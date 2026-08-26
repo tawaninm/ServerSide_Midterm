@@ -1,0 +1,3209 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server-Side Practical Exam Drill & Grill Hub | KMITL IT</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Prompt', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+          colors: {
+            bgDark: '#08090d',
+            surfaceDark: '#11131c',
+            surfaceBorder: '#1e2235',
+            brandIndigo: '#6366f1',
+            brandCyan: '#06b6d4',
+            brandEmerald: '#10b981',
+            brandAmber: '#f59e0b',
+            brandRose: '#f43f5e',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #08090d;
+      color: #e2e8f0;
+    }
+    .code-editor {
+      font-family: 'Fira Code', monospace;
+      tab-size: 2;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0d0f17;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #262b42;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3e4668;
+    }
+    .tab-active {
+      border-color: #6366f1;
+      color: #ffffff;
+      background: linear-gradient(180deg, rgba(99, 102, 241, 0.12) 0%, rgba(99, 102, 241, 0.02) 100%);
+    }
+    .glass-card {
+      background: rgba(17, 19, 28, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid #1e2235;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-brandIndigo selection:text-white">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-50 glass-card border-b border-surfaceBorder px-4 lg:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-brandIndigo to-brandCyan flex items-center justify-center shadow-lg shadow-brandIndigo/20">
+          <i data-lucide="server" class="w-5 h-5 text-white"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-bold text-lg text-white tracking-wide">Server-Side Exam Drill & Grill</h1>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-brandIndigo/20 text-indigo-300 font-mono border border-brandIndigo/30">06016418</span>
+          </div>
+          <p class="text-xs text-slate-400">Docker • MySQL on Docker • MongoDB & Mongoose • Express Practice</p>
+        </div>
+      </div>
+
+      <!-- Quick Stats & Action -->
+      <div class="flex items-center gap-3">
+        <div class="hidden sm:flex items-center gap-2 bg-surfaceDark px-3 py-1.5 rounded-lg border border-surfaceBorder text-xs">
+          <span class="text-slate-400">Lab Solved:</span>
+          <span id="stat-solved" class="font-bold text-brandEmerald font-mono">0 / 10</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-2 bg-surfaceDark px-3 py-1.5 rounded-lg border border-surfaceBorder text-xs">
+          <span class="text-slate-400">Quiz Score:</span>
+          <span id="stat-quiz" class="font-bold text-brandCyan font-mono">0 / 15</span>
+        </div>
+        <button onclick="resetAllProgress()" class="text-xs text-slate-400 hover:text-rose-400 transition-colors p-1.5 rounded" title="Reset Progress">
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Sub Navigation Tabs -->
+  <nav class="bg-surfaceDark/80 border-b border-surfaceBorder px-4 lg:px-8">
+    <div class="max-w-7xl mx-auto flex overflow-x-auto gap-2 py-2 text-sm font-medium">
+      <button onclick="switchTab('study')" id="tab-study" class="tab-btn tab-active px-4 py-2 rounded-lg border border-transparent flex items-center gap-2 transition-all">
+        <i data-lucide="book-open" class="w-4 h-4 text-brandIndigo"></i>
+        <span>1. Study Hub (สรุปทฤษฎี & สถาปัตยกรรม)</span>
+      </button>
+      <button onclick="switchTab('steps')" id="tab-steps" class="tab-btn px-4 py-2 rounded-lg border border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
+        <i data-lucide="list-ordered" class="w-4 h-4 text-brandEmerald"></i>
+        <span>2. Step-by-Step Blueprint (ขั้นตอนคำสั่งสด 0-9)</span>
+      </button>
+      <button onclick="switchTab('labs')" id="tab-labs" class="tab-btn px-4 py-2 rounded-lg border border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
+        <i data-lucide="terminal" class="w-4 h-4 text-brandCyan"></i>
+        <span>3. Hands-on Coding Labs (10 ข้อปฏิบัติ)</span>
+      </button>
+      <button onclick="switchTab('grill')" id="tab-grill" class="tab-btn px-4 py-2 rounded-lg border border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
+        <i data-lucide="flame" class="w-4 h-4 text-brandAmber"></i>
+        <span>4. Grill Exam Simulator (ข้อสอบจับเวลา)</span>
+      </button>
+      <button onclick="switchTab('cheatsheet')" id="tab-cheatsheet" class="tab-btn px-4 py-2 rounded-lg border border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
+        <i data-lucide="zap" class="w-4 h-4 text-purple-400"></i>
+        <span>5. Quick Cheat Sheet (กู้ชีพหน้าห้องสอบ)</span>
+      </button>
+      <button onclick="switchTab('checklist')" id="tab-checklist" class="tab-btn px-4 py-2 rounded-lg border border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
+        <i data-lucide="check-square" class="w-4 h-4 text-pink-400"></i>
+        <span>6. Exam Readiness Checklist</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 lg:p-8">
+
+    <!-- ==================== TAB 1: STUDY HUB ==================== -->
+    <div id="view-study" class="tab-view space-y-8">
+      <!-- Hero Banner -->
+      <div class="p-6 rounded-2xl bg-gradient-to-r from-indigo-950/40 via-purple-950/20 to-slate-900/40 border border-brandIndigo/30 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <span class="text-xs uppercase tracking-wider text-brandIndigo font-semibold">Study Deep-Dive</span>
+          <h2 class="text-2xl font-bold text-white mt-1">คลังสรุปสาระสำคัญสำหรับสอบปฏิบัติ Server-Side</h2>
+          <p class="text-slate-400 text-sm mt-1">เจาะลึก 4 แกนหลัก: Docker Lifecycle, MySQL Parameterized Query & Soft Delete, MongoDB Mongoose Model, และ Express Patterns</p>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="switchTab('labs')" class="px-4 py-2 rounded-lg bg-brandIndigo hover:bg-indigo-600 text-white font-medium text-sm flex items-center gap-2 shadow-lg shadow-brandIndigo/25 transition-all">
+            <span>เริ่มทำแล็บปฏิบัติ</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Core Modules Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Card 1: Docker Essentials -->
+        <div class="glass-card rounded-xl p-6 hover:border-brandIndigo/50 transition-all">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="p-2.5 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20">
+                <i data-lucide="container" class="w-5 h-5"></i>
+              </div>
+              <h3 class="font-bold text-lg text-white">1. Docker & Docker Compose</h3>
+            </div>
+            <span class="text-xs font-mono bg-sky-500/10 text-sky-300 px-2 py-0.5 rounded border border-sky-500/20">Module 01</span>
+          </div>
+          <ul class="text-sm space-y-2.5 text-slate-300">
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
+              <span><strong>VM vs Container:</strong> Container ใช้ Linux Kernel ร่วมกับ Host ผ่าน <code>namespaces</code> (PID, NET, MNT) และ <code>cgroups</code> จึงเบากว่าและเร็วกว่า VM ที่ต้องรัน Guest OS เต็ม</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
+              <span><strong>Dockerfile Optimization:</strong> ก๊อปปี้ <code>package*.json</code> ก่อนรัน <code>npm install</code> เพื่อใช้ Docker Layer Cache หากโค้ดเปลี่ยนแต่ dependency ไม่เปลี่ยน</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
+              <span><strong>Port Mapping <code>-p Host:Container</code>:</strong> เช่น <code>3307:3306</code> หมายถึง ฝั่งนอกเปิด 3307 แมปเข้า 3306 ของ MySQL ใน Container</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
+              <span><strong>Named Volume vs Bind Mount:</strong> ใช้ Named Volume (เช่น <code>mysql_data:/var/lib/mysql</code>) เพื่อเก็บ Data ถาวรแม้ Container จะถูกลบ</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Card 2: MySQL with Express -->
+        <div class="glass-card rounded-xl p-6 hover:border-brandIndigo/50 transition-all">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="p-2.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                <i data-lucide="database" class="w-5 h-5"></i>
+              </div>
+              <h3 class="font-bold text-lg text-white">2. MySQL & Parameterized Queries</h3>
+            </div>
+            <span class="text-xs font-mono bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded border border-amber-500/20">Module 02</span>
+          </div>
+          <ul class="text-sm space-y-2.5 text-slate-300">
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+              <span><strong>Connection Pool (<code>mysql2/promise</code>):</strong> ใช้ <code>mysql.createPool({ host, user, password, database, port, waitForConnections: true, connectionLimit: 10 })</code> เพื่อประสิทธิภาพ</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+              <span><strong>SQL Injection Prevention:</strong> ห้าม String Concatenation เด็ดขาด! ให้ใช้ <code>pool.query('SELECT * FROM users WHERE id = ?', [id])</code> เสมอ</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
+              <span><strong>Soft Delete Pattern:</strong> ห้าม <code>DELETE FROM</code> แต่ใช้ <code>UPDATE users SET deleted_at = NOW() WHERE id = ?</code> และ Query ดึงเฉพาะ <code>WHERE deleted_at IS NULL</code></span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Card 3: MongoDB & Mongoose -->
+        <div class="glass-card rounded-xl p-6 hover:border-brandIndigo/50 transition-all">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <i data-lucide="layers" class="w-5 h-5"></i>
+              </div>
+              <h3 class="font-bold text-lg text-white">3. MongoDB & Mongoose ODM</h3>
+            </div>
+            <span class="text-xs font-mono bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/20">Module 03</span>
+          </div>
+          <ul class="text-sm space-y-2.5 text-slate-300">
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+              <span><strong>Connection:</strong> <code>mongoose.connect(process.env.MONGODB_URI)</code> จัดการ connection pooling อัตโนมัติ</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+              <span><strong>Schema & Validations:</strong> กำหนด <code>{ type: String, required: [true, 'Msg'], trim: true, minlength: 3 }</code> และ <code>{ timestamps: true }</code> เพื่อได้ <code>createdAt/updatedAt</code></span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
+              <span><strong>CRUD Methods:</strong> <code>Model.create(req.body)</code>, <code>Model.find({ isDeleted: false })</code>, <code>Model.findById(id)</code>, <code>Model.findByIdAndUpdate(id, data, { new: true, runValidators: true })</code></span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Card 4: Express Middleware & Best Practices -->
+        <div class="glass-card rounded-xl p-6 hover:border-brandIndigo/50 transition-all">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-3">
+              <div class="p-2.5 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                <i data-lucide="cpu" class="w-5 h-5"></i>
+              </div>
+              <h3 class="font-bold text-lg text-white">4. Express Middleware & Error Handling</h3>
+            </div>
+            <span class="text-xs font-mono bg-purple-500/10 text-purple-300 px-2 py-0.5 rounded border border-purple-500/20">Module 04</span>
+          </div>
+          <ul class="text-sm space-y-2.5 text-slate-300">
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-purple-400 shrink-0 mt-0.5"></i>
+              <span><strong>Middleware Lifecycle:</strong> ต้องเรียก <code>next()</code> เสมอหากไม่ส่ง response ออกไป เพื่อไม่ให้ request ค้าง (hang)</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-purple-400 shrink-0 mt-0.5"></i>
+              <span><strong>Global Error Handler:</strong> Function 4 parameters <code>(err, req, res, next)</code> วางไว้บรรทัดล่างสุดของ app</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-purple-400 shrink-0 mt-0.5"></i>
+              <span><strong>HTTP Status Codes:</strong> <code>200 OK</code>, <code>201 Created</code>, <code>400 Bad Request</code>, <code>404 Not Found</code>, <code>500 Internal Server Error</code></span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Architectural Comparison Diagram -->
+      <div class="glass-card rounded-xl p-6">
+        <h3 class="font-bold text-base text-white mb-3 flex items-center gap-2">
+          <i data-lucide="git-merge" class="w-5 h-5 text-brandCyan"></i>
+          <span>เปรียบเทียบสถาปัตยกรรม MySQL vs MongoDB บน Express Server</span>
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm border-collapse">
+            <thead>
+              <tr class="border-b border-surfaceBorder text-slate-400 bg-surfaceDark/50">
+                <th class="py-3 px-4">มิติเปรียบเทียบ</th>
+                <th class="py-3 px-4 text-amber-400">MySQL (Relational)</th>
+                <th class="py-3 px-4 text-emerald-400">MongoDB (NoSQL Document)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-surfaceBorder text-slate-300">
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-200">Library / Driver ใน Node.js</td>
+                <td class="py-3 px-4 font-mono text-xs">mysql2 / mysql2/promise</td>
+                <td class="py-3 px-4 font-mono text-xs">mongoose (ODM) / mongodb</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-200">Docker Image</td>
+                <td class="py-3 px-4 font-mono text-xs">mysql:8.0</td>
+                <td class="py-3 px-4 font-mono text-xs">mongo:6.0 / mongo:7.0</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-200">Default Port ใน Container</td>
+                <td class="py-3 px-4 font-mono text-xs text-amber-300">3306</td>
+                <td class="py-3 px-4 font-mono text-xs text-emerald-300">27017</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-200">โครงสร้างข้อมูล</td>
+                <td class="py-3 px-4">Tables, Rows, Columns (Strict Schema)</td>
+                <td class="py-3 px-4">Databases, Collections, Documents (BSON/JSON)</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-200">ป้องกัน Injection / Schema Guard</td>
+                <td class="py-3 px-4">Prepared Statements (<code>?</code> placeholders)</td>
+                <td class="py-3 px-4">Mongoose Schema Type Validation & Cast</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-200">Primary Key</td>
+                <td class="py-3 px-4"><code>id INT AUTO_INCREMENT PRIMARY KEY</code></td>
+                <td class="py-3 px-4"><code>_id ObjectId</code> (สร้างอัตโนมัติ)</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-4 font-semibold text-slate-200">Soft Delete Pattern</td>
+                <td class="py-3 px-4"><code>deleted_at TIMESTAMP NULL</code></td>
+                <td class="py-3 px-4"><code>isDeleted: { type: Boolean, default: false }</code> หรือ <code>deletedAt: Date</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: STEP-BY-STEP BLUEPRINT & LIVE TERMINAL PRACTICE ==================== -->
+    <div id="view-steps" class="tab-view hidden space-y-8">
+      
+      <!-- Hero Banner -->
+      <div class="p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-teal-950/20 to-slate-900/40 border border-brandEmerald/30 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs uppercase tracking-wider text-brandEmerald font-semibold">Live Practical Exam Blueprint</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-brandEmerald/20 text-emerald-300 font-mono border border-brandEmerald/30">Total 20 Points</span>
+          </div>
+          <h2 class="text-2xl font-bold text-white mt-1">คู่มือพิมพ์คำสั่งและโค้ดทีละ Step สำหรับสอบปฏิบัติ (Step 0 - 9)</h2>
+          <p class="text-slate-400 text-sm mt-1">พิมพ์ตามลำดับจริง: Git Repo ➔ Scaffolding ➔ Docker Compose ➔ Mongoose ➔ Express CRUD ➔ cURL Test ➔ Git Push</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="scrollToTerminalTrainer()" class="px-4 py-2 rounded-lg bg-brandEmerald hover:bg-emerald-600 text-white font-medium text-sm flex items-center gap-2 shadow-lg shadow-brandEmerald/25 transition-all">
+            <i data-lucide="terminal" class="w-4 h-4"></i>
+            <span>ซ้อมพิมพ์ใน Terminal Trainer</span>
+          </button>
+          <button onclick="copyAllStarterBundle()" class="px-4 py-2 rounded-lg bg-surfaceDark hover:bg-surfaceBorder text-slate-300 border border-surfaceBorder text-sm flex items-center gap-2 transition-all">
+            <i data-lucide="copy" class="w-4 h-4 text-brandCyan"></i>
+            <span>คัดลอก Starter Kit รวม</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE TERMINAL PRACTICE TRAINER -->
+      <div id="terminal-trainer-card" class="glass-card rounded-2xl p-6 border-brandEmerald/40 relative overflow-hidden shadow-2xl">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-surfaceBorder pb-4 mb-4">
+          <div class="flex items-center gap-3">
+            <div class="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <i data-lucide="terminal-square" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-white text-base flex items-center gap-2">
+                <span>Interactive Terminal Command Practice Sandbox</span>
+                <span class="text-xs font-normal text-slate-400 font-mono">(ฝึกพิมพ์คำสั่งจริงสร้าง Muscle Memory)</span>
+              </h3>
+              <p class="text-xs text-slate-400">พิมพ์คำสั่งตามที่โจทย์กำหนด แล้วกด <kbd class="px-1.5 py-0.5 bg-bgDark border border-surfaceBorder rounded text-[10px] text-slate-300">Enter</kbd> เพื่อตรวจสอบ</p>
+            </div>
+          </div>
+
+          <!-- Mode Picker & Streak -->
+          <div class="flex items-center gap-3 w-full md:w-auto justify-between">
+            <select id="trainer-scenario" onchange="changeTrainerScenario(this.value)" class="bg-bgDark text-white text-xs rounded-lg border border-surfaceBorder px-3 py-1.5 focus:outline-none focus:border-brandEmerald">
+              <option value="full">🎯 Full Exam Flow (ทุกคำสั่งตั้งแต่ 0-9)</option>
+              <option value="git">🌿 1. Git Workflow Only</option>
+              <option value="docker">🐳 2. Docker & Compose Only</option>
+              <option value="node">📦 3. Node & Express NPM Only</option>
+              <option value="curl">📡 4. cURL CRUD API Tests</option>
+            </select>
+            <div class="flex items-center gap-1.5 bg-surfaceDark px-3 py-1.5 rounded-lg border border-surfaceBorder text-xs font-mono text-amber-400">
+              <span>🔥 Streak:</span>
+              <span id="trainer-streak" class="font-bold">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="mb-4">
+          <div class="flex justify-between text-xs font-mono text-slate-400 mb-1">
+            <span id="trainer-step-label">คำสั่งที่ 1 / 12</span>
+            <span id="trainer-progress-pct" class="text-brandEmerald font-bold">0%</span>
+          </div>
+          <div class="w-full h-1.5 bg-bgDark rounded-full overflow-hidden border border-surfaceBorder">
+            <div id="trainer-progress-bar" class="h-full bg-gradient-to-r from-brandEmerald to-brandCyan transition-all duration-300" style="width: 0%;"></div>
+          </div>
+        </div>
+
+        <!-- Target Command Prompt Box -->
+        <div class="bg-surfaceDark/80 p-4 rounded-xl border border-surfaceBorder mb-4 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400 flex items-center gap-1.5">
+              <i data-lucide="target" class="w-3.5 h-3.5 text-brandAmber"></i>
+              <span id="trainer-task-title">โจทย์: สร้าง Repository และกำหนด Main Branch</span>
+            </span>
+            <span id="trainer-task-cat" class="text-[10px] font-mono px-2 py-0.5 rounded bg-brandEmerald/10 text-emerald-300 border border-brandEmerald/20">GIT</span>
+          </div>
+          <div class="bg-bgDark p-3 rounded-lg border border-surfaceBorder flex items-center justify-between">
+            <div class="font-mono text-xs md:text-sm text-emerald-300 overflow-x-auto">
+              <span class="text-slate-500 mr-2">$</span>
+              <span id="trainer-target-cmd" class="font-bold text-white tracking-wide">git init && git branch -M main</span>
+            </div>
+            <button onclick="copyCurrentTargetCmd()" class="text-slate-400 hover:text-white p-1 rounded hover:bg-surfaceDark" title="Copy Command">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Terminal Window Screen -->
+        <div class="bg-[#050608] rounded-xl border border-surfaceBorder overflow-hidden font-mono shadow-inner">
+          <div class="bg-surfaceDark/90 px-4 py-2 border-b border-surfaceBorder flex items-center justify-between text-xs text-slate-400">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block"></span>
+              <span class="text-[11px] text-slate-400 ml-2">bash - doro@kmitl-exam: ~/exam-project</span>
+            </div>
+            <span class="text-[10px] text-slate-500">Interactive Prompt</span>
+          </div>
+
+          <!-- Console Output Logs -->
+          <div id="trainer-console-log" class="p-4 text-xs space-y-1.5 max-h-48 overflow-y-auto text-slate-300">
+            <div class="text-slate-500"># Welcome to Server-Side Practical Exam Live Terminal Trainer.</div>
+            <div class="text-slate-500"># พิมพ์คำสั่งในช่องด้านล่าง แล้วกด Enter เพื่อจำลองการรันจริง</div>
+          </div>
+
+          <!-- Terminal Input Row -->
+          <div class="p-3 bg-bgDark/60 border-t border-surfaceBorder flex items-center gap-2">
+            <span class="text-emerald-400 font-bold text-xs select-none">doro@exam:~$</span>
+            <input type="text" id="trainer-input" onkeydown="handleTrainerKeydown(event)" placeholder="พิมพ์คำสั่งที่นี่..." class="flex-1 bg-transparent text-xs md:text-sm text-emerald-300 focus:outline-none font-mono" autocomplete="off" spellcheck="false">
+            <button onclick="submitTrainerCommand()" class="px-3 py-1.5 bg-brandEmerald hover:bg-emerald-600 text-white rounded-lg text-xs font-sans font-medium flex items-center gap-1">
+              <span>Enter</span>
+              <i data-lucide="corner-down-left" class="w-3 h-3"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Terminal Actions Toolbar -->
+        <div class="flex flex-wrap items-center justify-between gap-2 mt-4 pt-3 border-t border-surfaceBorder">
+          <div class="flex items-center gap-2">
+            <button onclick="autoTypeCommand()" class="px-3 py-1.5 rounded-lg bg-surfaceDark hover:bg-surfaceBorder text-slate-300 text-xs flex items-center gap-1.5 border border-surfaceBorder">
+              <i data-lucide="wand-2" class="w-3.5 h-3.5 text-brandCyan"></i>
+              <span>พิมพ์ให้ดู / Auto-Type</span>
+            </button>
+            <button onclick="skipTrainerCommand()" class="px-3 py-1.5 rounded-lg bg-surfaceDark hover:bg-surfaceBorder text-slate-400 hover:text-slate-200 text-xs flex items-center gap-1.5 border border-surfaceBorder">
+              <i data-lucide="skip-forward" class="w-3.5 h-3.5"></i>
+              <span>ข้ามข้อนี้ (Skip)</span>
+            </button>
+          </div>
+          <button onclick="resetTrainer()" class="px-3 py-1.5 rounded-lg bg-surfaceDark hover:bg-surfaceBorder text-slate-400 hover:text-rose-400 text-xs flex items-center gap-1.5 border border-surfaceBorder">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            <span>เริ่มรอบใหม่ (Reset)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- FILTERABLE STEP-BY-STEP EXAM GUIDE -->
+      <div class="space-y-6">
+        
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 glass-card p-4 rounded-xl">
+          <div>
+            <h3 class="font-bold text-white text-base flex items-center gap-2">
+              <i data-lucide="layers" class="w-5 h-5 text-brandEmerald"></i>
+              <span>Master Exam Pipeline (ลำดับการทำฉบับเต็มทีละไฟล์)</span>
+            </h3>
+            <p class="text-xs text-slate-400">คลิกเลือกหมวดหมู่เพื่อกรอง หรือดูครบทุก Step พร้อมโค้ดสำหรับเปิดดูในห้องสอบ</p>
+          </div>
+
+          <!-- Filter Pills -->
+          <div class="flex flex-wrap gap-1.5" id="step-filter-buttons">
+            <button onclick="filterStepCards('all')" class="step-filter-btn active-filter px-3 py-1 rounded-lg text-xs font-medium bg-brandEmerald text-white border border-brandEmerald transition-all" data-cat="all">ทั้งหมด (All 0-9)</button>
+            <button onclick="filterStepCards('git')" class="step-filter-btn px-3 py-1 rounded-lg text-xs font-medium bg-surfaceDark text-slate-300 border border-surfaceBorder hover:border-slate-500 transition-all" data-cat="git">🌿 Git (0-2)</button>
+            <button onclick="filterStepCards('docker')" class="step-filter-btn px-3 py-1 rounded-lg text-xs font-medium bg-surfaceDark text-slate-300 border border-surfaceBorder hover:border-slate-500 transition-all" data-cat="docker">🐳 Docker (3)</button>
+            <button onclick="filterStepCards('mongo')" class="step-filter-btn px-3 py-1 rounded-lg text-xs font-medium bg-surfaceDark text-slate-300 border border-surfaceBorder hover:border-slate-500 transition-all" data-cat="mongo">🍃 MongoDB (4-5)</button>
+            <button onclick="filterStepCards('express')" class="step-filter-btn px-3 py-1 rounded-lg text-xs font-medium bg-surfaceDark text-slate-300 border border-surfaceBorder hover:border-slate-500 transition-all" data-cat="express">⚡ Express & CRUD (6-7)</button>
+            <button onclick="filterStepCards('test')" class="step-filter-btn px-3 py-1 rounded-lg text-xs font-medium bg-surfaceDark text-slate-300 border border-surfaceBorder hover:border-slate-500 transition-all" data-cat="test">📡 cURL & Push (8-9)</button>
+          </div>
+        </div>
+
+        <!-- STEP CARDS CONTAINER -->
+        <div class="space-y-6" id="step-cards-container">
+          
+          <!-- STEP 0 -->
+          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-brandEmerald" data-cat="git">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">STEP 0</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">สร้างโฟลเดอร์โปรเจกต์ & ตั้งค่า Git Repository</h4>
+                  <p class="text-xs text-slate-400">Initialize Git, ตั้งชื่อ branch เป็น main, และสร้าง .gitignore ก่อนเป็นอันดับแรก</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
+                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
+                  <input type="checkbox" onchange="toggleStepDone('step0', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
+                  <span>ทำเสร็จแล้ว</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Terminal Commands -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span class="font-semibold">💻 คำสั่ง Terminal ที่ต้องพิมพ์:</span>
+                <button onclick="copySnippet('cmd-step0')" class="text-brandCyan hover:underline flex items-center gap-1">
+                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกคำสั่ง
+                </button>
+              </div>
+              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-emerald-300 overflow-x-auto"><code id="cmd-step0">mkdir server-exam-2026 && cd server-exam-2026
+git init
+git branch -M main</code></pre>
+            </div>
+
+            <!-- File Content -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span class="font-semibold flex items-center gap-1.5"><i data-lucide="file-code" class="w-3.5 h-3.5 text-amber-400"></i> สร้างไฟล์: <code>.gitignore</code></span>
+                <button onclick="copySnippet('file-step0')" class="text-brandCyan hover:underline flex items-center gap-1">
+                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกเนื้อหาไฟล์
+                </button>
+              </div>
+              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="file-step0">node_modules/
+.env
+.DS_Store
+*.log</code></pre>
+            </div>
+
+            <!-- Warning Callout -->
+            <div class="p-3 rounded-lg bg-rose-950/30 border border-rose-800/40 text-xs text-rose-200 flex items-start gap-2">
+              <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-400 shrink-0 mt-0.5"></i>
+              <span><strong>⚠️ จุดที่อาจารย์หักคะแนนบ่อย:</strong> ห้ามลืมสร้างไฟล์ <code>.gitignore</code> เด็ดขาด! หากเผลอ `git add .` โดยไม่มี .gitignore โฟลเดอร์ `node_modules` จะหลุดขึ้นไปบน GitHub ทันที</span>
+            </div>
+          </div>
+
+          <!-- STEP 1 -->
+          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-sky-500" data-cat="git">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/30">STEP 1</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">Initialize Node.js Project & ติดตั้ง Dependencies</h4>
+                  <p class="text-xs text-slate-400">สร้าง package.json และลงแพ็กเกจ Express, Mongoose, Dotenv, Cors, และ Nodemon</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
+                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
+                  <input type="checkbox" onchange="toggleStepDone('step1', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
+                  <span>ทำเสร็จแล้ว</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Terminal Commands -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span class="font-semibold">💻 คำสั่ง Terminal ที่ต้องพิมพ์:</span>
+                <button onclick="copySnippet('cmd-step1')" class="text-brandCyan hover:underline flex items-center gap-1">
+                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกคำสั่ง
+                </button>
+              </div>
+              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-sky-300 overflow-x-auto"><code id="cmd-step1">npm init -y
+npm install express mongoose dotenv cors
+npm install -D nodemon</code></pre>
+            </div>
+
+            <!-- package.json scripts snippet -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span class="font-semibold flex items-center gap-1.5"><i data-lucide="file-code" class="w-3.5 h-3.5 text-amber-400"></i> ปรับแต่งส่วน scripts ใน: <code>package.json</code></span>
+                <button onclick="copySnippet('file-step1')" class="text-brandCyan hover:underline flex items-center gap-1">
+                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอก scripts
+                </button>
+              </div>
+              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="file-step1">"scripts": {
+  "start": "node server.js",
+  "dev": "nodemon server.js"
+}</code></pre>
+            </div>
+          </div>
+
+          <!-- STEP 2 -->
+          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-indigo-500" data-cat="git">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">STEP 2</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">สร้างไฟล์ Environment Variables (.env และ .env.example)</h4>
+                  <p class="text-xs text-slate-400">แยกตัวแปร Configuration ตามหลัก 12-Factor App เพื่อความปลอดภัย</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~1 นาที</span>
+                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
+                  <input type="checkbox" onchange="toggleStepDone('step2', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
+                  <span>ทำเสร็จแล้ว</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- File Content -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span class="font-semibold flex items-center gap-1"><i data-lucide="lock" class="w-3.5 h-3.5 text-indigo-400"></i> ไฟล์: <code>.env</code></span>
+                  <button onclick="copySnippet('file-step2-env')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
+                </div>
+                <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-indigo-300 overflow-x-auto"><code id="file-step2-env">PORT=5000
+NODE_ENV=development
+MONGO_URI=mongodb://localhost:27017/examdb</code></pre>
+              </div>
+
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span class="font-semibold flex items-center gap-1"><i data-lucide="file" class="w-3.5 h-3.5 text-slate-400"></i> ไฟล์: <code>.env.example</code> (Push ขึ้น Git)</span>
+                  <button onclick="copySnippet('file-step2-ex')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
+                </div>
+                <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-slate-400 overflow-x-auto"><code id="file-step2-ex">PORT=5000
+NODE_ENV=development
+MONGO_URI=mongodb://localhost:27017/examdb</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-cyan-500" data-cat="docker">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">STEP 3</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">สร้าง Dockerfile & docker-compose.yml สำหรับ MongoDB</h4>
+                  <p class="text-xs text-slate-400">รัน Database Container พร้อมเปิด Port และเชื่อมต่อ Named Volume เพื่อ Data Persistence</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~4 นาที</span>
+                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
+                  <input type="checkbox" onchange="toggleStepDone('step3', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
+                  <span>ทำเสร็จแล้ว</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <!-- Dockerfile -->
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span class="font-semibold flex items-center gap-1"><i data-lucide="box" class="w-3.5 h-3.5 text-cyan-400"></i> ไฟล์: <code>Dockerfile</code></span>
+                  <button onclick="copySnippet('file-step3-dockerfile')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
+                </div>
+                <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-cyan-300 overflow-x-auto"><code id="file-step3-dockerfile">FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 5000
+CMD ["npm", "start"]</code></pre>
+              </div>
+
+              <!-- docker-compose.yml -->
+              <div class="space-y-2">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span class="font-semibold flex items-center gap-1"><i data-lucide="layers" class="w-3.5 h-3.5 text-cyan-400"></i> ไฟล์: <code>docker-compose.yml</code></span>
+                  <button onclick="copySnippet('file-step3-compose')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
+                </div>
+                <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-cyan-300 overflow-x-auto"><code id="file-step3-compose">version: '3.8'
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: exam_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: examdb
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:</code></pre>
+              </div>
+            </div>
+
+            <!-- Terminal Run Commands -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span class="font-semibold">💻 คำสั่งสั่งรัน Container ในพื้นหลัง:</span>
+                <button onclick="copySnippet('cmd-step3-run')" class="text-brandCyan hover:underline flex items-center gap-1">
+                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกคำสั่ง
+                </button>
+              </div>
+              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-emerald-300 overflow-x-auto"><code id="cmd-step3-run">docker compose up -d
+docker compose ps</code></pre>
+            </div>
+          </div>
+
+          <!-- STEP 4 -->
+          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-emerald-500" data-cat="mongo">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">STEP 4</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">สร้างโมดูลเชื่อมต่อ MongoDB (config/db.js)</h4>
+                  <p class="text-xs text-slate-400">ใช้ Mongoose Connect พร้อม Async/Await และ Try...Catch ป้องกันแอป Crash</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
+                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
+                  <input type="checkbox" onchange="toggleStepDone('step4', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
+                  <span>ทำเสร็จแล้ว</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- File Content -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span class="font-semibold flex items-center gap-1.5"><i data-lucide="database" class="w-3.5 h-3.5 text-emerald-400"></i> ไฟล์: <code>config/db.js</code></span>
+                <button onclick="copySnippet('file-step4')" class="text-brandCyan hover:underline flex items-center gap-1">
+                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกโค้ด
+                </button>
+              </div>
+              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-emerald-300 overflow-x-auto"><code id="file-step4">const mongoose = require('mongoose');
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/examdb');
+    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+  } catch (error) {
+    console.error(`❌ MongoDB Connection Error: ${error.message}`);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDB;</code></pre>
+            </div>
+          </div>
+
+          <!-- STEP 5 -->
+          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-purple-500" data-cat="mongo">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30">STEP 5</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">สร้าง Mongoose Schema & Model (models/Student.js)</h4>
+                  <p class="text-xs text-slate-400">กำหนด Field Types พร้อมตัวตรวจจับความถูกต้อง (Strict Validations) และ Timestamps</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~3 นาที</span>
+                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
+                  <input type="checkbox" onchange="toggleStepDone('step5', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
+                  <span>ทำเสร็จแล้ว</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- File Content -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span class="font-semibold flex items-center gap-1.5"><i data-lucide="file-code" class="w-3.5 h-3.5 text-purple-400"></i> ไฟล์: <code>models/Student.js</code></span>
+                <button onclick="copySnippet('file-step5')" class="text-brandCyan hover:underline flex items-center gap-1">
+                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกโค้ด
+                </button>
+              </div>
+              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-purple-300 overflow-x-auto"><code id="file-step5">const mongoose = require('mongoose');
+
+const studentSchema = new mongoose.Schema({
+  studentId: {
+    type: String,
+    required: [true, 'Student ID is required'],
+    unique: true,
+    trim: true
+  },
+  name: {
+    type: String,
+    required: [true, 'Student name is required'],
+    trim: true
+  },
+  major: {
+    type: String,
+    required: true,
+    enum: ['IT', 'CS', 'DS', 'SE'],
+    default: 'IT'
+  },
+  gpa: {
+    type: Number,
+    min: [0.0, 'GPA cannot be less than 0.0'],
+    max: [4.0, 'GPA cannot be more than 4.0'],
+    default: 0.0
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  }
+}, {
+  timestamps: true // สร้าง createdAt และ updatedAt อัตโนมัติ
+});
+
+module.exports = mongoose.model('Student', studentSchema);</code></pre>
+            </div>
+          </div>
+
+          <!-- STEP 6 -->
+          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-amber-500" data-cat="express">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30">STEP 6</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">เขียน Main Server & Middleware Pipeline (server.js)</h4>
+                  <p class="text-xs text-slate-400">โหลด Dotenv, เชื่อมต่อ DB, วาง express.json(), Mount Router, และ Global Error Handler</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~3 นาที</span>
+                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
+                  <input type="checkbox" onchange="toggleStepDone('step6', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
+                  <span>ทำเสร็จแล้ว</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- File Content -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span class="font-semibold flex items-center gap-1.5"><i data-lucide="file-code" class="w-3.5 h-3.5 text-amber-400"></i> ไฟล์: <code>server.js</code></span>
+                <button onclick="copySnippet('file-step6')" class="text-brandCyan hover:underline flex items-center gap-1">
+                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกโค้ด
+                </button>
+              </div>
+              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-amber-300 overflow-x-auto"><code id="file-step6">require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db');
+const studentRoutes = require('./routes/studentRoutes');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// 1. เชื่อมต่อฐานข้อมูล MongoDB
+connectDB();
+
+// 2. Built-in Middleware (สำคัญมาก! ต้องวางก่อน Route Handler)
+app.use(cors());
+app.use(express.json());
+
+// 3. Root Healthcheck Route
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Server-Side Practical Exam API is running!' });
+});
+
+// 4. Mount API Routes
+app.use('/api/students', studentRoutes);
+
+// 5. 404 Route Not Found Middleware
+app.use((req, res, next) => {
+  res.status(404).json({ error: `Route ${req.originalUrl} not found` });
+});
+
+// 6. Global 500 Error Handling Middleware (ต้องมีครบ 4 parameters เสมอ)
+app.use((err, req, res, next) => {
+  console.error('Unhandled Error:', err.stack);
+  res.status(err.status || 500).json({
+    error: err.message || 'Internal Server Error'
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+});</code></pre>
+            </div>
+          </div>
+
+          <!-- STEP 7 -->
+          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-rose-500" data-cat="express">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30">STEP 7</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">เขียน 5-Route MongoDB CRUD Handlers (routes/studentRoutes.js)</h4>
+                  <p class="text-xs text-slate-400">ครบทั้ง 5 เส้นทาง: POST(201), GET All(200), GET by ID(200/404), PUT(200/404), DELETE(200/404)</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~5 นาที</span>
+                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
+                  <input type="checkbox" onchange="toggleStepDone('step7', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
+                  <span>ทำเสร็จแล้ว</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- File Content -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span class="font-semibold flex items-center gap-1.5"><i data-lucide="file-code" class="w-3.5 h-3.5 text-rose-400"></i> ไฟล์: <code>routes/studentRoutes.js</code></span>
+                <button onclick="copySnippet('file-step7')" class="text-brandCyan hover:underline flex items-center gap-1">
+                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกโค้ด
+                </button>
+              </div>
+              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-rose-300 overflow-x-auto leading-relaxed"><code id="file-step7">const express = require('express');
+const router = express.Router();
+const Student = require('../models/Student');
+
+// 1. CREATE: POST /api/students
+router.post('/', async (req, res) => {
+  try {
+    const student = await Student.create(req.body);
+    res.status(201).json(student);
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(400).json({ error: 'Duplicate studentId error' });
+    }
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// 2. READ ALL: GET /api/students (รองรับ Query Filter)
+router.get('/', async (req, res) => {
+  try {
+    const filter = {};
+    if (req.query.major) filter.major = req.query.major;
+    if (req.query.isActive !== undefined) filter.isActive = req.query.isActive === 'true';
+
+    const students = await Student.find(filter).sort({ createdAt: -1 });
+    res.status(200).json(students);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 3. READ ONE BY ID: GET /api/students/:id
+router.get('/:id', async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.status(200).json(student);
+  } catch (err) {
+    res.status(400).json({ error: 'Invalid ID format or Error: ' + err.message });
+  }
+});
+
+// 4. UPDATE: PUT /api/students/:id (สำคัญมาก: ต้องมี { new: true, runValidators: true })
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedStudent = await Student.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!updatedStudent) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.status(200).json(updatedStudent);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// 5. DELETE: DELETE /api/students/:id
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedStudent = await Student.findByIdAndDelete(req.params.id);
+    if (!deletedStudent) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.status(200).json({ message: 'Student deleted successfully', id: req.params.id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+module.exports = router;</code></pre>
+            </div>
+          </div>
+
+          <!-- STEP 8 -->
+          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-brandCyan" data-cat="test">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">STEP 8</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">ทดสอบยิง API ครบ 5 เส้นทางด้วย cURL (Command Line Test Suite)</h4>
+                  <p class="text-xs text-slate-400">ใช้ทดสอบใน Terminal ทันทีโดยไม่ต้องเปิด Postman ให้เปลืองเวลาสอบ</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
+                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
+                  <input type="checkbox" onchange="toggleStepDone('step8', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
+                  <span>ทำเสร็จแล้ว</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- cURL snippets -->
+            <div class="space-y-3">
+              <div class="space-y-1">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span class="font-mono text-emerald-400 font-semibold">1. Test POST Create:</span>
+                  <button onclick="copySnippet('curl-1')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
+                </div>
+                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-1">curl -X POST http://localhost:5000/api/students -H "Content-Type: application/json" -d "{\"studentId\":\"66070001\",\"name\":\"Tawan Promthong\",\"major\":\"IT\",\"gpa\":3.85}"</code></pre>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span class="font-mono text-sky-400 font-semibold">2. Test GET All:</span>
+                  <button onclick="copySnippet('curl-2')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
+                </div>
+                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-2">curl http://localhost:5000/api/students</code></pre>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span class="font-mono text-amber-400 font-semibold">3. Test PUT Update (แก้ GPA เป็น 4.00):</span>
+                  <button onclick="copySnippet('curl-3')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
+                </div>
+                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-3">curl -X PUT http://localhost:5000/api/students/PASTE_ID_HERE -H "Content-Type: application/json" -d "{\"gpa\":4.00}"</code></pre>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span class="font-mono text-rose-400 font-semibold">4. Test DELETE:</span>
+                  <button onclick="copySnippet('curl-4')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
+                </div>
+                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-4">curl -X DELETE http://localhost:5000/api/students/PASTE_ID_HERE</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 9 -->
+          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-brandEmerald" data-cat="test">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">STEP 9</span>
+                <div>
+                  <h4 class="font-bold text-white text-base">Git Checkpoint, Commit & Push ส่งงานอาจารย์</h4>
+                  <p class="text-xs text-slate-400">ตรวจสอบสถานะ git status, บันทึก commit ข้อความชัดเจน และ Push ขึ้น Remote Repository</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
+                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
+                  <input type="checkbox" onchange="toggleStepDone('step9', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
+                  <span>ทำเสร็จแล้ว</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Terminal Commands -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <span class="font-semibold">💻 คำสั่ง Terminal บันทึกและส่งงาน:</span>
+                <button onclick="copySnippet('cmd-step9')" class="text-brandCyan hover:underline flex items-center gap-1">
+                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกคำสั่ง
+                </button>
+              </div>
+              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-emerald-300 overflow-x-auto"><code id="cmd-step9">git status
+git add .
+git commit -m "feat: complete server-side exam express mongoose crud with docker"
+git remote add origin https://github.com/YOUR_USERNAME/server-side-exam.git
+git push -u origin main</code></pre>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ==================== TAB 3: HANDS-ON CODING LABS ==================== -->
+    <div id="view-labs" class="tab-view hidden space-y-6">
+      
+      <!-- Lab Selector Header -->
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 glass-card p-4 rounded-xl">
+        <div class="flex items-center gap-3">
+          <div class="p-2 rounded-lg bg-brandEmerald/10 text-brandEmerald border border-brandEmerald/20">
+            <i data-lucide="code" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="font-bold text-white text-base">Server-Side Practical Coding Workbench</h2>
+            <p class="text-xs text-slate-400">เลือกข้อสอบปฏิบัติ เขียนโค้ดลงใน Editor และกด 'ตรวจสอบโค้ด (Check Code)' เพื่อประเมินผลอัตโนมัติ</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 w-full lg:w-auto">
+          <label for="lab-select" class="text-xs text-slate-400 whitespace-nowrap">เลือกข้อแล็บ:</label>
+          <select id="lab-select" onchange="loadLab(this.value)" class="bg-bgDark text-white text-xs rounded-lg border border-surfaceBorder px-3 py-2 focus:outline-none focus:border-brandIndigo w-full lg:w-72">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+      </div>
+
+      <!-- Lab Problem & Workspace Area -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Column: Lab Brief & Requirements (5 Cols) -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="glass-card rounded-xl p-5 space-y-4">
+            <div class="flex items-center justify-between border-b border-surfaceBorder pb-3">
+              <span id="lab-badge" class="text-xs font-mono px-2.5 py-0.5 rounded-full bg-brandIndigo/20 text-indigo-300 border border-brandIndigo/30">Lab 01</span>
+              <span id="lab-difficulty" class="text-xs font-medium text-amber-400 flex items-center gap-1">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i> Medium
+              </span>
+            </div>
+
+            <div>
+              <h3 id="lab-title" class="font-bold text-lg text-white">Dockerfile for Node.js Application</h3>
+              <p id="lab-desc" class="text-sm text-slate-300 mt-2 leading-relaxed">จงเขียน Dockerfile เพื่อ Build Image แอปพลิเคชัน Node.js ที่มี Layer Caching เหมาะสม</p>
+            </div>
+
+            <div class="space-y-2">
+              <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400">🎯 ข้อกำหนดที่ต้องทำ (Requirements):</h4>
+              <ul id="lab-requirements" class="text-xs space-y-1.5 text-slate-300 list-disc list-inside">
+                <!-- Populated via JS -->
+              </ul>
+            </div>
+
+            <!-- Hint Box -->
+            <div class="pt-2">
+              <button onclick="toggleHint()" class="text-xs text-brandCyan hover:underline flex items-center gap-1">
+                <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
+                <span id="hint-btn-text">ดูคำใบ้ (Show Hint)</span>
+              </button>
+              <div id="lab-hint" class="hidden mt-2 p-3 rounded-lg bg-sky-950/40 border border-sky-800/40 text-xs text-sky-200 font-mono">
+                <!-- Populated via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Solution Snippet (Initially Hidden) -->
+          <div class="glass-card rounded-xl p-4">
+            <button onclick="toggleSolution()" class="w-full text-xs font-semibold text-slate-400 hover:text-slate-200 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="key" class="w-4 h-4 text-brandAmber"></i>
+                เฉลยและคำอธิบายโค้ดมาตรฐาน (Official Solution)
+              </span>
+              <i id="sol-chevron" data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
+            </button>
+            <div id="lab-solution-box" class="hidden mt-3 pt-3 border-t border-surfaceBorder">
+              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-emerald-300 overflow-x-auto whitespace-pre-wrap"><code id="lab-solution-code"></code></pre>
+              <p id="lab-solution-explain" class="text-xs text-slate-400 mt-2 leading-relaxed"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Code Editor & Validation (7 Cols) -->
+        <div class="lg:col-span-7 flex flex-col space-y-4">
+          <div class="glass-card rounded-xl overflow-hidden flex-1 flex flex-col border border-surfaceBorder">
+            
+            <!-- Editor Header -->
+            <div class="bg-surfaceDark px-4 py-2.5 border-b border-surfaceBorder flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+                <span id="editor-filename" class="text-xs font-mono text-slate-400 ml-2">Dockerfile</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="resetEditorCode()" class="text-xs text-slate-400 hover:text-white px-2 py-1 rounded bg-bgDark border border-surfaceBorder flex items-center gap-1" title="คืนค่าตั้งต้น">
+                  <i data-lucide="refresh-cw" class="w-3 h-3"></i> รีเซ็ต
+                </button>
+                <button onclick="copyEditorCode()" class="text-xs text-slate-400 hover:text-white px-2 py-1 rounded bg-bgDark border border-surfaceBorder flex items-center gap-1" title="คัดลอกโค้ด">
+                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอก
+                </button>
+              </div>
+            </div>
+
+            <!-- Textarea Code Editor -->
+            <div class="relative flex-1 min-h-[340px] bg-bgDark">
+              <textarea id="code-input" class="w-full h-full p-4 bg-transparent text-emerald-400 text-xs md:text-sm font-mono focus:outline-none resize-none leading-relaxed" spellcheck="false"></textarea>
+            </div>
+
+            <!-- Editor Action Footer -->
+            <div class="bg-surfaceDark px-4 py-3 border-t border-surfaceBorder flex items-center justify-between gap-3">
+              <div class="flex items-center gap-2 text-xs text-slate-400">
+                <i data-lucide="shield-check" class="w-4 h-4 text-brandCyan"></i>
+                <span>ระบบตรวจจับ Syntax & Rules อัตโนมัติ</span>
+              </div>
+              <button onclick="evaluateCurrentLab()" class="px-5 py-2 rounded-lg bg-gradient-to-r from-brandIndigo to-brandCyan hover:opacity-95 text-white font-medium text-xs md:text-sm flex items-center gap-2 shadow-lg shadow-brandIndigo/25 transition-all">
+                <i data-lucide="play" class="w-4 h-4 fill-white"></i>
+                <span>ตรวจสอบโค้ด (Check Code)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Evaluation Results Box -->
+          <div id="eval-result-card" class="hidden glass-card rounded-xl p-4 transition-all">
+            <div class="flex items-start gap-3">
+              <div id="eval-icon-wrap" class="p-2 rounded-lg shrink-0 mt-0.5">
+                <!-- Icon injected -->
+              </div>
+              <div class="flex-1">
+                <h4 id="eval-title" class="font-bold text-sm"></h4>
+                <p id="eval-msg" class="text-xs mt-1 text-slate-300 leading-relaxed"></p>
+                <div id="eval-details" class="mt-2 text-xs font-mono space-y-1"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ==================== TAB 3: GRILL EXAM SIMULATOR ==================== -->
+    <div id="view-grill" class="tab-view hidden space-y-6">
+      
+      <!-- Quiz Header & Controller -->
+      <div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs uppercase tracking-wider text-brandAmber font-semibold">Timed Exam Mode</span>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-brandAmber/20 text-amber-300 font-mono">15 Questions</span>
+          </div>
+          <h2 class="text-2xl font-bold text-white mt-1">Server-Side Grill Exam Simulator</h2>
+          <p class="text-slate-400 text-sm mt-0.5">ทดสอบความพร้อมจับเวลา 20 นาที เจาะจุดหลอกที่มักผิดในห้องสอบจริง (Docker, MySQL2, MongoDB, Express)</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- Timer Display -->
+          <div class="flex items-center gap-2 bg-surfaceDark px-4 py-2 rounded-xl border border-surfaceBorder">
+            <i data-lucide="clock" class="w-5 h-5 text-brandAmber animate-pulse"></i>
+            <span id="quiz-timer" class="font-mono text-lg font-bold text-white">20:00</span>
+          </div>
+          <button id="start-quiz-btn" onclick="toggleQuizTimer()" class="px-4 py-2 rounded-lg bg-brandAmber hover:bg-amber-600 text-slate-950 font-bold text-sm transition-all flex items-center gap-1.5">
+            <i data-lucide="play" class="w-4 h-4 fill-slate-950"></i>
+            <span id="quiz-btn-text">เริ่มจับเวลา</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quiz Question Cards Container -->
+      <div id="quiz-container" class="space-y-6">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Submit Quiz Bar -->
+      <div class="glass-card p-6 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h4 class="font-bold text-white text-sm">พร้อมตรวจผลคะแนนหรือไม่?</h4>
+          <p class="text-xs text-slate-400">เมื่อส่งคำตอบ ระบบจะวิเคราะห์จุดผิดและให้คำอธิบายเชิงลึกทันที</p>
+        </div>
+        <button onclick="submitQuiz()" class="px-6 py-2.5 rounded-lg bg-gradient-to-r from-brandEmerald to-teal-500 text-white font-bold text-sm shadow-lg shadow-brandEmerald/25 hover:opacity-90 transition-all flex items-center gap-2">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>ส่งคำตอบและตรวจผลสอบ</span>
+        </button>
+      </div>
+
+      <!-- Quiz Final Report Modal/Section -->
+      <div id="quiz-report" class="hidden glass-card p-6 rounded-2xl border-brandIndigo/40 space-y-4">
+        <!-- Injected via JS -->
+      </div>
+
+    </div>
+
+    <!-- ==================== TAB 4: CHEATSHEET ==================== -->
+    <div id="view-cheatsheet" class="tab-view hidden space-y-6">
+      
+      <div class="p-6 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-slate-900 to-indigo-950/40 border border-brandCyan/30">
+        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="zap" class="w-6 h-6 text-brandCyan"></i>
+          <span>Server-Side Emergency Cheat Sheet (กู้ชีพหน้าห้องสอบ)</span>
+        </h2>
+        <p class="text-slate-400 text-sm mt-1">สรุปคำสั่ง Docker, Docker Compose Template, โค้ดเชื่อมต่อ MySQL/Mongo, และ Express Middleware ในรูปแบบที่เปิดดูไวๆ ได้ทันที</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Sheet 1: Docker CLI Reference -->
+        <div class="glass-card rounded-xl p-5 space-y-3">
+          <h3 class="font-bold text-white text-base flex items-center gap-2 border-b border-surfaceBorder pb-2">
+            <i data-lucide="terminal" class="w-4 h-4 text-sky-400"></i>
+            <span>Docker CLI Essential Commands</span>
+          </h3>
+          <div class="space-y-2 text-xs font-mono">
+            <div class="bg-bgDark p-2.5 rounded-lg border border-surfaceBorder">
+              <span class="text-slate-400"># 1. Build Docker Image จาก Dockerfile</span>
+              <p class="text-sky-300 mt-1">docker build -t my-app:1.0 .</p>
+            </div>
+            <div class="bg-bgDark p-2.5 rounded-lg border border-surfaceBorder">
+              <span class="text-slate-400"># 2. Run Container (Background + Port Mapping)</span>
+              <p class="text-sky-300 mt-1">docker run -d --name app-container -p 3000:3000 my-app:1.0</p>
+            </div>
+            <div class="bg-bgDark p-2.5 rounded-lg border border-surfaceBorder">
+              <span class="text-slate-400"># 3. ตรวจสอบ Container ที่รันอยู่</span>
+              <p class="text-sky-300 mt-1">docker ps -a</p>
+            </div>
+            <div class="bg-bgDark p-2.5 rounded-lg border border-surfaceBorder">
+              <span class="text-slate-400"># 4. เข้าไปใช้งาน Interactive Terminal ใน Container</span>
+              <p class="text-sky-300 mt-1">docker exec -it lab6_mysql mysql -u root -p</p>
+            </div>
+            <div class="bg-bgDark p-2.5 rounded-lg border border-surfaceBorder">
+              <span class="text-slate-400"># 5. สั่ง Docker Compose รัน/หยุด</span>
+              <p class="text-sky-300 mt-1">docker compose up -d<br>docker compose down -v</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sheet 2: Docker Compose YAML Template -->
+        <div class="glass-card rounded-xl p-5 space-y-3">
+          <h3 class="font-bold text-white text-base flex items-center gap-2 border-b border-surfaceBorder pb-2">
+            <i data-lucide="file-code" class="w-4 h-4 text-emerald-400"></i>
+            <span>Standard Docker Compose (MySQL + MongoDB)</span>
+          </h3>
+          <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-emerald-300 overflow-x-auto leading-relaxed"><code>version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: lab6_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  mongodb:
+    image: mongo:6.0
+    container_name: lab6_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mysql_data:
+  mongo_data:</code></pre>
+        </div>
+
+        <!-- Sheet 3: MySQL Connection Pool & Parameterized Queries -->
+        <div class="glass-card rounded-xl p-5 space-y-3">
+          <h3 class="font-bold text-white text-base flex items-center gap-2 border-b border-surfaceBorder pb-2">
+            <i data-lucide="database" class="w-4 h-4 text-amber-400"></i>
+            <span>MySQL2 Connection Pool & CRUD</span>
+          </h3>
+          <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-amber-300 overflow-x-auto leading-relaxed"><code>const mysql = require('mysql2/promise');
+require('dotenv').config();
+
+const pool = mysql.createPool({
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'myuser',
+  password: process.env.DB_PASSWORD || 'mypassword',
+  database: process.env.DB_NAME || 'mydatabase',
+  port: Number(process.env.DB_PORT) || 3307,
+  waitForConnections: true,
+  connectionLimit: 10
+});
+
+// Parameterized Query (ป้องกัน SQL Injection)
+app.get('/api/users/:id', async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      'SELECT * FROM users WHERE id = ? AND deleted_at IS NULL',
+      [req.params.id]
+    );
+    if (rows.length === 0) return res.status(404).json({ message: 'User not found' });
+    res.status(200).json(rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});</code></pre>
+        </div>
+
+        <!-- Sheet 4: MongoDB Mongoose Setup & CRUD -->
+        <div class="glass-card rounded-xl p-5 space-y-3">
+          <h3 class="font-bold text-white text-base flex items-center gap-2 border-b border-surfaceBorder pb-2">
+            <i data-lucide="layers" class="w-4 h-4 text-purple-400"></i>
+            <span>Mongoose Schema & CRUD</span>
+          </h3>
+          <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-purple-300 overflow-x-auto leading-relaxed"><code>const mongoose = require('mongoose');
+
+// Connect
+mongoose.connect(process.env.MONGODB_URI);
+
+// Schema with Validation
+const UserSchema = new mongoose.Schema({
+  name: { type: String, required: [true, 'Name is required'], trim: true },
+  email: { type: String, required: true, unique: true, lowercase: true },
+  age: { type: Number, min: [0, 'Age must be >= 0'] },
+  isDeleted: { type: Boolean, default: false }
+}, { timestamps: true });
+
+const User = mongoose.model('User', UserSchema);
+
+// CRUD Route Example
+app.post('/api/users', async (req, res) => {
+  try {
+    const newUser = await User.create(req.body);
+    res.status(201).json(newUser);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});</code></pre>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ==================== TAB 5: CHECKLIST ==================== -->
+    <div id="view-checklist" class="tab-view hidden space-y-6">
+      
+      <div class="glass-card p-6 rounded-2xl flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-bold text-white">Exam Readiness Self-Audit Checklist</h2>
+          <p class="text-slate-400 text-sm mt-1">ติ๊กตรวจสอบทุกหัวข้อเพื่อให้มั่นใจว่าพร้อมลงสนามสอบปฏิบัติ 100%</p>
+        </div>
+        <div class="text-right">
+          <span id="chk-percent" class="text-2xl font-mono font-bold text-brandEmerald">0%</span>
+          <p class="text-xs text-slate-400">ความพร้อมทั้งหมด</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="checklist-container">
+        <!-- Rendered via JS -->
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-surfaceBorder py-6 px-4 text-center text-xs text-slate-500 bg-surfaceDark">
+    <p>Server-Side Web Development Practice Engine • TAWAN-OS Edition • Prepared for KMITL IT Students</p>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT DATA & LOGIC ==================== -->
+  <script>
+    // --- 1. LAB DATA (10 Hands-on Labs) ---
+    const LABS = [
+      {
+        id: "lab1",
+        badge: "Lab 01 • Dockerfile",
+        difficulty: "Easy",
+        title: "Dockerfile for Node.js Application with Layer Caching",
+        desc: "เขียน Dockerfile สำหรับ Node.js App ที่ใช้ Base Image `node:20-alpine`, กำหนด Working Dir ที่ `/app`, ก๊อปปี้ package files ก่อนเพื่อ Cache dependencies, รัน npm install, แล้วก๊อปปี้โค้ดทั้งหมด พร้อมเปิด Port 3000 และตั้งคำสั่งรัน `npm start`",
+        requirements: [
+          "ใช้ Base Image: node:20-alpine",
+          "ตั้ง WORKDIR /app",
+          "COPY package*.json ./ และ RUN npm install",
+          "COPY . .",
+          "EXPOSE 3000",
+          "CMD [\"npm\", \"start\"]"
+        ],
+        hint: "คำสั่ง COPY package.json ต้องมาก่อน COPY . . เพื่อให้ Docker Cache layer การติดตั้ง package ไว้",
+        filename: "Dockerfile",
+        initialCode: `# Write your Dockerfile here
+FROM node:20-alpine
+
+`,
+        validate: (code) => {
+          const checks = [
+            { desc: "ใช้ Base Image node:*", pass: /FROM\s+node:[0-9]+(-alpine)?/i.test(code) },
+            { desc: "กำหนด WORKDIR /app", pass: /WORKDIR\s+\/app/i.test(code) },
+            { desc: "COPY package*.json แยกออกมาก่อน", pass: /COPY\s+package.*json\s+(\.\/|\.)/i.test(code) },
+            { desc: "RUN npm install หรือ npm ci", pass: /RUN\s+npm\s+(install|ci)/i.test(code) },
+            { desc: "COPY . .", pass: /COPY\s+\.\s+\./i.test(code) },
+            { desc: "EXPOSE 3000", pass: /EXPOSE\s+3000/i.test(code) },
+            { desc: "CMD [\"npm\", \"start\"] หรือ node ...", pass: /CMD\s+\[.*"npm".*"start".*\]|CMD\s+npm\s+start/i.test(code) },
+          ];
+          return checks;
+        },
+        solutionCode: `FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --production
+COPY . .
+EXPOSE 3000
+CMD ["npm", "start"]`,
+        solutionExplain: "การแยก COPY package*.json ออกมาก่อน RUN npm install ทำให้เวลาเราแก้โค้ด Docker จะ reuse layer ของ node_modules ได้ทันที ไม่ต้องดาวน์โหลดใหม่ทุกครั้ง"
+      },
+      {
+        id: "lab2",
+        badge: "Lab 02 • Docker Compose",
+        difficulty: "Medium",
+        title: "Docker Compose สำหรับ MySQL Database Container",
+        desc: "เขียนไฟล์ `docker-compose.yaml` เพื่อสร้าง Container ของ MySQL 8.0 โดยตั้งชื่อ Container เป็น `lab6_mysql`, เปิด Port `3307:3306`, ตั้ง Environment Variable ครบถ้วน และสร้าง Named Volume ชื่อ `mysql_data`",
+        requirements: [
+          "services: mysql image: mysql:8.0",
+          "container_name: lab6_mysql",
+          "ports: '3307:3306'",
+          "environment: MYSQL_ROOT_PASSWORD, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD",
+          "volumes: mysql_data:/var/lib/mysql",
+          "ระบุ root-level volumes: mysql_data:"
+        ],
+        hint: "Port mapping ใน Docker Compose ใช้รูปแบบ 'HOST:CONTAINER' -> '3307:3306' และอย่าลืมประกาศ volumes: ที่ระดับบนสุด",
+        filename: "docker-compose.yaml",
+        initialCode: `version: '3.8'
+
+services:
+  mysql:
+    # เติมการตั้งค่าด้านล่างนี้
+`,
+        validate: (code) => {
+          return [
+            { desc: "ระบุ image: mysql:8.0 หรือ mysql:latest", pass: /image:\s*mysql/i.test(code) },
+            { desc: "ตั้ง container_name: lab6_mysql", pass: /container_name:\s*lab6_mysql/i.test(code) },
+            { desc: "ระบุ ports: 3307:3306", pass: /3307:3306/i.test(code) },
+            { desc: "มี MYSQL_ROOT_PASSWORD", pass: /MYSQL_ROOT_PASSWORD/i.test(code) },
+            { desc: "มี MYSQL_DATABASE", pass: /MYSQL_DATABASE/i.test(code) },
+            { desc: "Mount volume ไปยัง /var/lib/mysql", pass: /mysql_data\s*:\s*\/var\/lib\/mysql/i.test(code) },
+            { desc: "มี root volumes: mysql_data:", pass: /volumes:[\s\S]*mysql_data:/i.test(code) }
+          ];
+        },
+        solutionCode: `version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: lab6_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:`,
+        solutionExplain: "MySQL ใน container จะเก็บไฟล์ฐานข้อมูลจริงไว้ที่ `/var/lib/mysql` จึงต้อง mount volume เข้าจุดนี้เพื่อป้องกันข้อมูลหายเวลา container stop"
+      },
+      {
+        id: "lab3",
+        badge: "Lab 03 • MySQL2 Pool",
+        difficulty: "Medium",
+        title: "Node.js + mysql2/promise Connection Pool",
+        desc: "เขียนโมดูลเชื่อมต่อ MySQL ด้วย `mysql2/promise` โดยอ่านค่าจาก `process.env` (DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT) และ export instance ของ pool ออกไปใช้งาน",
+        requirements: [
+          "require('mysql2/promise')",
+          "ใช้ mysql.createPool({...})",
+          "ดึงค่าจาก process.env ครบ 5 ตัวแปร (host, user, password, database, port)",
+          "ตั้ง waitForConnections: true และ connectionLimit: 10",
+          "module.exports = pool"
+        ],
+        hint: "DB_PORT จาก process.env จะเป็น String ต้องแปลงเป็น Number เช่น Number(process.env.DB_PORT) || 3307",
+        filename: "db_mysql.js",
+        initialCode: `const mysql = require('mysql2/promise');
+require('dotenv').config();
+
+// สร้าง Connection Pool ที่นี่
+
+`,
+        validate: (code) => {
+          return [
+            { desc: "require mysql2/promise", pass: /require\(['"]mysql2\/promise['"]\)/i.test(code) },
+            { desc: "เรียก createPool", pass: /createPool\s*\(/i.test(code) },
+            { desc: "ดึง process.env.DB_HOST", pass: /process\.env\.DB_HOST/i.test(code) },
+            { desc: "ดึง process.env.DB_USER", pass: /process\.env\.DB_USER/i.test(code) },
+            { desc: "ดึง process.env.DB_PASSWORD", pass: /process\.env\.DB_PASSWORD/i.test(code) },
+            { desc: "ดึง process.env.DB_NAME", pass: /process\.env\.DB_NAME/i.test(code) },
+            { desc: "module.exports pool", pass: /module\.exports\s*=\s*pool/i.test(code) }
+          ];
+        },
+        solutionCode: `const mysql = require('mysql2/promise');
+require('dotenv').config();
+
+const pool = mysql.createPool({
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'myuser',
+  password: process.env.DB_PASSWORD || 'mypassword',
+  database: process.env.DB_NAME || 'mydatabase',
+  port: Number(process.env.DB_PORT) || 3307,
+  waitForConnections: true,
+  connectionLimit: 10
+});
+
+module.exports = pool;`,
+        solutionExplain: "Connection Pool ช่วยประหยัดเวลาและทรัพยากรในการเปิด/ปิด handshake ซ้ำๆ โดยนำ connection เก่ากลับมาใช้ใหม่ได้ทันที"
+      },
+      {
+        id: "lab4",
+        badge: "Lab 04 • Parameterized CRUD",
+        difficulty: "Medium",
+        title: "Express MySQL Parameterized Query ป้องกัน SQL Injection",
+        desc: "เขียน Route Handler `POST /api/products` เพื่อรับ `name`, `price`, `stock` จาก `req.body` แล้ว INSERT ลงตาราง `products` ด้วย Parameterized Query (`?` placeholders) ส่งสถานะ 201 พร้อม ID เมื่อสำเร็จ และ 400 เมื่อข้อมูลไม่ครบ",
+        requirements: [
+          "ตรวจสอบ req.body ว่ามี name และ price",
+          "ใช้ pool.query ด้วย Prepared Statement SQL ('INSERT INTO products (name, price, stock) VALUES (?, ?, ?)', [name, price, stock])",
+          "ส่ง status 201 พร้อม JSON { id: result.insertId, ... }",
+          "ใช้ try...catch ส่ง status 500 กรณี Database Error"
+        ],
+        hint: "ผลลัพธ์ของ pool.query คือ [result] โดย result.insertId จะบอก id ล่าสุดที่เพิ่ง insert",
+        filename: "routes/products.js",
+        initialCode: `// เขียน async handler สำหรับ POST /api/products
+app.post('/api/products', async (req, res) => {
+  // เติมโค้ดที่นี่
+});
+`,
+        validate: (code) => {
+          return [
+            { desc: "เป็น async function", pass: /async\s*\(\s*req,\s*res/i.test(code) },
+            { desc: "มีการดึง/ตรวจสอบ body", pass: /req\.body/i.test(code) },
+            { desc: "ใช้ Parameterized Query (?, ?, ?)", pass: /\?.*\?.*\?/i.test(code) },
+            { desc: "ส่ง status 201 เมื่อสำเร็จ", pass: /res\.status\(201\)/i.test(code) },
+            { desc: "มี try...catch จัดการ error 500", pass: /try\s*\{[\s\S]*\}\s*catch[\s\S]*500/i.test(code) }
+          ];
+        },
+        solutionCode: `app.post('/api/products', async (req, res) => {
+  const { name, price, stock } = req.body;
+  if (!name || price === undefined) {
+    return res.status(400).json({ message: 'Name and price are required' });
+  }
+
+  try {
+    const [result] = await pool.query(
+      'INSERT INTO products (name, price, stock) VALUES (?, ?, ?)',
+      [name, price, stock || 0]
+    );
+    res.status(201).json({
+      message: 'Product created successfully',
+      id: result.insertId,
+      name,
+      price
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});`,
+        solutionExplain: "การใช้ ? placeholders ทำให้ MySQL Driver ทำการ sanitize และ escape ค่า parameters แยกออกจาก statement ป้องกัน SQL Injection 100%"
+      },
+      {
+        id: "lab5",
+        badge: "Lab 05 • Soft Delete",
+        difficulty: "Hard",
+        title: "Express + MySQL Soft Delete Implementation",
+        desc: "เขียน Route Handler `DELETE /api/users/:id` ที่ไม่ใช่ Hard Delete แต่เป็น Soft Delete โดยอัปเดตฟิลด์ `deleted_at = NOW()` และตรวจสอบว่าหาก record นั้นไม่พบ หรือถูกลบไปแล้ว ให้ตอบ 404",
+        requirements: [
+          "ดึง id จาก req.params.id",
+          "ใช้คำสั่ง UPDATE users SET deleted_at = NOW() WHERE id = ? AND deleted_at IS NULL",
+          "เช็ค result.affectedRows === 0 เพื่อตอบ status 404",
+          "ตอบ status 200 JSON { message: 'User deleted (soft) successfully' }"
+        ],
+        hint: "เงื่อนไข 'AND deleted_at IS NULL' สำคัญมาก เพื่อไม่ให้ไปกดลบซ้ำคนเดิมที่เคยถูก soft delete ไปแล้ว",
+        filename: "routes/users.js",
+        initialCode: `app.delete('/api/users/:id', async (req, res) => {
+  // เติมโค้ด Soft Delete ที่นี่
+});
+`,
+        validate: (code) => {
+          return [
+            { desc: "ดึง req.params (id)", pass: /req\.params(\.id|\b)/i.test(code) },
+            { desc: "ใช้ UPDATE ... SET deleted_at = NOW()", pass: /UPDATE\s+users\s+SET\s+deleted_at\s*=\s*NOW\(\)/i.test(code) },
+            { desc: "เช็คเงื่อนไข deleted_at IS NULL", pass: /deleted_at\s+IS\s+NULL/i.test(code) },
+            { desc: "ตรวจ affectedRows สำหรับกรณี 404", pass: /affectedRows/i.test(code) && /404/.test(code) },
+            { desc: "ส่ง 200 เมื่อลบสำเร็จ", pass: /res\.status\(200\)|res\.json/i.test(code) }
+          ];
+        },
+        solutionCode: `app.delete('/api/users/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [result] = await pool.query(
+      'UPDATE users SET deleted_at = NOW() WHERE id = ? AND deleted_at IS NULL',
+      [id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'User not found or already deleted' });
+    }
+
+    res.status(200).json({ message: 'User soft deleted successfully', id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});`,
+        solutionExplain: "Soft Delete เป็นมาตรฐานองค์กรในการรักษาประวัติข้อมูล (Data Auditing) โดยที่ Foreign Key สัมพันธ์เดิมยังไม่พังทลาย"
+      },
+      {
+        id: "lab6",
+        badge: "Lab 06 • Mongoose Schema",
+        difficulty: "Medium",
+        title: "Mongoose Schema with Strict Validations",
+        desc: "เขียนไฟล์โมเดล `models/Student.js` โดยสร้าง Mongoose Schema สำหรับนักศึกษา ประกอบด้วย: `studentId` (String, required, unique), `name` (String, required, trim), `gpa` (Number, min: 0, max: 4.0), `isActive` (Boolean, default: true) พร้อมเปิด `{ timestamps: true }` และ export Model",
+        requirements: [
+          "const mongoose = require('mongoose')",
+          "studentId: { type: String, required: true, unique: true }",
+          "name: { type: String, required: true, trim: true }",
+          "gpa: { type: Number, min: 0, max: 4.0 }",
+          "isActive: { type: Boolean, default: true }",
+          "เปิด options { timestamps: true }",
+          "module.exports = mongoose.model('Student', StudentSchema)"
+        ],
+        hint: "options ของ Schema จะเป็น argument ตัวที่ 2 เช่น new mongoose.Schema({ ... }, { timestamps: true })",
+        filename: "models/Student.js",
+        initialCode: `const mongoose = require('mongoose');
+
+// กำหนด StudentSchema ที่นี่
+
+`,
+        validate: (code) => {
+          return [
+            { desc: "require mongoose", pass: /require\(['"]mongoose['"]\)/i.test(code) },
+            { desc: "มีฟิลด์ studentId พร้อม required และ unique", pass: /studentId/i.test(code) && /required/i.test(code) && /unique/i.test(code) },
+            { desc: "มีฟิลด์ name พร้อม trim", pass: /name[\s\S]*trim/i.test(code) },
+            { desc: "มีฟิลด์ gpa พร้อม min/max", pass: /gpa/i.test(code) && /min/i.test(code) && /max/i.test(code) },
+            { desc: "เปิด { timestamps: true }", pass: /timestamps:\s*true/i.test(code) },
+            { desc: "export model 'Student'", pass: /mongoose\.model\(['"]Student['"]/i.test(code) }
+          ];
+        },
+        solutionCode: `const mongoose = require('mongoose');
+
+const StudentSchema = new mongoose.Schema({
+  studentId: {
+    type: String,
+    required: [true, 'Student ID is required'],
+    unique: true,
+    trim: true
+  },
+  name: {
+    type: String,
+    required: [true, 'Name is required'],
+    trim: true
+  },
+  gpa: {
+    type: Number,
+    min: [0.0, 'GPA cannot be less than 0.0'],
+    max: [4.0, 'GPA cannot exceed 4.0'],
+    default: 0.0
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  }
+}, {
+  timestamps: true
+});
+
+module.exports = mongoose.model('Student', StudentSchema);`,
+        solutionExplain: "Mongoose Schema ช่วยทำการ Type Casting และตรวจ Validation ฝั่งแอปพลิเคชันก่อนที่ข้อมูลจะถูกส่งเข้าไปบันทึกลง MongoDB จริง"
+      },
+      {
+        id: "lab7",
+        badge: "Lab 07 • Mongoose CRUD",
+        difficulty: "Hard",
+        title: "Express + Mongoose Full RESTful Endpoint (PUT Update)",
+        desc: "เขียน Route Handler `PUT /api/students/:id` เพื่ออัปเดตข้อมูลนักศึกษาด้วย `Student.findByIdAndUpdate` โดยส่งคืนข้อมูลตัวใหม่ (`new: true`) และบังคับตรวจ validation ซ้ำ (`runValidators: true`) หากไม่พบ ID ให้ส่ง 404",
+        requirements: [
+          "ใช้ Student.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })",
+          "ตรวจสอบ if (!student) return res.status(404)",
+          "ตอบสถานะ 200 พร้อม JSON ของ document ที่อัปเดตแล้ว",
+          "ครอบด้วย try...catch ตอบ 400 เมื่อ validation fail หรือ 500"
+        ],
+        hint: "ออปชัน { new: true } ทำให้ Mongoose ส่ง document หลังแก้ไขกลับมา ถ้าไม่ใส่จะได้ document ตัวเก่าก่อนแก้",
+        filename: "routes/students.js",
+        initialCode: `app.put('/api/students/:id', async (req, res) => {
+  // เติมโค้ดอัปเดตด้วย Mongoose ที่นี่
+});
+`,
+        validate: (code) => {
+          return [
+            { desc: "เรียก findByIdAndUpdate", pass: /findByIdAndUpdate/i.test(code) },
+            { desc: "ระบุออปชัน { new: true }", pass: /new:\s*true/i.test(code) },
+            { desc: "ระบุออปชัน { runValidators: true }", pass: /runValidators:\s*true/i.test(code) },
+            { desc: "ตรวจ 404 กรณีหา ID ไม่เจอ", pass: /404/i.test(code) },
+            { desc: "ส่ง 200 ส่งกลับ object", pass: /200/i.test(code) }
+          ];
+        },
+        solutionCode: `app.put('/api/students/:id', async (req, res) => {
+  try {
+    const updatedStudent = await Student.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedStudent) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    res.status(200).json({
+      message: 'Student updated successfully',
+      data: updatedStudent
+    });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});`,
+        solutionExplain: "ตามปกติ Mongoose จะไม่รัน Validator ตอน update เว้นแต่เราจะใส่ `runValidators: true` อย่างชัดเจน"
+      },
+      {
+        id: "lab8",
+        badge: "Lab 08 • Custom Middleware",
+        difficulty: "Medium",
+        title: "Express Request Logger & API Key Guard Middleware",
+        desc: "เขียน Custom Middleware 2 ตัว: 1) `requestLogger` พิมพ์ `[METHOD] URL - TIMESTAMP` แล้วเรียก `next()` 2) `apiKeyGuard` ตรวจสอบ Header `x-api-key` หากตรงกับ `process.env.API_KEY` ให้ผ่าน (next()) หากไม่ตรงส่ง 401 Unauthorized",
+        requirements: [
+          "requestLogger(req, res, next) มีการ console.log และเรียก next()",
+          "apiKeyGuard(req, res, next) ตรวจ req.headers['x-api-key']",
+          "ถ้า key ไม่ตรง ตอบ res.status(401).json({ message: 'Unauthorized' })",
+          "ถ้า key ถูกต้อง เรียก next()"
+        ],
+        hint: "Express Headers จะถูกแปลงเป็น lowercase เสมอ ดังนั้นอ่านจาก req.headers['x-api-key']",
+        filename: "middlewares/auth.js",
+        initialCode: `// 1. Request Logger Middleware
+const requestLogger = (req, res, next) => {
+  // เติมโค้ด
+};
+
+// 2. API Key Guard Middleware
+const apiKeyGuard = (req, res, next) => {
+  // เติมโค้ด
+};
+
+module.exports = { requestLogger, apiKeyGuard };
+`,
+        validate: (code) => {
+          return [
+            { desc: "requestLogger เรียก next()", pass: /requestLogger[\s\S]*next\(\)/i.test(code) },
+            { desc: "apiKeyGuard อ่าน req.headers", pass: /req\.headers/i.test(code) },
+            { desc: "ส่ง 401 เมื่อ key ไม่ตรง", pass: /401/i.test(code) },
+            { desc: "apiKeyGuard เรียก next() เมื่อผ่าน", pass: /apiKeyGuard[\s\S]*next\(\)/i.test(code) }
+          ];
+        },
+        solutionCode: `const requestLogger = (req, res, next) => {
+  console.log(\`[\${new Date().toISOString()}] \${req.method} \${req.url}\`);
+  next();
+};
+
+const apiKeyGuard = (req, res, next) => {
+  const apiKey = req.headers['x-api-key'];
+  if (!apiKey || apiKey !== process.env.API_KEY) {
+    return res.status(401).json({ message: 'Unauthorized: Invalid API Key' });
+  }
+  next();
+};
+
+module.exports = { requestLogger, apiKeyGuard };`,
+        solutionExplain: "Middleware ที่ทำหน้าที่ Guard จะตัดจบ request ทันทีด้วย `res.status(401)` ถ้าไม่ผ่านเงื่อนไข แต่ถ้าผ่านจะต้องส่งต่อด้วย `next()` เสมอ"
+      },
+      {
+        id: "lab9",
+        badge: "Lab 09 • Error Middleware",
+        difficulty: "Medium",
+        title: "Express Global Error Handling Middleware",
+        desc: "เขียน Global Error Handler Middleware ที่รับ 4 parameters `(err, req, res, next)` เพื่อดักจับทุกข้อผิดพลาดที่โยนมาในแอป ส่ง status `err.statusCode || 500` พร้อม JSON `{ success: false, message: err.message }`",
+        requirements: [
+          "ฟังก์ชันต้องมี 4 parameters ครบถ้วน: (err, req, res, next)",
+          "อ่าน statusCode จาก err.statusCode หรือ fallback เป็น 500",
+          "ส่ง res.status(statusCode).json({ success: false, message: err.message })"
+        ],
+        hint: "Express จะระบุว่าเป็น Error Middleware ได้ก็ต่อเมื่อฟังก์ชันรับ parameter ครบ 4 ตัวพอดี",
+        filename: "middlewares/errorHandler.js",
+        initialCode: `// Global Error Handler Middleware
+const errorHandler = (err, req, res, next) => {
+  // เติมโค้ดจัดการ Error ที่นี่
+};
+
+module.exports = errorHandler;
+`,
+        validate: (code) => {
+          return [
+            { desc: "มี parameter ครบ 4 ตัว (err, req, res, next)", pass: /\(err,\s*req,\s*res,\s*next\)/i.test(code) },
+            { desc: "มีการกำหนด statusCode หรือ 500", pass: /500/i.test(code) },
+            { desc: "ส่ง response JSON ออกไป", pass: /res\.status.*\.json/i.test(code) }
+          ];
+        },
+        solutionCode: `const errorHandler = (err, req, res, next) => {
+  console.error('[Unhandled Error]:', err.stack || err.message);
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode).json({
+    success: false,
+    message: err.message || 'Internal Server Error',
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+  });
+};
+
+module.exports = errorHandler;`,
+        solutionExplain: "Error Middleware ตัวนี้ต้องถูก `app.use(errorHandler)` ไว้ที่ล่างสุดหลังจากทุก Routes เพื่อให้ `next(err)` ทุกจุดวิ่งมารวมที่นี่"
+      },
+      {
+        id: "lab10",
+        badge: "Lab 10 • Compose Multi-DB",
+        difficulty: "Hard",
+        title: "Full Stack Docker Compose: Node App + MySQL + MongoDB",
+        desc: "เขียน `docker-compose.yaml` ที่ประกอบด้วย 3 services: 1) `app` (build จาก Dockerfile ปัจจุบัน, port 3000:3000, depends_on mysql, mongodb) 2) `mysql` (mysql:8.0, port 3307:3306) 3) `mongodb` (mongo:6.0, port 27017:27017) พร้อม Named Volumes",
+        requirements: [
+          "services: app, mysql, mongodb",
+          "app มี build: . และ depends_on: [mysql, mongodb]",
+          "mysql มี volume mysql_data:/var/lib/mysql",
+          "mongodb มี volume mongo_data:/data/db",
+          "ประกาศ top-level volumes ครบทั้งสองตัว"
+        ],
+        hint: "depends_on ช่วยบอก Docker Compose ให้เริ่ม Container ของ Database ก่อน App",
+        filename: "docker-compose.full.yaml",
+        initialCode: `version: '3.8'
+
+services:
+  # กำหนด app, mysql, mongodb ที่นี่
+`,
+        validate: (code) => {
+          return [
+            { desc: "มี service app พร้อม build: .", pass: /app:[\s\S]*build:\s*\./i.test(code) },
+            { desc: "app มี depends_on", pass: /depends_on:/i.test(code) },
+            { desc: "มี service mysql", pass: /mysql:[\s\S]*image:\s*mysql/i.test(code) },
+            { desc: "มี service mongodb", pass: /mongodb:[\s\S]*image:\s*mongo/i.test(code) },
+            { desc: "มี volumes สำหรับทั้งคู่", pass: /volumes:/i.test(code) && /mysql_data/i.test(code) && /mongo_data/i.test(code) }
+          ];
+        },
+        solutionCode: `version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: serverside_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=myuser
+      - DB_PASSWORD=mypassword
+      - DB_NAME=mydatabase
+      - MONGODB_URI=mongodb://mongodb:27017/mydatabase
+    depends_on:
+      - mysql
+      - mongodb
+
+  mysql:
+    image: mysql:8.0
+    container_name: db_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  mongodb:
+    image: mongo:6.0
+    container_name: db_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mysql_data:
+  mongo_data:`,
+        solutionExplain: "เมื่อรันใน Docker Network เดียวกัน Node App จะมองเห็น DB_HOST เป็นชื่อ service (เช่น `mysql`, `mongodb`) และใช้ port ภายใน 3306 / 27017 ได้ทันที"
+      }
+    ];
+
+    // --- 2. QUIZ DATA (15 Tough Exam Questions) ---
+    const QUIZ_QUESTIONS = [
+      {
+        id: 1,
+        topic: "Docker Architecture",
+        question: "เพราะเหตุใด Docker Container จึงสามารถ Start ได้เร็วกว่าและกินทรัพยากรน้อยกว่า Virtual Machine (VM) อย่างมีนัยสำคัญ?",
+        options: [
+          "Container มี Hypervisor Type-1 ในตัวที่ช่วยเร่งความเร็ว CPU",
+          "Container แชร์ Linux Kernel ของ Host OS ร่วมกันผ่าน Namespaces และ cgroups โดยไม่ต้องบูต Guest OS ใหม่",
+          "Container แปลงโค้ดภาษา JavaScript ทั้งหมดเป็น Binary ล่วงหน้า",
+          "Container ทำงานอยู่บน RAM Disk เสมอจึงไม่ต้องอ่านข้อมูลจาก Storage จริง"
+        ],
+        answer: 1,
+        explanation: "Container ใช้ฟีเจอร์ของ Linux Kernel (PID, NET namespaces และ cgroups) เพื่อแยก Process ออกจากกัน ทำให้ไม่ต้องเสียเวลาและทรัพยากรไปกับการบูต Guest OS เต็มรูปแบบเหมือน VM"
+      },
+      {
+        id: 2,
+        topic: "Dockerfile Optimization",
+        question: "ใน Dockerfile ของ Node.js ทำไมเราจึงควรแยกคำสั่ง `COPY package*.json ./` และ `RUN npm install` ออกมาก่อนคำสั่ง `COPY . .`?",
+        options: [
+          "เพราะถ้าทำพร้อมกัน Node.js จะเกิดข้อผิดพลาด Permission Denied",
+          "เพื่อให้ Docker สามารถนำ Layer ของ Dependencies ที่เคย build ไว้แล้วมา Cache ใช้ใหม่ได้ เมื่อมีการแก้ไขซอร์สโค้ดในไฟล์อื่น",
+          "เพราะ package.json ต้องอยู่ใน Root Directory ของ Host เท่านั้น",
+          "เพื่อให้ npm รันด้วยสิทธิ์ Root อัตโนมัติ"
+        ],
+        answer: 1,
+        explanation: "Docker ทำงานแบบ Layer Caching หากไฟล์ในคำสั่ง COPY ไม่มีการเปลี่ยนแปลง Docker จะข้าม RUN npm install ในรอบถัดไป ทำให้การ build รวดเร็วมาก"
+      },
+      {
+        id: 3,
+        topic: "Docker Port Mapping",
+        question: "หากตั้งค่า `ports: - \"3307:3306\"` ใน service ของ MySQL บน docker-compose.yaml โค้ด Node.js ที่รันอยู่บนเครื่อง Host (ภายนอก Docker) จะต้องตั้งค่า `DB_PORT` เป็นเท่าใดจึงจะเชื่อมต่อได้?",
+        options: [
+          "3306",
+          "3307",
+          "33060",
+          "เชื่อมต่อไม่ได้ ต้องเข้าผ่าน Docker Network เท่านั้น"
+        ],
+        answer: 1,
+        explanation: "รูปแบบการแมปพอร์ตคือ `HOST_PORT:CONTAINER_PORT` ดังนั้นเครื่อง Host ที่อยู่ด้านนอกจะต้องเชื่อมต่อผ่านพอร์ต 3307"
+      },
+      {
+        id: 4,
+        topic: "SQL Injection Defense",
+        question: "โค้ดข้อใดต่อไปนี้ป้องกันปัญหา SQL Injection ได้อย่างถูกต้องและปลอดภัยที่สุดเมื่อใช้ `mysql2/promise`?",
+        options: [
+          "pool.query(`SELECT * FROM users WHERE email = '${email}' AND password = '${password}'`)",
+          "pool.query('SELECT * FROM users WHERE email = ' + escape(email))",
+          "pool.query('SELECT * FROM users WHERE email = ? AND password = ?', [email, password])",
+          "pool.query(`SELECT * FROM users WHERE email = $1 AND password = $2`, email, password)"
+        ],
+        answer: 2,
+        explanation: "การใช้ `?` placeholders (Prepared Statement) ใน mysql2 จะทำให้ Database แยกโครงสร้างคำสั่ง SQL ออกจากข้อมูล Parameters จึงป้องกัน SQL Injection ได้ 100%"
+      },
+      {
+        id: 5,
+        topic: "Soft Delete Pattern",
+        question: "ข้อดีสำคัญที่สุดของการเลือกใช้ 'Soft Delete' (`deleted_at TIMESTAMP`) แทน 'Hard Delete' (`DELETE FROM`) ในระบบฐานข้อมูลคืออะไร?",
+        options: [
+          "ทำให้ประหยัดพื้นที่ฮาร์ดดิสก์ได้มากกว่า",
+          "ทำให้คำสั่ง SELECT ทำงานได้เร็วกว่าเดิมเสมอ",
+          "เก็บประวัติข้อมูลไว้สำหรับ Audit Trail, สามารถกู้คืนข้อมูลได้ และป้องกัน Foreign Key ในตารางสัมพันธ์พัง",
+          "ทำให้ไม่ต้องสร้าง Index บนตารางนั้นอีกต่อไป"
+        ],
+        answer: 2,
+        explanation: "Soft Delete ช่วยรักษาความสมบูรณ์ของข้อมูลสัมพันธ์ (Referential Integrity) และป้องกันข้อมูลสูญหายถาวรจากความผิดพลาดของผู้ใช้"
+      },
+      {
+        id: 6,
+        topic: "Mongoose Schema",
+        question: "หากต้องการให้ Mongoose ทำการบันทึกเวลา `createdAt` และ `updatedAt` ให้อัตโนมัติทุกครั้งที่สร้างหรือแก้ไข Document จะต้องตั้งค่าอย่างไร?",
+        options: [
+          "สร้าง middleware `pre('save')` คำนวณ Date.now() เองทุกครั้ง",
+          "ส่งออปชัน `{ timestamps: true }` เป็น Parameter ตัวที่สองในการสร้าง `new mongoose.Schema(...)`",
+          "กำหนด default: new Date() ในทุกฟิลด์",
+          "MongoDB มีฟิลด์นี้ให้อัตโนมัติในทุกคอลเลกชันอยู่แล้วโดยไม่ต้องตั้งค่า"
+        ],
+        answer: 1,
+        explanation: "Mongoose มี Schema Option `{ timestamps: true }` ซึ่งจะสร้างและอัปเดตฟิลด์ `createdAt` และ `updatedAt` ให้โดยอัตโนมัติ"
+      },
+      {
+        id: 7,
+        topic: "Mongoose Updates",
+        question: "ในการใช้ `Model.findByIdAndUpdate(id, updateData)` หากต้องการให้คืนค่า Document ที่ได้รับการแก้ไขแล้ว และต้องการให้ระบบตรวจสอบ Schema Validations ด้วย ต้องส่งออปชันอย่างไร?",
+        options: [
+          "{ returnNew: true, validate: true }",
+          "{ new: true, runValidators: true }",
+          "{ upsert: true, strict: true }",
+          "{ overwrite: true, check: true }"
+        ],
+        answer: 1,
+        explanation: "โดย Default Mongoose จะคืน document ตัวเก่าก่อนแก้ และไม่รัน validator ใน update query จึงต้องระบุ `{ new: true, runValidators: true }`"
+      },
+      {
+        id: 8,
+        topic: "Express Middleware",
+        question: "หากเขียน Middleware ใน Express แล้วลืมเรียก `next()` และไม่ได้เรียก `res.send()` / `res.json()` จะเกิดผลลัพธ์อย่างไร?",
+        options: [
+          "Express จะข้ามไปรัน Route Handler ถัดไปให้อัตโนมัติ",
+          "Request จะค้าง (Hang) อยู่ตรงนั้นจนกระทั่งเกิด Client Timeout",
+          "Node.js Server จะ Crash ทันทีด้วย Error 500",
+          "Express จะตอบกลับ 404 Not Found ให้อัตโนมัติ"
+        ],
+        answer: 1,
+        explanation: "ถ้า Middleware ไม่จบวงจร Request ด้วยการตอบ response หรือไม่ส่งต่อด้วย `next()` ตัว Express จะรอค้างอยู่ตรงนั้นจน Client ตัดการเชื่อมต่อไปเอง"
+      },
+      {
+        id: 9,
+        topic: "12-Factor App & dotenv",
+        question: "ตามหลักการ 12-Factor App และความปลอดภัยของระบบ ทำไมเราจึงต้องเก็บ Database Password และ API Keys ไว้ใน `.env` และใส่ `.env` ใน `.gitignore`?",
+        options: [
+          "เพราะ Node.js ไม่สามารถอ่านค่า Object ที่มีตัวอักษรพิเศษได้",
+          "เพื่อแยกการตั้งค่าคอนฟิกออกจากซอร์สโค้ด ป้องกันการทำรหัสผ่านหลุดขึ้นคลังโค้ดสาธารณะ (Git Repository)",
+          "เพื่อให้โปรแกรมรันได้เร็วกว่าการ Hardcode ในไฟล์ JS",
+          "เพราะ Docker บังคับให้อ่านค่าจากไฟล์ .env เท่านั้น"
+        ],
+        answer: 1,
+        explanation: "การ Hardcode รหัสผ่านลงในโค้ดทำให้เกิดช่องโหว่ร้ายแรงเมื่อโค้ดถูก Push ขึ้น Git การใช้ `.env` ร่วมกับ `process.env` ช่วยให้การสลับระหว่าง Dev/Staging/Production ปลอดภัยและยืดหยุ่น"
+      },
+      {
+        id: 10,
+        topic: "HTTP Status Codes",
+        question: "เมื่อทำการสร้างข้อมูลใหม่ในฐานข้อมูลสำเร็จผ่าน `POST /api/users` ควรส่ง HTTP Status Code ใดกลับไปตามมาตรฐาน RESTful API?",
+        options: [
+          "200 OK",
+          "201 Created",
+          "204 No Content",
+          "202 Accepted"
+        ],
+        answer: 1,
+        explanation: "HTTP 201 Created เป็นมาตรฐานสากลสำหรับบ่งบอกว่าการสร้าง Resource ใหม่บนเซิร์ฟเวอร์เสร็จสมบูรณ์"
+      },
+      {
+        id: 11,
+        topic: "Docker Volume Persistence",
+        question: "คำสั่ง `docker compose down -v` แตกต่างจาก `docker compose down` ธรรมดาอย่างไร?",
+        options: [
+          "ไม่มีความแตกต่างกัน เป็นเพียง shorthand syntax",
+          "`-v` จะทำการลบ Named Volumes และข้อมูลทั้งหมดในฐานข้อมูลที่ผูกไว้ทิ้งไปด้วย",
+          "`-v` จะเปิด Verbose Log ระหว่างการปิดเครื่อง",
+          "`-v` จะทำการอัปเดต Version ของ Docker Image อัตโนมัติ"
+        ],
+        answer: 1,
+        explanation: "Flag `-v` (หรือ `--volumes`) จะลบ Named Volumes ที่กำหนดในไฟล์ docker-compose ไปด้วย ทำให้ข้อมูลใน DB สูญหาย จึงต้องระวังอย่างยิ่งในการใช้งานบน Production"
+      },
+      {
+        id: 12,
+        topic: "Express Error Handler Signature",
+        question: "ฟังก์ชัน Middleware ใน Express ที่ทำหน้าที่เป็น Global Error Handler ต้องมีจำนวน Parameters กี่ตัว และเรียงลำดับอย่างไร?",
+        options: [
+          "2 ตัว: `(req, res)`",
+          "3 ตัว: `(req, res, next)`",
+          "4 ตัว: `(err, req, res, next)`",
+          "1 ตัว: `(err)`"
+        ],
+        answer: 2,
+        explanation: "Express ตรวจสอบ `fn.length` (จำนวน parameters) หากมี 4 ตัวพอดี `(err, req, res, next)` มันจะรับรู้ว่าเป็น Error Handling Middleware ทันที"
+      },
+      {
+        id: 13,
+        topic: "Docker Network in Compose",
+        question: "เมื่อรัน Node.js App และ MySQL อยู่ใน `docker-compose.yaml` เดียวกัน การตั้งค่า `DB_HOST` ในฝั่ง App ที่ถูกต้องควรระบุเป็นอะไร?",
+        options: [
+          "localhost",
+          "127.0.0.1",
+          "ชื่อ Service ของ MySQL ในไฟล์ compose เช่น `mysql` หรือ `db`",
+          "0.0.0.0"
+        ],
+        answer: 2,
+        explanation: "Docker Compose จะสร้าง Default Bridge Network และมี Embedded DNS Server ที่แมปชื่อ Service (เช่น `mysql`) เป็น IP Address ภายในให้อัตโนมัติ"
+      },
+      {
+        id: 14,
+        topic: "Mongoose Query Helpers",
+        question: "หากต้องการดึงข้อมูลผู้ใช้ทั้งหมดที่ยังไม่ถูก Soft Delete (`isDeleted: false`) และเรียงลำดับจากคนที่สร้างล่าสุด (`createdAt` มากไปน้อย) โค้ด Mongoose ข้อใดถูกต้อง?",
+        options: [
+          "User.find({ isDeleted: false }).sort({ createdAt: -1 })",
+          "User.findAll().where('isDeleted', false).orderBy('createdAt', 'desc')",
+          "User.select().filter({ isDeleted: false }).order(-1)",
+          "User.query('SELECT * FROM users WHERE isDeleted = false ORDER BY createdAt DESC')"
+        ],
+        answer: 0,
+        explanation: "Mongoose ใช้ `Model.find(query).sort({ field: -1 })` โดย `-1` หมายถึง Descending (มากไปน้อย / ล่าสุดไปเก่าสุด)"
+      },
+      {
+        id: 15,
+        topic: "MySQL Connection Pooling",
+        question: "ทำไมในงาน Production เราจึงควรใช้ `createPool` แทนที่จะเป็น `createConnection` เดี่ยวๆ?",
+        options: [
+          "เพราะ createConnection รันบน CPU Core เดียวเสมอ",
+          "เพราะ Connection Pool ช่วยบริหารการยืม/คืน Connection รองรับ Concurrent Requests หลายสิบ/ร้อยคำขอพร้อมกันโดยไม่ต้องเปิด TCP handshake ใหม่ทุกครั้ง",
+          "เพราะ createConnection ไม่อนุญาตให้ใช้คำสั่ง SELECT",
+          "เพราะ Pool เข้ารหัสข้อมูล SSL ให้อัตโนมัติ"
+        ],
+        answer: 1,
+        explanation: "Connection Pool ช่วยลด Overhead ในการเปิดปิด Connection ซ้ำๆ และป้องกันปัญหาระบบล่มจากกรณี Too many connections"
+      }
+    ];
+
+    // --- 3. CHECKLIST DATA ---
+    const CHECKLIST_SECTIONS = [
+      {
+        category: "🐳 Docker & Containerization",
+        items: [
+          "เข้าใจความต่างของ VM vs Container (Namespaces, cgroups, No Guest OS)",
+          "เขียน Dockerfile สำหรับ Node.js ที่มี Layer Caching (COPY package*.json ก่อน)",
+          "เข้าใจคำสั่ง `FROM`, `WORKDIR`, `COPY`, `RUN`, `EXPOSE`, `CMD`",
+          "เข้าใจความต่างระหว่าง `CMD` (คำสั่งรันเริ่มต้น) vs `ENTRYPOINT` (คำสั่งหลัก)",
+          "เข้าใจคำสั่ง Docker CLI: `docker build`, `docker run -d -p`, `docker exec -it`, `docker ps`",
+          "เขียน `docker-compose.yaml` ที่มี services, ports, environment, volumes"
+        ]
+      },
+      {
+        category: "🐬 MySQL & Parameterized Queries",
+        items: [
+          "ตั้งค่า MySQL Container บน Docker (ports 3307:3306, root password, volume)",
+          "เชื่อมต่อ MySQL ด้วย `mysql2/promise` ผ่าน `createPool`",
+          "เข้าใจการใช้ `?` placeholders (Prepared Statement) เพื่อป้องกัน SQL Injection",
+          "เขียนคำสั่ง DDL สร้างตาราง (`AUTO_INCREMENT`, `PRIMARY KEY`, `TIMESTAMP`)",
+          "ทำ Soft Delete Pattern (`deleted_at TIMESTAMP NULL` และ query `WHERE deleted_at IS NULL`)"
+        ]
+      },
+      {
+        category: "🍃 MongoDB & Mongoose ODM",
+        items: [
+          "ตั้งค่า MongoDB Container บน Docker (port 27017:27017)",
+          "เชื่อมต่อ MongoDB ด้วย `mongoose.connect(process.env.MONGODB_URI)`",
+          "สร้าง Mongoose Schema พร้อม Validators (`required`, `unique`, `min`, `trim`, `timestamps: true`)",
+          "ใช้งาน Mongoose CRUD: `create()`, `find()`, `findById()`, `findByIdAndUpdate()`, `findByIdAndDelete()`",
+          "เข้าใจออปชัน `{ new: true, runValidators: true }` ในการอัปเดตข้อมูล"
+        ]
+      },
+      {
+        category: "⚡ Express.js Server Patterns",
+        items: [
+          "เข้าใจ Express Request-Response Lifecycle และการเรียก `next()` ใน Middleware",
+          "เขียน Custom Middleware (Request Logger, Header / API Key Guard)",
+          "เขียน Global Error Handler Middleware 4 parameters `(err, req, res, next)`",
+          "จัดการ Secret Config ผ่าน `.env` และ `dotenv` ตามหลัก 12-Factor App",
+          "ตอบ HTTP Status Code ถูกต้องตาม RESTful API (200, 201, 400, 401, 404, 500)"
+        ]
+      }
+    ];
+
+    // --- 4. APP STATE & CONTROLLERS ---
+    let currentTab = 'study';
+    let currentLabId = LABS[0].id;
+    let quizAnswers = {};
+    let timerInterval = null;
+    let timeLeft = 20 * 60; // 20 mins in seconds
+    let isTimerRunning = false;
+
+    // Load progress from localStorage
+    function loadSavedState() {
+      const savedSolved = localStorage.getItem('serverside_labs_solved');
+      if (savedSolved) {
+        window.solvedLabs = JSON.parse(savedSolved);
+      } else {
+        window.solvedLabs = {};
+      }
+
+      const savedQuiz = localStorage.getItem('serverside_quiz_score');
+      if (savedQuiz) {
+        document.getElementById('stat-quiz').innerText = `${savedQuiz} / ${QUIZ_QUESTIONS.length}`;
+      }
+
+      updateSolvedCounter();
+    }
+
+    function updateSolvedCounter() {
+      const solvedCount = Object.values(window.solvedLabs || {}).filter(Boolean).length;
+      document.getElementById('stat-solved').innerText = `${solvedCount} / ${LABS.length}`;
+    }
+
+    // Switch Top Tabs
+    function switchTab(tabId) {
+      currentTab = tabId;
+      document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('tab-active');
+        btn.classList.add('text-slate-400');
+      });
+
+      const activeView = document.getElementById(`view-${tabId}`);
+      const activeBtn = document.getElementById(`tab-${tabId}`);
+      if (activeView) activeView.classList.remove('hidden');
+      if (activeBtn) {
+        activeBtn.classList.add('tab-active');
+        activeBtn.classList.remove('text-slate-400');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Populate Lab Selector Dropdown
+    function initLabSelector() {
+      const select = document.getElementById('lab-select');
+      select.innerHTML = '';
+      LABS.forEach((lab, idx) => {
+        const opt = document.createElement('option');
+        opt.value = lab.id;
+        const isPassed = window.solvedLabs && window.solvedLabs[lab.id];
+        opt.innerText = `${isPassed ? '✅ ' : ''}${lab.badge}: ${lab.title.substring(0, 32)}...`;
+        select.appendChild(opt);
+      });
+    }
+
+    // Load specific lab into workbench
+    function loadLab(labId) {
+      currentLabId = labId;
+      const lab = LABS.find(l => l.id === labId);
+      if (!lab) return;
+
+      document.getElementById('lab-select').value = labId;
+      document.getElementById('lab-badge').innerText = lab.badge;
+      document.getElementById('lab-difficulty').innerHTML = `<i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i> ${lab.difficulty}`;
+      document.getElementById('lab-title').innerText = lab.title;
+      document.getElementById('lab-desc').innerText = lab.desc;
+      document.getElementById('editor-filename').innerText = lab.filename;
+
+      // Requirements
+      const reqList = document.getElementById('lab-requirements');
+      reqList.innerHTML = '';
+      lab.requirements.forEach(req => {
+        const li = document.createElement('li');
+        li.innerText = req;
+        reqList.appendChild(li);
+      });
+
+      // Hint & Solution
+      document.getElementById('lab-hint').innerText = lab.hint;
+      document.getElementById('lab-hint').classList.add('hidden');
+      document.getElementById('hint-btn-text').innerText = 'ดูคำใบ้ (Show Hint)';
+
+      document.getElementById('lab-solution-box').classList.add('hidden');
+      document.getElementById('lab-solution-code').innerText = lab.solutionCode;
+      document.getElementById('lab-solution-explain').innerText = lab.solutionExplain;
+      document.getElementById('sol-chevron').classList.remove('rotate-180');
+
+      // Code Editor
+      const savedCode = localStorage.getItem(`serverside_code_${lab.id}`);
+      document.getElementById('code-input').value = savedCode || lab.initialCode;
+
+      // Reset Eval card
+      document.getElementById('eval-result-card').classList.add('hidden');
+
+      lucide.createIcons();
+    }
+
+    function toggleHint() {
+      const hintEl = document.getElementById('lab-hint');
+      const btnText = document.getElementById('hint-btn-text');
+      if (hintEl.classList.contains('hidden')) {
+        hintEl.classList.remove('hidden');
+        btnText.innerText = 'ซ่อนคำใบ้ (Hide Hint)';
+      } else {
+        hintEl.classList.add('hidden');
+        btnText.innerText = 'ดูคำใบ้ (Show Hint)';
+      }
+    }
+
+    function toggleSolution() {
+      const solBox = document.getElementById('lab-solution-box');
+      const chevron = document.getElementById('sol-chevron');
+      if (solBox.classList.contains('hidden')) {
+        solBox.classList.remove('hidden');
+        chevron.classList.add('rotate-180');
+      } else {
+        solBox.classList.add('hidden');
+        chevron.classList.remove('rotate-180');
+      }
+    }
+
+    function resetEditorCode() {
+      const lab = LABS.find(l => l.id === currentLabId);
+      if (lab) {
+        document.getElementById('code-input').value = lab.initialCode;
+        localStorage.removeItem(`serverside_code_${lab.id}`);
+      }
+    }
+
+    function copyEditorCode() {
+      const code = document.getElementById('code-input').value;
+      navigator.clipboard.writeText(code).then(() => {
+        alert('คัดลอกโค้ดลง Clipboard เรียบร้อยแล้ว!');
+      });
+    }
+
+    // Evaluate Lab Code
+    function evaluateCurrentLab() {
+      const lab = LABS.find(l => l.id === currentLabId);
+      if (!lab) return;
+
+      const code = document.getElementById('code-input').value;
+      localStorage.setItem(`serverside_code_${lab.id}`, code);
+
+      const checks = lab.validate(code);
+      const allPassed = checks.every(c => c.pass);
+
+      const evalCard = document.getElementById('eval-result-card');
+      const evalIconWrap = document.getElementById('eval-icon-wrap');
+      const evalTitle = document.getElementById('eval-title');
+      const evalMsg = document.getElementById('eval-msg');
+      const evalDetails = document.getElementById('eval-details');
+
+      evalCard.classList.remove('hidden');
+      evalDetails.innerHTML = '';
+
+      checks.forEach(c => {
+        const item = document.createElement('div');
+        item.className = `flex items-center gap-2 ${c.pass ? 'text-emerald-400' : 'text-rose-400'}`;
+        item.innerHTML = `<span>${c.pass ? '✓' : '✗'}</span> <span>${c.desc}</span>`;
+        evalDetails.appendChild(item);
+      });
+
+      if (allPassed) {
+        evalCard.className = 'glass-card rounded-xl p-4 border-brandEmerald/50 bg-emerald-950/20';
+        evalIconWrap.className = 'p-2 rounded-lg bg-emerald-500/20 text-emerald-400';
+        evalIconWrap.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5"></i>';
+        evalTitle.className = 'font-bold text-sm text-emerald-300';
+        evalTitle.innerText = '🎉 ผ่านการทดสอบทั้งหมด (Passed All Rules!)';
+        evalMsg.innerText = 'โค้ดของคุณถูกต้อง ครบถ้วนตามมาตรฐานที่ข้อสอบกำหนด!';
+
+        window.solvedLabs[lab.id] = true;
+        localStorage.setItem('serverside_labs_solved', JSON.stringify(window.solvedLabs));
+        updateSolvedCounter();
+        initLabSelector();
+      } else {
+        evalCard.className = 'glass-card rounded-xl p-4 border-rose-500/50 bg-rose-950/20';
+        evalIconWrap.className = 'p-2 rounded-lg bg-rose-500/20 text-rose-400';
+        evalIconWrap.innerHTML = '<i data-lucide="alert-circle" class="w-5 h-5"></i>';
+        evalTitle.className = 'font-bold text-sm text-rose-300';
+        evalTitle.innerText = '⚠️ ยังมีข้อกำหนดที่ไม่ผ่าน (Some Checks Failed)';
+        evalMsg.innerText = 'โปรดตรวจสอบรายการด้านล่าง และปรับแก้โค้ดของคุณก่อนทดสอบอีกครั้ง';
+      }
+
+      lucide.createIcons();
+    }
+
+    // --- 5. QUIZ LOGIC ---
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = '';
+
+      QUIZ_QUESTIONS.forEach((q, qIdx) => {
+        const card = document.createElement('div');
+        card.id = `quiz-card-${q.id}`;
+        card.className = 'glass-card rounded-xl p-6 space-y-4';
+
+        let optionsHtml = '';
+        q.options.forEach((opt, optIdx) => {
+          optionsHtml += `
+            <label class="flex items-start gap-3 p-3 rounded-lg bg-surfaceDark/60 hover:bg-surfaceDark border border-surfaceBorder cursor-pointer transition-all">
+              <input type="radio" name="question_${q.id}" value="${optIdx}" onchange="selectQuizOption(${q.id}, ${optIdx})" class="mt-1 text-brandAmber focus:ring-brandAmber">
+              <span class="text-sm text-slate-200 leading-relaxed">${opt}</span>
+            </label>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between border-b border-surfaceBorder pb-3">
+            <span class="text-xs font-mono px-2 py-0.5 rounded bg-brandAmber/10 text-amber-300 border border-brandAmber/20">ข้อที่ ${qIdx + 1} / ${QUIZ_QUESTIONS.length}</span>
+            <span class="text-xs text-slate-400 font-mono">${q.topic}</span>
+          </div>
+          <h3 class="font-bold text-white text-base leading-relaxed">${q.question}</h3>
+          <div class="space-y-2">
+            ${optionsHtml}
+          </div>
+          <div id="quiz-feedback-${q.id}" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function selectQuizOption(qId, optIdx) {
+      quizAnswers[qId] = optIdx;
+    }
+
+    function toggleQuizTimer() {
+      const btnText = document.getElementById('quiz-btn-text');
+      const startBtn = document.getElementById('start-quiz-btn');
+
+      if (!isTimerRunning) {
+        isTimerRunning = true;
+        btnText.innerText = 'หยุดเวลาชั่วคราว';
+        startBtn.classList.remove('bg-brandAmber');
+        startBtn.classList.add('bg-slate-700', 'text-white');
+
+        timerInterval = setInterval(() => {
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            alert('⏰ หมดเวลาทำข้อสอบแล้ว! ระบบจะส่งคำตอบอัตโนมัติ');
+            submitQuiz();
+            return;
+          }
+          timeLeft--;
+          updateTimerDisplay();
+        }, 1000);
+      } else {
+        isTimerRunning = false;
+        clearInterval(timerInterval);
+        btnText.innerText = 'ทำต่อ (Resume)';
+        startBtn.classList.add('bg-brandAmber');
+        startBtn.classList.remove('bg-slate-700', 'text-white');
+      }
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      document.getElementById('quiz-timer').innerText = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function submitQuiz() {
+      clearInterval(timerInterval);
+      let score = 0;
+
+      QUIZ_QUESTIONS.forEach(q => {
+        const userChoice = quizAnswers[q.id];
+        const isCorrect = userChoice === q.answer;
+        if (isCorrect) score++;
+
+        const fbEl = document.getElementById(`quiz-feedback-${q.id}`);
+        fbEl.classList.remove('hidden');
+        if (isCorrect) {
+          fbEl.className = 'mt-3 p-3 rounded-lg text-xs leading-relaxed bg-emerald-950/40 border border-emerald-800/40 text-emerald-200';
+          fbEl.innerHTML = `<strong>✓ ถูกต้อง!</strong> ${q.explanation}`;
+        } else {
+          fbEl.className = 'mt-3 p-3 rounded-lg text-xs leading-relaxed bg-rose-950/40 border border-rose-800/40 text-rose-200';
+          fbEl.innerHTML = `<strong>✗ ไม่ถูกต้อง:</strong> คำตอบที่ถูกคือ <em>"${q.options[q.answer]}"</em><br><span class="text-slate-300 mt-1 block">${q.explanation}</span>`;
+        }
+      });
+
+      // Save score
+      localStorage.setItem('serverside_quiz_score', score);
+      document.getElementById('stat-quiz').innerText = `${score} / ${QUIZ_QUESTIONS.length}`;
+
+      // Show Report Banner
+      const reportBox = document.getElementById('quiz-report');
+      reportBox.classList.remove('hidden');
+      const percent = Math.round((score / QUIZ_QUESTIONS.length) * 100);
+
+      let gradeMsg = '';
+      if (percent >= 80) gradeMsg = '🏆 ยอดเยี่ยมมาก! คุณมีความเข้าใจลึกซึ้ง พร้อมทำข้อสอบปฏิบัติได้คะแนนเต็ม!';
+      else if (percent >= 60) gradeMsg = '👍 ผ่านเกณฑ์ได้ดี แต่ยังมีจุดที่ต้องทบทวนในส่วนที่ตอบผิดด้านล่าง';
+      else gradeMsg = '📚 ควรกลับไปทบทวนในแท็บ Study Hub และฝึกทำ Hands-on Lab ซ้ำอีกรอบ!';
+
+      reportBox.innerHTML = `
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-surfaceBorder pb-4">
+          <div>
+            <h3 class="text-xl font-bold text-white">ผลคะแนนสอบจำลอง Server-Side Grill</h3>
+            <p class="text-sm text-slate-300 mt-1">${gradeMsg}</p>
+          </div>
+          <div class="text-center px-6 py-3 rounded-xl bg-surfaceDark border border-surfaceBorder">
+            <span class="text-3xl font-bold font-mono text-brandCyan">${score} / ${QUIZ_QUESTIONS.length}</span>
+            <p class="text-xs text-slate-400 mt-0.5">${percent}% Score</p>
+          </div>
+        </div>
+        <p class="text-xs text-slate-400">คุณสามารถเลื่อนดูคำอธิบายเฉลยและเหตุผลของแต่ละข้อด้านบนเพื่อจดจำจุดหลอกก่อนเข้าสอบจริงได้เลย!</p>
+      `;
+
+      reportBox.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // --- 6. CHECKLIST LOGIC ---
+    function renderChecklist() {
+      const container = document.getElementById('checklist-container');
+      container.innerHTML = '';
+      const savedChecks = JSON.parse(localStorage.getItem('serverside_checklist') || '{}');
+
+      CHECKLIST_SECTIONS.forEach((sec, sIdx) => {
+        const card = document.createElement('div');
+        card.className = 'glass-card rounded-xl p-5 space-y-3';
+        
+        let itemsHtml = '';
+        sec.items.forEach((item, iIdx) => {
+          const key = `chk_${sIdx}_${iIdx}`;
+          const isChecked = !!savedChecks[key];
+          itemsHtml += `
+            <label class="flex items-start gap-2.5 text-xs text-slate-300 hover:text-white cursor-pointer select-none">
+              <input type="checkbox" id="${key}" onchange="toggleChecklistItem('${key}')" ${isChecked ? 'checked' : ''} class="mt-0.5 rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
+              <span class="${isChecked ? 'line-through text-slate-500' : ''}">${item}</span>
+            </label>
+          `;
+        });
+
+        card.innerHTML = `
+          <h3 class="font-bold text-white text-sm border-b border-surfaceBorder pb-2">${sec.category}</h3>
+          <div class="space-y-2">
+            ${itemsHtml}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      calcChecklistPercent();
+    }
+
+    function toggleChecklistItem(key) {
+      const savedChecks = JSON.parse(localStorage.getItem('serverside_checklist') || '{}');
+      const input = document.getElementById(key);
+      savedChecks[key] = input.checked;
+      localStorage.setItem('serverside_checklist', JSON.stringify(savedChecks));
+
+      const span = input.nextElementSibling;
+      if (input.checked) {
+        span.classList.add('line-through', 'text-slate-500');
+      } else {
+        span.classList.remove('line-through', 'text-slate-500');
+      }
+
+      calcChecklistPercent();
+    }
+
+    function calcChecklistPercent() {
+      const total = CHECKLIST_SECTIONS.reduce((acc, s) => acc + s.items.length, 0);
+      const savedChecks = JSON.parse(localStorage.getItem('serverside_checklist') || '{}');
+      const checkedCount = Object.values(savedChecks).filter(Boolean).length;
+      const pct = Math.round((checkedCount / total) * 100);
+      document.getElementById('chk-percent').innerText = `${pct}%`;
+    }
+
+    // --- 7. TERMINAL PRACTICE TRAINER & STEP BLUEPRINT DATA ---
+    const TRAINER_SCENARIOS = {
+      full: [
+        {
+          cat: "GIT",
+          title: "โจทย์ 1: สร้าง Folder และ Initial Git Repository พร้อมตั้ง branch main",
+          target: "mkdir server-exam-2026 && cd server-exam-2026 && git init && git branch -M main",
+          pattern: /git\s+init.*git\s+branch\s+-M\s+main|mkdir.*git\s+init/i,
+          output: "Initialized empty Git repository in /home/doro/server-exam-2026/.git/\nSwitched to a new branch 'main'"
+        },
+        {
+          cat: "GIT",
+          title: "โจทย์ 2: สร้างไฟล์ .gitignore และ Commit ครั้งแรก",
+          target: "git add .gitignore && git commit -m \"chore: initial commit\"",
+          pattern: /git\s+add\s+\.gitignore.*git\s+commit\s+-m/i,
+          output: "[main (root-commit) 8f3b12a] chore: initial commit\n 1 file changed, 4 insertions(+)\n create mode 100644 .gitignore"
+        },
+        {
+          cat: "NODE",
+          title: "โจทย์ 3: สร้าง package.json แบบ default",
+          target: "npm init -y",
+          pattern: /npm\s+init\s+-y/i,
+          output: "Wrote to /home/doro/server-exam-2026/package.json:\n{\n  \"name\": \"server-exam-2026\",\n  \"version\": \"1.0.0\",\n  \"main\": \"server.js\"\n}"
+        },
+        {
+          cat: "NODE",
+          title: "โจทย์ 4: ติดตั้ง Dependencies หลัก (express, mongoose, dotenv, cors)",
+          target: "npm install express mongoose dotenv cors",
+          pattern: /npm\s+(i|install)\s+express\s+mongoose\s+dotenv\s+cors/i,
+          output: "added 68 packages, and audited 69 packages in 2s\nfound 0 vulnerabilities"
+        },
+        {
+          cat: "NODE",
+          title: "โจทย์ 5: ติดตั้ง Nodemon เป็น Dev Dependency",
+          target: "npm install -D nodemon",
+          pattern: /npm\s+(i|install)\s+(-D|--save-dev)\s+nodemon/i,
+          output: "added 32 packages in 1s\nfound 0 vulnerabilities"
+        },
+        {
+          cat: "DOCKER",
+          title: "โจทย์ 6: สั่งรัน Docker Compose ใน background โหมด",
+          target: "docker compose up -d",
+          pattern: /docker\s+compose\s+up\s+-d|docker-compose\s+up\s+-d/i,
+          output: "[+] Running 2/2\n ✔ Network server-exam-2026_default  Created\n ✔ Container exam_mongodb            Started (healthy)"
+        },
+        {
+          cat: "DOCKER",
+          title: "โจทย์ 7: ตรวจสอบสถานะการทำงานของ Container",
+          target: "docker compose ps",
+          pattern: /docker\s+compose\s+ps|docker-compose\s+ps|docker\s+ps/i,
+          output: "NAME           IMAGE       COMMAND                  SERVICE    STATUS          PORTS\nexam_mongodb   mongo:6.0   \"docker-entrypoint.s…\"   mongodb    Up 15 seconds   0.0.0.0:27017->27017/tcp"
+        },
+        {
+          cat: "NODE",
+          title: "โจทย์ 8: รัน Express Server ด้วยคำสั่ง dev script",
+          target: "npm run dev",
+          pattern: /npm\s+(run\s+dev|start)|nodemon\s+server\.js/i,
+          output: "[nodemon] 3.1.0\n[nodemon] watching path(s): *.*\n[nodemon] starting `node server.js`\n✅ MongoDB Connected: localhost:27017\n🚀 Server running on http://localhost:5000"
+        },
+        {
+          cat: "CURL",
+          title: "โจทย์ 9: ยิง POST สร้างข้อมูลนักศึกษาคนแรกผ่าน cURL",
+          target: "curl -X POST http://localhost:5000/api/students -H \"Content-Type: application/json\" -d '{\"studentId\":\"66070001\",\"name\":\"Tawan Promthong\",\"major\":\"IT\",\"gpa\":3.85}'",
+          pattern: /curl.*-X\s+POST.*\/api\/students/i,
+          output: "HTTP/1.1 201 Created\nContent-Type: application/json\n\n{\"_id\":\"66cc810f8a9e1b2c3d4e5f60\",\"studentId\":\"66070001\",\"name\":\"Tawan Promthong\",\"major\":\"IT\",\"gpa\":3.85,\"isActive\":true,\"createdAt\":\"2026-08-28T09:00:00.000Z\"}"
+        },
+        {
+          cat: "CURL",
+          title: "โจทย์ 10: ยิง GET ดึงรายชื่อนักศึกษาทั้งหมด",
+          target: "curl http://localhost:5000/api/students",
+          pattern: /curl.*http:\/\/localhost:5000\/api\/students/i,
+          output: "HTTP/1.1 200 OK\n[{\"_id\":\"66cc810f8a9e1b2c3d4e5f60\",\"studentId\":\"66070001\",\"name\":\"Tawan Promthong\",\"major\":\"IT\",\"gpa\":3.85,\"isActive\":true}]"
+        },
+        {
+          cat: "GIT",
+          title: "โจทย์ 11: ตรวจสอบสถานะไฟล์ก่อนบันทึก Git",
+          target: "git status",
+          pattern: /git\s+status/i,
+          output: "On branch main\nChanges not staged for commit:\n  (use \"git add <file>...\" to update what will be committed)\n\tmodified:   package.json\n\nUntracked files:\n\tDockerfile\n\tdocker-compose.yml\n\tserver.js\n\tconfig/\n\tmodels/\n\troutes/"
+        },
+        {
+          cat: "GIT",
+          title: "โจทย์ 12: Add ทุกไฟล์ และ Commit ส่งงาน",
+          target: "git add . && git commit -m \"feat: complete server-side practical exam\"",
+          pattern: /git\s+add\s+\..*git\s+commit\s+-m/i,
+          output: "[main 9a4c11e] feat: complete server-side practical exam\n 7 files changed, 215 insertions(+)\n create mode 100644 Dockerfile\n create mode 100644 docker-compose.yml\n create mode 100644 server.js"
+        }
+      ],
+      git: [
+        {
+          cat: "GIT",
+          title: "โจทย์: Initialize Repository และตั้ง Branch หลักเป็น main",
+          target: "git init && git branch -M main",
+          pattern: /git\s+init.*git\s+branch\s+-M\s+main|git\s+init/i,
+          output: "Initialized empty Git repository in /project/.git/\nSwitched to branch 'main'"
+        },
+        {
+          cat: "GIT",
+          title: "โจทย์: สเตจทุกไฟล์และ Commit โค้ด",
+          target: "git add . && git commit -m \"feat: initial scaffold\"",
+          pattern: /git\s+add\s+\..*git\s+commit\s+-m/i,
+          output: "[main (root-commit) 1a2b3c] feat: initial scaffold"
+        },
+        {
+          cat: "GIT",
+          title: "โจทย์: เชื่อมต่อ Remote Repository และ Push ข้อมูล",
+          target: "git remote add origin https://github.com/doro/exam.git && git push -u origin main",
+          pattern: /git\s+remote\s+add\s+origin.*git\s+push/i,
+          output: "Branch 'main' set up to track remote branch 'main' from 'origin'."
+        }
+      ],
+      docker: [
+        {
+          cat: "DOCKER",
+          title: "โจทย์: สั่ง Docker Compose Start Container ใน Background",
+          target: "docker compose up -d",
+          pattern: /docker\s+compose\s+up\s+-d|docker-compose\s+up\s+-d/i,
+          output: "[+] Running 2/2\n ✔ Network default Created\n ✔ Container exam_mongodb Started"
+        },
+        {
+          cat: "DOCKER",
+          title: "โจทย์: ตรวจสอบสถานะ Container ที่กำลังรัน",
+          target: "docker compose ps",
+          pattern: /docker\s+compose\s+ps|docker\s+ps/i,
+          output: "NAME           IMAGE       STATUS          PORTS\nexam_mongodb   mongo:6.0   Up 20 seconds   0.0.0.0:27017->27017/tcp"
+        },
+        {
+          cat: "DOCKER",
+          title: "โจทย์: ดู Log การทำงานของ Database Container",
+          target: "docker compose logs -f mongodb",
+          pattern: /docker\s+compose\s+logs/i,
+          output: "mongodb | [initandlisten] Waiting for connections on port 27017"
+        },
+        {
+          cat: "DOCKER",
+          title: "โจทย์: สั่งหยุด Container พร้อมลบ Named Volume ทิ้ง",
+          target: "docker compose down -v",
+          pattern: /docker\s+compose\s+down\s+-v|docker-compose\s+down\s+-v/i,
+          output: "[+] Running 2/2\n ✔ Container exam_mongodb  Removed\n ✔ Volume mongo_data       Removed"
+        }
+      ],
+      node: [
+        {
+          cat: "NODE",
+          title: "โจทย์: สร้าง package.json แบบ Default",
+          target: "npm init -y",
+          pattern: /npm\s+init\s+-y/i,
+          output: "Wrote to package.json"
+        },
+        {
+          cat: "NODE",
+          title: "โจทย์: ติดตั้ง express, mongoose, dotenv, cors",
+          target: "npm install express mongoose dotenv cors",
+          pattern: /npm\s+(i|install)\s+express\s+mongoose\s+dotenv\s+cors/i,
+          output: "added 68 packages in 1.8s"
+        },
+        {
+          cat: "NODE",
+          title: "โจทย์: สั่งรัน Server ในโหมด Development",
+          target: "npm run dev",
+          pattern: /npm\s+(run\s+dev|start)/i,
+          output: "🚀 Server running on http://localhost:5000"
+        }
+      ],
+      curl: [
+        {
+          cat: "CURL",
+          title: "โจทย์: ยิง POST สร้างข้อมูลนักศึกษา",
+          target: "curl -X POST http://localhost:5000/api/students -H \"Content-Type: application/json\" -d '{\"studentId\":\"66070001\",\"name\":\"Tawan\",\"major\":\"IT\",\"gpa\":3.85}'",
+          pattern: /curl.*-X\s+POST.*\/api\/students/i,
+          output: "HTTP/1.1 201 Created\n{\"studentId\":\"66070001\",\"name\":\"Tawan\",\"major\":\"IT\",\"gpa\":3.85}"
+        },
+        {
+          cat: "CURL",
+          title: "โจทย์: ยิง GET ดึงข้อมูลนักศึกษาทั้งหมด",
+          target: "curl http://localhost:5000/api/students",
+          pattern: /curl.*http:\/\/localhost:5000\/api\/students/i,
+          output: "HTTP/1.1 200 OK\n[{\"studentId\":\"66070001\",\"name\":\"Tawan\",\"major\":\"IT\",\"gpa\":3.85}]"
+        },
+        {
+          cat: "CURL",
+          title: "โจทย์: ยิง DELETE ลบนักศึกษาตาม ID",
+          target: "curl -X DELETE http://localhost:5000/api/students/66cc810f8a9e1b2c3d4e5f60",
+          pattern: /curl.*-X\s+DELETE.*\/api\/students/i,
+          output: "HTTP/1.1 200 OK\n{\"message\":\"Student deleted successfully\"}"
+        }
+      ]
+    };
+
+    let currentTrainerScenario = 'full';
+    let currentTrainerIndex = 0;
+    let trainerStreakCount = 0;
+
+    function initTrainer() {
+      currentTrainerIndex = 0;
+      trainerStreakCount = 0;
+      updateTrainerStreakDisplay();
+      loadTrainerStep(0);
+    }
+
+    function changeTrainerScenario(scenarioKey) {
+      currentTrainerScenario = scenarioKey;
+      currentTrainerIndex = 0;
+      loadTrainerStep(0);
+    }
+
+    function loadTrainerStep(idx) {
+      const scenario = TRAINER_SCENARIOS[currentTrainerScenario] || TRAINER_SCENARIOS.full;
+      if (idx >= scenario.length) {
+        // Complete scenario
+        appendConsoleLog('🎉 ยินดีด้วย! คุณพิมพ์คำสั่งผ่านครบทุกข้อในหมวดหมู่นี้แล้ว!', 'text-emerald-400 font-bold');
+        document.getElementById('trainer-step-label').innerText = 'Completed!';
+        document.getElementById('trainer-progress-pct').innerText = '100%';
+        document.getElementById('trainer-progress-bar').style.width = '100%';
+        document.getElementById('trainer-task-title').innerText = '🏆 จบการฝึกพิมพ์คำสั่งรอบนี้เรียบร้อย!';
+        document.getElementById('trainer-target-cmd').innerText = 'เยี่ยมมาก! กด "เริ่มรอบใหม่" หรือเลือกหมวดหมู่อื่นเพื่อฝึกซ้ำ';
+        return;
+      }
+
+      currentTrainerIndex = idx;
+      const step = scenario[idx];
+      document.getElementById('trainer-task-title').innerText = step.title;
+      document.getElementById('trainer-task-cat').innerText = step.cat;
+      document.getElementById('trainer-target-cmd').innerText = step.target;
+      document.getElementById('trainer-step-label').innerText = `คำสั่งที่ ${idx + 1} / ${scenario.length}`;
+      
+      const pct = Math.round((idx / scenario.length) * 100);
+      document.getElementById('trainer-progress-pct').innerText = `${pct}%`;
+      document.getElementById('trainer-progress-bar').style.width = `${pct}%`;
+
+      const input = document.getElementById('trainer-input');
+      input.value = '';
+      input.focus();
+    }
+
+    function handleTrainerKeydown(e) {
+      if (e.key === 'Enter') {
+        submitTrainerCommand();
+      }
+    }
+
+    function submitTrainerCommand() {
+      const input = document.getElementById('trainer-input');
+      const userVal = input.value.trim();
+      if (!userVal) return;
+
+      const scenario = TRAINER_SCENARIOS[currentTrainerScenario] || TRAINER_SCENARIOS.full;
+      const currentStep = scenario[currentTrainerIndex];
+      if (!currentStep) return;
+
+      appendConsoleLog(`doro@exam:~$ ${userVal}`, 'text-slate-200');
+
+      // Check pattern or close match
+      const isMatch = currentStep.pattern ? currentStep.pattern.test(userVal) : userVal.toLowerCase() === currentStep.target.toLowerCase();
+
+      if (isMatch) {
+        trainerStreakCount++;
+        updateTrainerStreakDisplay();
+        appendConsoleLog(currentStep.output, 'text-emerald-400');
+        appendConsoleLog('✓ คำสั่งถูกต้อง!', 'text-cyan-400 font-semibold mb-2');
+        loadTrainerStep(currentTrainerIndex + 1);
+      } else {
+        trainerStreakCount = 0;
+        updateTrainerStreakDisplay();
+        appendConsoleLog(`✗ คำสั่งไม่ตรงกับโจทย์: ${userVal}`, 'text-rose-400');
+        appendConsoleLog(`💡 คำสั่งที่ถูกต้อง: ${currentStep.target}`, 'text-amber-300 mb-2');
+      }
+
+      const logContainer = document.getElementById('trainer-console-log');
+      logContainer.scrollTop = logContainer.scrollHeight;
+    }
+
+    function autoTypeCommand() {
+      const scenario = TRAINER_SCENARIOS[currentTrainerScenario] || TRAINER_SCENARIOS.full;
+      const currentStep = scenario[currentTrainerIndex];
+      if (!currentStep) return;
+
+      const input = document.getElementById('trainer-input');
+      input.value = currentStep.target;
+      input.focus();
+    }
+
+    function skipTrainerCommand() {
+      const scenario = TRAINER_SCENARIOS[currentTrainerScenario] || TRAINER_SCENARIOS.full;
+      appendConsoleLog(`[Skipped] ข้อที่ ${currentTrainerIndex + 1}`, 'text-slate-500');
+      loadTrainerStep(currentTrainerIndex + 1);
+    }
+
+    function resetTrainer() {
+      const logContainer = document.getElementById('trainer-console-log');
+      logContainer.innerHTML = `
+        <div class="text-slate-500"># Welcome to Server-Side Practical Exam Live Terminal Trainer.</div>
+        <div class="text-slate-500"># พิมพ์คำสั่งในช่องด้านล่าง แล้วกด Enter เพื่อจำลองการรันจริง</div>
+      `;
+      initTrainer();
+    }
+
+    function updateTrainerStreakDisplay() {
+      document.getElementById('trainer-streak').innerText = trainerStreakCount;
+    }
+
+    function appendConsoleLog(text, cssClass = 'text-slate-300') {
+      const logContainer = document.getElementById('trainer-console-log');
+      const div = document.createElement('div');
+      div.className = `${cssClass} whitespace-pre-wrap leading-relaxed`;
+      div.innerText = text;
+      logContainer.appendChild(div);
+    }
+
+    function copyCurrentTargetCmd() {
+      const cmd = document.getElementById('trainer-target-cmd').innerText;
+      navigator.clipboard.writeText(cmd).then(() => {
+        alert('คัดลอกคำสั่งเรียบร้อยแล้ว!');
+      });
+    }
+
+    function scrollToTerminalTrainer() {
+      const el = document.getElementById('terminal-trainer-card');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Filter Step Blueprint Cards
+    function filterStepCards(category) {
+      const buttons = document.querySelectorAll('.step-filter-btn');
+      buttons.forEach(b => {
+        if (b.getAttribute('data-cat') === category) {
+          b.className = 'step-filter-btn px-3 py-1 rounded-lg text-xs font-medium bg-brandEmerald text-white border border-brandEmerald transition-all';
+        } else {
+          b.className = 'step-filter-btn px-3 py-1 rounded-lg text-xs font-medium bg-surfaceDark text-slate-300 border border-surfaceBorder hover:border-slate-500 transition-all';
+        }
+      });
+
+      const cards = document.querySelectorAll('.step-card');
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-cat');
+        if (category === 'all' || cat === category) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    function toggleStepDone(stepKey, isChecked) {
+      const saved = JSON.parse(localStorage.getItem('serverside_steps_done') || '{}');
+      saved[stepKey] = isChecked;
+      localStorage.setItem('serverside_steps_done', JSON.stringify(saved));
+    }
+
+    function loadSavedStepProgress() {
+      const saved = JSON.parse(localStorage.getItem('serverside_steps_done') || '{}');
+      Object.keys(saved).forEach(key => {
+        const chk = document.querySelector(`.step-chk[onchange*="${key}"]`);
+        if (chk) chk.checked = !!saved[key];
+      });
+    }
+
+    function copySnippet(elementId) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      navigator.clipboard.writeText(el.innerText).then(() => {
+        alert('คัดลอกโค้ด/คำสั่งลง Clipboard เรียบร้อยแล้ว!');
+      });
+    }
+
+    function copyAllStarterBundle() {
+      const bundle = `// ==========================================
+// 1. FILE: .gitignore
+// ==========================================
+node_modules/
+.env
+.DS_Store
+*.log
+
+// ==========================================
+// 2. FILE: Dockerfile
+// ==========================================
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 5000
+CMD ["npm", "start"]
+
+// ==========================================
+// 3. FILE: docker-compose.yml
+// ==========================================
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: exam_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: examdb
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+
+// ==========================================
+// 4. FILE: .env
+// ==========================================
+PORT=5000
+NODE_ENV=development
+MONGO_URI=mongodb://localhost:27017/examdb
+
+// ==========================================
+// 5. FILE: config/db.js
+// ==========================================
+const mongoose = require('mongoose');
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/examdb');
+    console.log(\`✅ MongoDB Connected: \${conn.connection.host}\`);
+  } catch (error) {
+    console.error(\`❌ MongoDB Connection Error: \${error.message}\`);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDB;
+
+// ==========================================
+// 6. FILE: models/Student.js
+// ==========================================
+const mongoose = require('mongoose');
+
+const studentSchema = new mongoose.Schema({
+  studentId: {
+    type: String,
+    required: [true, 'Student ID is required'],
+    unique: true,
+    trim: true
+  },
+  name: {
+    type: String,
+    required: [true, 'Student name is required'],
+    trim: true
+  },
+  major: {
+    type: String,
+    required: true,
+    enum: ['IT', 'CS', 'DS', 'SE'],
+    default: 'IT'
+  },
+  gpa: {
+    type: Number,
+    min: [0.0, 'GPA cannot be less than 0.0'],
+    max: [4.0, 'GPA cannot be more than 4.0'],
+    default: 0.0
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  }
+}, {
+  timestamps: true
+});
+
+module.exports = mongoose.model('Student', studentSchema);
+
+// ==========================================
+// 7. FILE: server.js
+// ==========================================
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db');
+const studentRoutes = require('./routes/studentRoutes');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+connectDB();
+
+app.use(cors());
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Server-Side Practical Exam API is running!' });
+});
+
+app.use('/api/students', studentRoutes);
+
+app.use((req, res, next) => {
+  res.status(404).json({ error: \`Route \${req.originalUrl} not found\` });
+});
+
+app.use((err, req, res, next) => {
+  console.error('Unhandled Error:', err.stack);
+  res.status(err.status || 500).json({
+    error: err.message || 'Internal Server Error'
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(\`🚀 Server running on http://localhost:\${PORT}\`);
+});
+
+// ==========================================
+// 8. FILE: routes/studentRoutes.js
+// ==========================================
+const express = require('express');
+const router = express.Router();
+const Student = require('../models/Student');
+
+// 1. CREATE
+router.post('/', async (req, res) => {
+  try {
+    const student = await Student.create(req.body);
+    res.status(201).json(student);
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(400).json({ error: 'Duplicate studentId error' });
+    }
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// 2. READ ALL
+router.get('/', async (req, res) => {
+  try {
+    const filter = {};
+    if (req.query.major) filter.major = req.query.major;
+    if (req.query.isActive !== undefined) filter.isActive = req.query.isActive === 'true';
+
+    const students = await Student.find(filter).sort({ createdAt: -1 });
+    res.status(200).json(students);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 3. READ BY ID
+router.get('/:id', async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.status(200).json(student);
+  } catch (err) {
+    res.status(400).json({ error: 'Invalid ID format or Error: ' + err.message });
+  }
+});
+
+// 4. UPDATE
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedStudent = await Student.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!updatedStudent) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.status(200).json(updatedStudent);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// 5. DELETE
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedStudent = await Student.findByIdAndDelete(req.params.id);
+    if (!deletedStudent) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.status(200).json({ message: 'Student deleted successfully', id: req.params.id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+module.exports = router;`;
+
+      navigator.clipboard.writeText(bundle).then(() => {
+        alert('คัดลอก Starter Kit โค้ดทุกไฟล์ (All Files Bundle) เรียบร้อยแล้ว!');
+      });
+    }
+
+    function resetAllProgress() {
+      if (confirm('คุณต้องการรีเซ็ตประวัติการฝึกทำแล็บและคะแนนสอบทั้งหมดใช่หรือไม่?')) {
+        localStorage.clear();
+        window.location.reload();
+      }
+    }
+
+    // --- INITIALIZATION ---
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSavedState();
+      initLabSelector();
+      loadLab(LABS[0].id);
+      renderQuiz();
+      renderChecklist();
+      initTrainer();
+      loadSavedStepProgress();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "serverside-midterm-drill-hub",
+  "version": "1.0.0",
+  "description": "Server-Side Web Development Midterm Practical Exam Drill & Grill Hub - KMITL IT (06016418)",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": [
+    "server-side",
+    "express",
+    "mongodb",
+    "mongoose",
+    "docker",
+    "kmitl"
+  ],
+  "author": "Thanatphat Promthong (Tawan)",
+  "license": "MIT"
+}
