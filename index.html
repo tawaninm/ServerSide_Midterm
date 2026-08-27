@@ -67,6 +67,86 @@
       backdrop-filter: blur(12px);
       border: 1px solid #1e2235;
     }
+  
+    /* VS Code Simulator Custom Styles */
+    .vscode-container {
+      background-color: #1e1e24;
+      border: 1px solid #282a36;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+    .vscode-activitybar {
+      background-color: #18191f;
+      width: 50px;
+      border-right: 1px solid #262833;
+    }
+    .vscode-sidebar {
+      background-color: #13141a;
+      border-right: 1px solid #232530;
+      width: 270px;
+      min-width: 250px;
+    }
+    .vscode-tab-active {
+      background-color: #1e1e24 !important;
+      color: #ffffff !important;
+      border-top: 2px solid #6366f1 !important;
+    }
+    .vscode-tab {
+      background-color: #13141a;
+      color: #8b92a5;
+      border-right: 1px solid #232530;
+      border-top: 2px solid transparent;
+      transition: all 0.15s ease;
+    }
+    .vscode-tab:hover {
+      background-color: #1a1b23;
+      color: #e2e8f0;
+    }
+    .vscode-gutter {
+      background-color: #181920;
+      color: #565f89;
+      user-select: none;
+      font-family: 'Fira Code', monospace;
+      text-align: right;
+      padding-right: 14px;
+      padding-left: 10px;
+      line-height: 1.625rem;
+      border-right: 1px solid #232530;
+    }
+    .vscode-editor-textarea {
+      font-family: 'Fira Code', monospace;
+      line-height: 1.625rem;
+      tab-size: 2;
+      background: transparent;
+      outline: none;
+      resize: none;
+      color: #f1f5f9;
+      white-space: pre;
+    }
+    .vscode-statusbar {
+      background-color: #4f46e5;
+      color: #ffffff;
+      font-size: 11px;
+      height: 26px;
+    }
+    .vscode-terminal-bg {
+      background-color: #0f1015;
+      font-family: 'Fira Code', monospace;
+    }
+    .file-tree-item {
+      transition: background-color 0.15s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .file-tree-item:hover {
+      background-color: #1f222e;
+    }
+    .file-tree-item.active {
+      background-color: #2e3247;
+      color: #ffffff;
+    }
+
   </style>
 </head>
 <body class="min-h-screen flex flex-col font-sans selection:bg-brandIndigo selection:text-white">
@@ -115,21 +195,25 @@
         <i data-lucide="list-ordered" class="w-4 h-4 text-brandEmerald"></i>
         <span>2. Step-by-Step Blueprint (ขั้นตอนคำสั่งสด 0-9)</span>
       </button>
+      <button onclick="switchTab('vscode')" id="tab-vscode" class="tab-btn px-4 py-2 rounded-lg border border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
+        <i data-lucide="code-2" class="w-4 h-4 text-blue-400"></i>
+        <span>3. VS Code IDE Simulator (จำลองห้องสอบจริง)</span>
+      </button>
       <button onclick="switchTab('labs')" id="tab-labs" class="tab-btn px-4 py-2 rounded-lg border border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
         <i data-lucide="terminal" class="w-4 h-4 text-brandCyan"></i>
-        <span>3. Hands-on Coding Labs (10 ข้อปฏิบัติ)</span>
+        <span>4. Hands-on Coding Labs (10 ข้อปฏิบัติ)</span>
       </button>
       <button onclick="switchTab('grill')" id="tab-grill" class="tab-btn px-4 py-2 rounded-lg border border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
         <i data-lucide="flame" class="w-4 h-4 text-brandAmber"></i>
-        <span>4. Grill Exam Simulator (ข้อสอบจับเวลา)</span>
+        <span>5. Grill Exam Simulator (ข้อสอบจับเวลา)</span>
       </button>
       <button onclick="switchTab('cheatsheet')" id="tab-cheatsheet" class="tab-btn px-4 py-2 rounded-lg border border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
         <i data-lucide="zap" class="w-4 h-4 text-purple-400"></i>
-        <span>5. Quick Cheat Sheet (กู้ชีพหน้าห้องสอบ)</span>
+        <span>6. Quick Cheat Sheet (กู้ชีพหน้าห้องสอบ)</span>
       </button>
       <button onclick="switchTab('checklist')" id="tab-checklist" class="tab-btn px-4 py-2 rounded-lg border border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
         <i data-lucide="check-square" class="w-4 h-4 text-pink-400"></i>
-        <span>6. Exam Readiness Checklist</span>
+        <span>7. Exam Readiness Checklist</span>
       </button>
     </div>
   </nav>
@@ -625,6 +709,7 @@
                 </div>
               </div>
               <div class="flex items-center gap-2">
+                <button onclick="switchTab('vscode'); openVSCodeFile('.gitignore');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด .gitignore ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
                 <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
                   <input type="checkbox" onchange="toggleStepDone('step0', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
@@ -678,6 +763,7 @@ git branch -M main</code></pre>
                 </div>
               </div>
               <div class="flex items-center gap-2">
+                <button onclick="switchTab('vscode'); openVSCodeFile('package.json');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด package.json ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
                 <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
                   <input type="checkbox" onchange="toggleStepDone('step1', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
@@ -725,6 +811,7 @@ npm install -D nodemon</code></pre>
                 </div>
               </div>
               <div class="flex items-center gap-2">
+                <button onclick="switchTab('vscode'); openVSCodeFile('.env');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด .env ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~1 นาที</span>
                 <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
                   <input type="checkbox" onchange="toggleStepDone('step2', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
@@ -768,6 +855,7 @@ MONGO_URI=mongodb://localhost:27017/examdb</code></pre>
                 </div>
               </div>
               <div class="flex items-center gap-2">
+                <button onclick="switchTab('vscode'); openVSCodeFile('Dockerfile');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด Dockerfile / docker-compose ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~4 นาที</span>
                 <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
                   <input type="checkbox" onchange="toggleStepDone('step3', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
@@ -840,6 +928,7 @@ docker compose ps</code></pre>
                 </div>
               </div>
               <div class="flex items-center gap-2">
+                <button onclick="switchTab('vscode'); openVSCodeFile('config/db.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด config/db.js ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
                 <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
                   <input type="checkbox" onchange="toggleStepDone('step4', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
@@ -883,6 +972,7 @@ module.exports = connectDB;</code></pre>
                 </div>
               </div>
               <div class="flex items-center gap-2">
+                <button onclick="switchTab('vscode'); openVSCodeFile('models/Student.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด models/Student.js ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~3 นาที</span>
                 <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
                   <input type="checkbox" onchange="toggleStepDone('step5', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
@@ -948,6 +1038,7 @@ module.exports = mongoose.model('Student', studentSchema);</code></pre>
                 </div>
               </div>
               <div class="flex items-center gap-2">
+                <button onclick="switchTab('vscode'); openVSCodeFile('server.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด server.js ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~3 นาที</span>
                 <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
                   <input type="checkbox" onchange="toggleStepDone('step6', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
@@ -1018,6 +1109,7 @@ app.listen(PORT, () => {
                 </div>
               </div>
               <div class="flex items-center gap-2">
+                <button onclick="switchTab('vscode'); openVSCodeFile('routes/studentRoutes.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด routes/studentRoutes.js ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~5 นาที</span>
                 <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
                   <input type="checkbox" onchange="toggleStepDone('step7', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
@@ -1123,6 +1215,7 @@ module.exports = router;</code></pre>
                 </div>
               </div>
               <div class="flex items-center gap-2">
+                <button onclick="switchTab('vscode'); runVSCodeTerminalCmd('curl http://localhost:5000/api/students');" class="px-2.5 py-1 rounded bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="play" class="w-3 h-3"></i><span>ทดสอบ cURL ใน Terminal</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
                 <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
                   <input type="checkbox" onchange="toggleStepDone('step8', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
@@ -1178,6 +1271,7 @@ module.exports = router;</code></pre>
                 </div>
               </div>
               <div class="flex items-center gap-2">
+                <button onclick="switchTab('vscode'); runVSCodeTerminalCmd('git status');" class="px-2.5 py-1 rounded bg-orange-600/20 hover:bg-orange-600 text-orange-300 hover:text-white border border-orange-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="git-branch" class="w-3 h-3"></i><span>รันคำสั่ง Git ใน Terminal</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
                 <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
                   <input type="checkbox" onchange="toggleStepDone('step9', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
@@ -1209,6 +1303,440 @@ git push -u origin main</code></pre>
     </div>
 
     <!-- ==================== TAB 3: HANDS-ON CODING LABS ==================== -->
+    
+    <!-- ==================== TAB 3: VS CODE IDE SIMULATOR ==================== -->
+    <div id="view-vscode" class="tab-view hidden space-y-6">
+      
+      <!-- VS Code Simulator Intro & Control Bar -->
+      <div class="glass-card rounded-2xl p-5 border border-blue-500/30 bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-slate-900/40 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs uppercase tracking-wider text-blue-400 font-semibold flex items-center gap-1.5">
+              <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
+              Interactive Practical Exam IDE
+            </span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-mono border border-blue-500/30">VS Code Dark+ Simulated</span>
+          </div>
+          <h2 class="text-xl md:text-2xl font-bold text-white mt-1">Visual Studio Code Exam Simulator (จำลองการพิมพ์และโครงสร้างไฟล์จริง)</h2>
+          <p class="text-slate-400 text-xs md:text-sm mt-1">ฝึกสร้างไฟล์, ตั้งชื่อและนามสกุลให้ถูกต้อง (<code class="text-amber-300">.js</code>, <code class="text-emerald-300">.env</code>, <code class="text-sky-300">Dockerfile</code>, <code class="text-pink-300">.yml</code>), สลับแท็บโค้ด, ตรวจสอบ Lint ป้องกันจุดหลอก, และจำลองการรัน Terminal</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="loadExamBlueprintToVSCode()" class="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs flex items-center gap-1.5 shadow-lg shadow-blue-600/25 transition-all">
+            <i data-lucide="download-cloud" class="w-4 h-4"></i>
+            <span>โหลด Exam Blueprint ครบชุด</span>
+          </button>
+          <button onclick="promptCreateNewFile()" class="px-3.5 py-2 rounded-lg bg-surfaceDark hover:bg-slate-800 text-slate-200 border border-surfaceBorder font-medium text-xs flex items-center gap-1.5 transition-all">
+            <i data-lucide="file-plus" class="w-4 h-4 text-emerald-400"></i>
+            <span>+ สร้างไฟล์ใหม่</span>
+          </button>
+          <button onclick="copyAllVSCodeFiles()" class="px-3.5 py-2 rounded-lg bg-surfaceDark hover:bg-slate-800 text-slate-200 border border-surfaceBorder font-medium text-xs flex items-center gap-1.5 transition-all" title="คัดลอกไฟล์ทั้งหมดลง Clipboard">
+            <i data-lucide="copy" class="w-4 h-4 text-cyan-400"></i>
+            <span>คัดลอกโปรเจกต์ทั้งหมด</span>
+          </button>
+          <button onclick="clearVSCodeWorkspace()" class="px-3 py-2 rounded-lg bg-surfaceDark hover:bg-rose-950/40 text-slate-400 hover:text-rose-300 border border-surfaceBorder font-medium text-xs flex items-center gap-1.5 transition-all" title="ล้าง Workspace เพื่อเริ่มพิมพ์ใหม่จากศูนย์">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+            <span>ล้าง Workspace</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- File Naming & Extension Rules Advisory -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+        <div class="p-3 rounded-xl bg-surfaceDark/80 border border-surfaceBorder flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-xs">.js</div>
+          <div>
+            <div class="font-bold text-slate-200">Node / Express</div>
+            <div class="text-[11px] text-slate-400">เช่น <code class="text-amber-300">server.js</code>, <code class="text-amber-300">db.js</code></div>
+          </div>
+        </div>
+        <div class="p-3 rounded-xl bg-surfaceDark/80 border border-surfaceBorder flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center font-bold text-xs"><i data-lucide="box" class="w-4 h-4"></i></div>
+          <div>
+            <div class="font-bold text-slate-200">Docker Config</div>
+            <div class="text-[11px] text-slate-400">เช่น <code class="text-sky-300">Dockerfile</code>, <code class="text-pink-300">docker-compose.yml</code></div>
+          </div>
+        </div>
+        <div class="p-3 rounded-xl bg-surfaceDark/80 border border-surfaceBorder flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold text-xs"><i data-lucide="lock" class="w-4 h-4"></i></div>
+          <div>
+            <div class="font-bold text-slate-200">Environment Vars</div>
+            <div class="text-[11px] text-slate-400">เช่น <code class="text-emerald-300">.env</code>, <code class="text-emerald-300">.env.example</code></div>
+          </div>
+        </div>
+        <div class="p-3 rounded-xl bg-surfaceDark/80 border border-surfaceBorder flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center font-bold text-xs"><i data-lucide="git-branch" class="w-4 h-4"></i></div>
+          <div>
+            <div class="font-bold text-slate-200">Git & Metadata</div>
+            <div class="text-[11px] text-slate-400">เช่น <code class="text-orange-300">.gitignore</code>, <code class="text-amber-300">package.json</code></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN VS CODE WINDOW FRAME -->
+      <div class="vscode-container flex flex-col h-[780px] select-none text-slate-300">
+        
+        <!-- VS Code Window Titlebar -->
+        <div class="bg-[#18191f] px-3 py-2 border-b border-[#282a36] flex items-center justify-between text-xs">
+          <div class="flex items-center gap-3">
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-[#ff5f56] inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-[#27c93f] inline-block"></span>
+            </div>
+            <div class="hidden sm:flex items-center gap-3 text-slate-400 text-[11px] ml-2">
+              <span class="hover:text-white cursor-pointer">File</span>
+              <span class="hover:text-white cursor-pointer">Edit</span>
+              <span class="hover:text-white cursor-pointer">Selection</span>
+              <span class="hover:text-white cursor-pointer">View</span>
+              <span class="hover:text-white cursor-pointer">Go</span>
+              <span class="hover:text-white cursor-pointer">Run</span>
+              <span class="hover:text-white cursor-pointer" onclick="toggleVSCodeBottomPanel()">Terminal</span>
+              <span class="hover:text-white cursor-pointer">Help</span>
+            </div>
+          </div>
+
+          <div class="text-slate-400 font-mono text-[11px] flex items-center gap-1.5 truncate">
+            <i data-lucide="code" class="w-3.5 h-3.5 text-blue-400"></i>
+            <span id="vscode-titlebar-filename">server-exam-2026</span>
+            <span class="text-slate-600">— Visual Studio Code</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="toggleVSCodeSidebar()" class="p-1 rounded hover:bg-slate-700/50 text-slate-400 hover:text-white" title="Toggle Sidebar">
+              <i data-lucide="sidebar" class="w-3.5 h-3.5"></i>
+            </button>
+            <button onclick="toggleVSCodeBottomPanel()" class="p-1 rounded hover:bg-slate-700/50 text-slate-400 hover:text-white" title="Toggle Terminal Panel">
+              <i data-lucide="panel-bottom" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- VS Code Middle Area: Activity Bar + Sidebar + Editor + Panel -->
+        <div class="flex-1 flex overflow-hidden">
+          
+          <!-- Activity Bar (Far Left) -->
+          <div class="vscode-activitybar flex flex-col items-center justify-between py-3">
+            <div class="flex flex-col items-center gap-4 text-slate-400">
+              <button onclick="setVSCodeActiveActivity('explorer')" id="act-explorer" class="p-2 text-white border-l-2 border-indigo-500 hover:text-white" title="Explorer (Ctrl+Shift+E)">
+                <i data-lucide="files" class="w-5 h-5"></i>
+              </button>
+              <button onclick="setVSCodeActiveActivity('search')" id="act-search" class="p-2 text-slate-500 hover:text-white border-l-2 border-transparent" title="Search in Workspace">
+                <i data-lucide="search" class="w-5 h-5"></i>
+              </button>
+              <button onclick="setVSCodeActiveActivity('git')" id="act-git" class="p-2 text-slate-500 hover:text-white border-l-2 border-transparent relative" title="Source Control">
+                <i data-lucide="git-branch" class="w-5 h-5"></i>
+                <span id="vscode-git-badge" class="hidden absolute top-1 right-1 w-2 h-2 rounded-full bg-blue-500"></span>
+              </button>
+              <button onclick="setVSCodeActiveActivity('rubric')" id="act-rubric" class="p-2 text-slate-500 hover:text-white border-l-2 border-transparent" title="Exam Rubric (20 Points)">
+                <i data-lucide="award" class="w-5 h-5"></i>
+              </button>
+            </div>
+            <div class="flex flex-col items-center gap-3 text-slate-500">
+              <button onclick="openVSCodeSettingsModal()" class="p-2 hover:text-white" title="Settings">
+                <i data-lucide="settings" class="w-5 h-5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Side Bar: Explorer & File Tree -->
+          <div id="vscode-sidebar" class="vscode-sidebar flex flex-col overflow-hidden">
+            
+            <!-- Explorer Header -->
+            <div class="px-3 py-2.5 bg-[#14151b] border-b border-[#232530] flex items-center justify-between text-xs">
+              <span class="font-bold text-slate-300 tracking-wider text-[11px]">EXPLORER: SERVER-EXAM</span>
+              <div class="flex items-center gap-1">
+                <button onclick="promptCreateNewFile()" class="p-1 hover:bg-slate-700/50 rounded text-slate-400 hover:text-emerald-400" title="New File (+ ไฟล์ใหม่)">
+                  <i data-lucide="file-plus" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="promptCreateNewFolder()" class="p-1 hover:bg-slate-700/50 rounded text-slate-400 hover:text-sky-400" title="New Folder (+ โฟลเดอร์ใหม่)">
+                  <i data-lucide="folder-plus" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="loadExamBlueprintToVSCode()" class="p-1 hover:bg-slate-700/50 rounded text-slate-400 hover:text-blue-400" title="Restore Standard Exam Blueprint">
+                  <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- New File/Folder Inline Creation Prompt (Hidden by default) -->
+            <div id="vscode-new-item-box" class="hidden p-2 bg-[#1c1e27] border-b border-indigo-500/40 text-xs space-y-1.5">
+              <div class="flex items-center justify-between text-[11px] text-slate-400">
+                <span id="vscode-new-item-title">ตั้งชื่อไฟล์ใหม่ (พร้อมนามสกุล):</span>
+                <button onclick="cancelCreateItem()" class="text-slate-500 hover:text-slate-300">✕</button>
+              </div>
+              <input type="text" id="vscode-new-item-input" oninput="validateNewItemName(this.value)" onkeydown="handleNewItemKeydown(event)" placeholder="เช่น server.js หรือ models/User.js" class="w-full bg-[#111218] border border-slate-700 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              
+              <!-- Validation Hint Box -->
+              <div id="vscode-name-feedback" class="text-[10px] leading-tight text-slate-400">
+                พิมพ์ชื่อไฟล์และกด Enter เพื่อสร้าง
+              </div>
+
+              <!-- Quick File Presets -->
+              <div class="pt-1 flex flex-wrap gap-1 text-[10px]">
+                <button onclick="quickSetNewFileName('server.js')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-300 font-mono border border-slate-700">+ server.js</button>
+                <button onclick="quickSetNewFileName('models/Student.js')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-300 font-mono border border-slate-700">+ models/Student.js</button>
+                <button onclick="quickSetNewFileName('routes/studentRoutes.js')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-300 font-mono border border-slate-700">+ routes/studentRoutes.js</button>
+                <button onclick="quickSetNewFileName('config/db.js')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-300 font-mono border border-slate-700">+ config/db.js</button>
+                <button onclick="quickSetNewFileName('Dockerfile')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-sky-300 font-mono border border-slate-700">+ Dockerfile</button>
+                <button onclick="quickSetNewFileName('docker-compose.yml')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-pink-300 font-mono border border-slate-700">+ docker-compose.yml</button>
+                <button onclick="quickSetNewFileName('.env')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-emerald-300 font-mono border border-slate-700">+ .env</button>
+                <button onclick="quickSetNewFileName('.gitignore')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-orange-300 font-mono border border-slate-700">+ .gitignore</button>
+                <button onclick="quickSetNewFileName('package.json')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-400 font-mono border border-slate-700">+ package.json</button>
+              </div>
+            </div>
+
+            <!-- Workspace File Tree List -->
+            <div id="vscode-filetree" class="flex-1 overflow-y-auto p-1 space-y-0.5 text-xs font-mono">
+              <!-- Populated dynamically via JavaScript -->
+            </div>
+
+            <!-- Workspace Stats Footer -->
+            <div class="px-3 py-2 bg-[#14151b] border-t border-[#232530] text-[10px] text-slate-400 flex items-center justify-between">
+              <span id="vscode-file-count">0 files</span>
+              <button onclick="promptCreateNewFolder()" class="text-sky-400 hover:underline">+ New Folder</button>
+            </div>
+          </div>
+
+          <!-- Main Editor Workspace (Tabs + Editor Canvas + Bottom Panel) -->
+          <div class="flex-1 flex flex-col overflow-hidden bg-[#1e1e24]">
+            
+            <!-- Editor Tabs Bar -->
+            <div class="bg-[#14151b] border-b border-[#282a36] flex items-center justify-between overflow-hidden">
+              <div id="vscode-tabs-bar" class="flex items-center overflow-x-auto text-xs font-mono select-none">
+                <!-- Tabs populated dynamically -->
+              </div>
+              <div class="flex items-center gap-1 px-2 text-slate-400">
+                <button onclick="promptCreateNewFile()" class="p-1 hover:bg-slate-700/50 rounded" title="Open New File">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="closeAllTabs()" class="p-1 hover:bg-slate-700/50 rounded text-slate-500 hover:text-slate-300" title="Close All Tabs">
+                  <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Breadcrumb Navigation Bar -->
+            <div class="bg-[#181920] px-4 py-1.5 border-b border-[#232530] flex items-center justify-between text-[11px] text-slate-400 font-mono">
+              <div id="vscode-breadcrumb-path" class="flex items-center gap-1.5 truncate">
+                <span>server-exam-2026</span>
+                <span>›</span>
+                <span id="vscode-breadcrumb-file" class="text-white">server.js</span>
+              </div>
+              <div class="flex items-center gap-3 text-[10px]">
+                <span id="vscode-doc-stats" class="text-slate-500">Ln 1, Col 1 • 0 chars</span>
+                <span id="vscode-lang-badge" class="px-1.5 py-0.2 rounded bg-indigo-950/60 text-indigo-300 border border-indigo-800/40">JavaScript</span>
+              </div>
+            </div>
+
+            <!-- Code Editor Body Area (Gutter + Textarea) -->
+            <div class="flex-1 flex overflow-hidden relative">
+              
+              <!-- Active Editor Canvas -->
+              <div id="vscode-editor-pane" class="flex-1 flex overflow-hidden">
+                <!-- Line Numbers Gutter -->
+                <div id="vscode-gutter" class="vscode-gutter select-none text-xs overflow-hidden">
+                  1
+                </div>
+
+                <!-- Textarea Code Input -->
+                <div class="flex-1 relative overflow-hidden">
+                  <textarea id="vscode-editor-textarea" 
+                    oninput="handleVSCodeTextareaInput()" 
+                    onscroll="syncVSCodeGutterScroll()" 
+                    onkeydown="handleVSCodeEditorKeydown(event)"
+                    onclick="updateCursorPosition()" 
+                    onkeyup="updateCursorPosition()" 
+                    class="vscode-editor-textarea w-full h-full p-3 text-xs md:text-sm" 
+                    spellcheck="false" 
+                    autocapitalize="off"></textarea>
+
+                  <!-- Floating Quick Action Toolbar -->
+                  <div class="absolute top-2 right-4 flex items-center gap-1.5 bg-[#181920]/90 backdrop-blur-md px-2 py-1 rounded-lg border border-[#2e3247] shadow-lg text-xs">
+                    <button onclick="copyActiveVSCodeFile()" class="p-1 rounded hover:bg-slate-700/60 text-slate-300 hover:text-white" title="Copy Current Code">
+                      <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    </button>
+                    <button onclick="fillActiveFileBoilerplate()" class="p-1 rounded hover:bg-slate-700/60 text-amber-300 hover:text-amber-200" title="Fill Exam Solution for this file">
+                      <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                    </button>
+                    <button onclick="formatVSCodeCode()" class="p-1 rounded hover:bg-slate-700/60 text-cyan-300 hover:text-cyan-200" title="Format / Auto Indent">
+                      <i data-lucide="align-left" class="w-3.5 h-3.5"></i>
+                    </button>
+                    <button onclick="auditCurrentFileTraps()" class="p-1 rounded hover:bg-slate-700/60 text-emerald-400 hover:text-emerald-300" title="Audit this file for exam traps">
+                      <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Empty State (When no files are open) -->
+              <div id="vscode-empty-state" class="hidden absolute inset-0 flex flex-col items-center justify-center bg-[#1e1e24] p-6 text-center space-y-4">
+                <div class="w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+                  <i data-lucide="code" class="w-8 h-8"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-base text-white">ไม่มีไฟล์ที่เปิดอยู่ใน Editor</h3>
+                  <p class="text-xs text-slate-400 max-w-sm mt-1">คลิกเลือกไฟล์จาก Explorer ด้านซ้าย หรือกดปุ่มด้านล่างเพื่อเริ่มสร้างไฟล์และเขียนโค้ด</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button onclick="loadExamBlueprintToVSCode()" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-medium flex items-center gap-1.5">
+                    <i data-lucide="download-cloud" class="w-4 h-4"></i>
+                    <span>เปิด Exam Blueprint ครบ 8 ไฟล์</span>
+                  </button>
+                  <button onclick="promptCreateNewFile()" class="px-4 py-2 rounded-lg bg-surfaceDark hover:bg-slate-800 text-slate-200 border border-surfaceBorder text-xs font-medium flex items-center gap-1.5">
+                    <i data-lucide="file-plus" class="w-4 h-4"></i>
+                    <span>สร้างไฟล์ใหม่</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Collapsible Bottom Panel: Terminal / Problems / Rubric -->
+            <div id="vscode-bottom-panel" class="h-64 border-t border-[#282a36] bg-[#0f1015] flex flex-col">
+              
+              <!-- Panel Tab Header -->
+              <div class="bg-[#14151b] px-3 py-1.5 border-b border-[#232530] flex items-center justify-between text-xs">
+                <div class="flex items-center gap-4 text-[11px] font-mono">
+                  <button onclick="setVSCodePanelTab('terminal')" id="pntab-terminal" class="text-white border-b-2 border-indigo-500 pb-0.5 flex items-center gap-1.5">
+                    <i data-lucide="terminal" class="w-3.5 h-3.5 text-emerald-400"></i>
+                    <span>TERMINAL</span>
+                  </button>
+                  <button onclick="setVSCodePanelTab('problems')" id="pntab-problems" class="text-slate-400 hover:text-white border-b-2 border-transparent pb-0.5 flex items-center gap-1.5">
+                    <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-amber-400"></i>
+                    <span>PROBLEMS</span>
+                    <span id="vscode-problem-badge" class="px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 text-[10px]">0</span>
+                  </button>
+                  <button onclick="setVSCodePanelTab('rubric')" id="pntab-rubric" class="text-slate-400 hover:text-white border-b-2 border-transparent pb-0.5 flex items-center gap-1.5">
+                    <i data-lucide="check-circle" class="w-3.5 h-3.5 text-blue-400"></i>
+                    <span>EXAM RUBRIC (20 PTS)</span>
+                  </button>
+                </div>
+
+                <div class="flex items-center gap-2 text-slate-500">
+                  <button onclick="clearVSCodeTerminal()" class="hover:text-slate-300" title="Clear Terminal">
+                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button onclick="toggleVSCodeBottomPanel()" class="hover:text-slate-300" title="Close Panel">
+                    <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Panel Body: Terminal View -->
+              <div id="pnb-terminal" class="flex-1 flex flex-col p-3 overflow-hidden vscode-terminal-bg text-xs">
+                <!-- Terminal Output Stream -->
+                <div id="vscode-terminal-output" class="flex-1 overflow-y-auto space-y-1 text-slate-300 pr-2">
+                  <div class="text-slate-500"># Welcome to VS Code Integrated Practical Terminal.</div>
+                  <div class="text-slate-500"># Type commands or click the shortcut chips below to simulate dev server & docker:</div>
+                  <div class="text-emerald-400">tawan@kmitl-exam:~/server-exam-2026$ <span class="text-slate-300">ready</span></div>
+                </div>
+
+                <!-- Quick Command Chips -->
+                <div class="pt-2 pb-1 flex flex-wrap gap-1.5 text-[10px] font-mono border-t border-slate-800/80 mt-1">
+                  <button onclick="runVSCodeTerminalCmd('npm run dev')" class="px-2 py-1 rounded bg-[#1e2029] hover:bg-slate-700 text-emerald-300 border border-slate-700 flex items-center gap-1">
+                    <i data-lucide="play" class="w-3 h-3"></i> npm run dev
+                  </button>
+                  <button onclick="runVSCodeTerminalCmd('docker compose up -d')" class="px-2 py-1 rounded bg-[#1e2029] hover:bg-slate-700 text-sky-300 border border-slate-700 flex items-center gap-1">
+                    <i data-lucide="box" class="w-3 h-3"></i> docker compose up -d
+                  </button>
+                  <button onclick="runVSCodeTerminalCmd('docker ps')" class="px-2 py-1 rounded bg-[#1e2029] hover:bg-slate-700 text-cyan-300 border border-slate-700">
+                    docker ps
+                  </button>
+                  <button onclick="runVSCodeTerminalCmd('curl http://localhost:5000/api/students')" class="px-2 py-1 rounded bg-[#1e2029] hover:bg-slate-700 text-amber-300 border border-slate-700">
+                    curl GET /api/students
+                  </button>
+                  <button onclick="runVSCodeTerminalCmd('curl -X POST http://localhost:5000/api/students')" class="px-2 py-1 rounded bg-[#1e2029] hover:bg-slate-700 text-amber-300 border border-slate-700">
+                    curl POST /api/students
+                  </button>
+                  <button onclick="runVSCodeTerminalCmd('git status')" class="px-2 py-1 rounded bg-[#1e2029] hover:bg-slate-700 text-orange-300 border border-slate-700">
+                    git status
+                  </button>
+                  <button onclick="runVSCodeTerminalCmd('ls -la')" class="px-2 py-1 rounded bg-[#1e2029] hover:bg-slate-700 text-slate-300 border border-slate-700">
+                    ls -la
+                  </button>
+                  <button onclick="clearVSCodeTerminal()" class="px-2 py-1 rounded bg-[#1e2029] hover:bg-slate-700 text-rose-300 border border-slate-700">
+                    clear
+                  </button>
+                </div>
+
+                <!-- Terminal Interactive Input Row -->
+                <div class="flex items-center gap-2 pt-1">
+                  <span class="text-emerald-400 font-bold select-none text-[11px]">tawan@kmitl-exam:~$</span>
+                  <input type="text" id="vscode-terminal-input" onkeydown="handleVSCodeTerminalKeydown(event)" placeholder="พิมพ์คำสั่ง เช่น npm run dev, git status..." class="flex-1 bg-transparent text-emerald-300 text-xs focus:outline-none font-mono" autocomplete="off" spellcheck="false">
+                  <button onclick="submitVSCodeTerminalInput()" class="px-2.5 py-1 rounded bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-sans font-medium">
+                    Run
+                  </button>
+                </div>
+              </div>
+
+              <!-- Panel Body: Problems / Linter View -->
+              <div id="pnb-problems" class="hidden flex-1 p-3 overflow-y-auto text-xs space-y-2 font-mono">
+                <div class="flex items-center justify-between border-b border-[#232530] pb-2">
+                  <span class="font-bold text-slate-200">Workspace Diagnostic Results (ตรวจจุดบกพร่องของไฟล์ทั้งหมด):</span>
+                  <button onclick="runWorkspaceLinter()" class="px-2 py-0.5 rounded bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white text-[11px] border border-indigo-500/40">
+                    🔄 สแกนใหม่
+                  </button>
+                </div>
+                <div id="vscode-problems-list" class="space-y-1.5">
+                  <!-- Populated via JS -->
+                </div>
+              </div>
+
+              <!-- Panel Body: Exam Rubric View (20 Points) -->
+              <div id="pnb-rubric" class="hidden flex-1 p-3 overflow-y-auto text-xs space-y-3 font-sans">
+                <div class="flex items-center justify-between border-b border-[#232530] pb-2">
+                  <div>
+                    <h4 class="font-bold text-sm text-white">Midterm Practical Exam 20-Point Rubric</h4>
+                    <p class="text-[11px] text-slate-400">ประเมินคะแนนความสมบูรณ์ของโครงสร้างโปรเจกต์และโค้ดใน Workspace แบบเรียลไทม์</p>
+                  </div>
+                  <div class="text-right">
+                    <div id="vscode-rubric-score" class="text-2xl font-bold font-mono text-emerald-400">20 / 20</div>
+                    <div class="text-[10px] text-slate-400">Total Score</div>
+                  </div>
+                </div>
+                <div id="vscode-rubric-items" class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                  <!-- Populated via JS -->
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- VS Code Bottom Status Bar -->
+        <div class="vscode-statusbar px-3 flex items-center justify-between select-none">
+          <div class="flex items-center gap-3">
+            <span class="flex items-center gap-1 hover:bg-indigo-700 px-1.5 py-0.5 rounded cursor-pointer">
+              <i data-lucide="git-branch" class="w-3 h-3"></i>
+              <span>main*</span>
+            </span>
+            <span class="flex items-center gap-1 hover:bg-indigo-700 px-1.5 py-0.5 rounded cursor-pointer" onclick="setVSCodePanelTab('problems')">
+              <i data-lucide="x-circle" class="w-3 h-3 text-rose-300"></i>
+              <span id="stb-errors">0</span>
+              <i data-lucide="alert-triangle" class="w-3 h-3 text-amber-300 ml-1"></i>
+              <span id="stb-warnings">0</span>
+            </span>
+            <span class="hidden sm:inline hover:bg-indigo-700 px-1.5 py-0.5 rounded cursor-pointer" onclick="runVSCodeTerminalCmd('npm run dev')">
+              <i data-lucide="radio" class="w-3 h-3 inline text-emerald-300 mr-1"></i>
+              <span>Port: 5000</span>
+            </span>
+          </div>
+
+          <div class="flex items-center gap-4">
+            <span id="stb-cursor">Ln 1, Col 1</span>
+            <span class="hidden sm:inline">Spaces: 2</span>
+            <span class="hidden sm:inline">UTF-8</span>
+            <span id="stb-lang" class="font-medium bg-indigo-700 px-2 py-0.5 rounded">JavaScript</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
     <div id="view-labs" class="tab-view hidden space-y-6">
       
       <!-- Lab Selector Header -->
@@ -3450,6 +3978,1125 @@ module.exports = router;`;
         alert('คัดลอก Starter Kit โค้ดทุกไฟล์ (All Files Bundle) เรียบร้อยแล้ว!');
       });
     }
+
+    
+    // =========================================================================
+    // 🖥️ VISUAL STUDIO CODE EXAM SIMULATOR CONTROLLER
+    // =========================================================================
+
+    const DEFAULT_VSCODE_WORKSPACE = {
+      ".gitignore": `node_modules/
+.env
+.DS_Store
+*.log`,
+
+      "package.json": `{
+  "name": "server-side-midterm-exam",
+  "version": "1.0.0",
+  "description": "Server-Side Web Development 06016418 Practical Exam Project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}`,
+
+      ".env": `PORT=5000
+NODE_ENV=development
+MONGO_URI=mongodb://localhost:27017/examdb`,
+
+      ".env.example": `PORT=5000
+NODE_ENV=development
+MONGO_URI=mongodb://localhost:27017/examdb`,
+
+      "Dockerfile": `FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 5000
+CMD ["npm", "start"]`,
+
+      "docker-compose.yml": `version: '3.8'
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: exam_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: examdb
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:`,
+
+      "config/db.js": `const mongoose = require('mongoose');
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/examdb');
+    console.log(\`✅ MongoDB Connected: \${conn.connection.host}\`);
+  } catch (error) {
+    console.error(\`❌ MongoDB Connection Error: \${error.message}\`);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDB;`,
+
+      "models/Student.js": `const mongoose = require('mongoose');
+
+const studentSchema = new mongoose.Schema({
+  studentId: {
+    type: String,
+    required: [true, 'Student ID is required'],
+    unique: true,
+    trim: true
+  },
+  name: {
+    type: String,
+    required: [true, 'Student name is required'],
+    trim: true
+  },
+  major: {
+    type: String,
+    required: true,
+    enum: ['IT', 'CS', 'DS', 'SE'],
+    default: 'IT'
+  },
+  gpa: {
+    type: Number,
+    min: [0.0, 'GPA cannot be less than 0.0'],
+    max: [4.0, 'GPA cannot be more than 4.0'],
+    default: 0.0
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  }
+}, {
+  timestamps: true
+});
+
+module.exports = mongoose.model('Student', studentSchema);`,
+
+      "server.js": `require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db');
+const studentRoutes = require('./routes/studentRoutes');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// 1. Connect Database
+connectDB();
+
+// 2. Middlewares (Must be before routes)
+app.use(cors());
+app.use(express.json());
+
+// 3. Healthcheck Route
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Server-Side Practical Exam API is running!' });
+});
+
+// 4. API Routes Mounting
+app.use('/api/students', studentRoutes);
+
+// 5. 404 Route Not Found
+app.use((req, res, next) => {
+  res.status(404).json({ error: \`Route \${req.originalUrl} not found\` });
+});
+
+// 6. Global Error Handler Middleware
+app.use((err, req, res, next) => {
+  console.error('Unhandled Error:', err.stack);
+  res.status(err.status || 500).json({
+    error: err.message || 'Internal Server Error'
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(\`🚀 Server running on http://localhost:\${PORT}\`);
+});`,
+
+      "routes/studentRoutes.js": `const express = require('express');
+const router = express.Router();
+const Student = require('../models/Student');
+
+// 1. CREATE: POST /api/students (Status 201)
+router.post('/', async (req, res) => {
+  try {
+    const student = await Student.create(req.body);
+    res.status(201).json(student);
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(400).json({ error: 'Duplicate studentId error' });
+    }
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// 2. READ ALL: GET /api/students (Status 200 + Query Filter)
+router.get('/', async (req, res) => {
+  try {
+    const filter = {};
+    if (req.query.major) filter.major = req.query.major;
+    if (req.query.isActive !== undefined) filter.isActive = req.query.isActive === 'true';
+
+    const students = await Student.find(filter).sort({ createdAt: -1 });
+    res.status(200).json(students);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 3. READ ONE: GET /api/students/:id (Status 200 / 404)
+router.get('/:id', async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.status(200).json(student);
+  } catch (err) {
+    res.status(400).json({ error: 'Invalid ID format or Error: ' + err.message });
+  }
+});
+
+// 4. UPDATE: PUT /api/students/:id (Status 200 / 404 + { new: true, runValidators: true })
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedStudent = await Student.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!updatedStudent) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.status(200).json(updatedStudent);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// 5. DELETE: DELETE /api/students/:id (Status 200 / 404)
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedStudent = await Student.findByIdAndDelete(req.params.id);
+    if (!deletedStudent) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.status(200).json({ message: 'Student deleted successfully', id: req.params.id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+module.exports = router;`
+    };
+
+    let vsFiles = {};
+    let vsOpenTabs = [];
+    let vsActiveFile = 'server.js';
+    let vsCollapsedFolders = {};
+
+    function initVSCodeSimulator() {
+      const saved = localStorage.getItem('serverside_vscode_files');
+      if (saved) {
+        try {
+          vsFiles = JSON.parse(saved);
+        } catch (e) {
+          vsFiles = { ...DEFAULT_VSCODE_WORKSPACE };
+        }
+      } else {
+        vsFiles = { ...DEFAULT_VSCODE_WORKSPACE };
+      }
+
+      const savedTabs = localStorage.getItem('serverside_vscode_tabs');
+      if (savedTabs) {
+        try {
+          vsOpenTabs = JSON.parse(savedTabs);
+        } catch (e) {
+          vsOpenTabs = ['server.js', 'routes/studentRoutes.js', 'models/Student.js', 'Dockerfile'];
+        }
+      } else {
+        vsOpenTabs = ['server.js', 'routes/studentRoutes.js', 'models/Student.js', 'Dockerfile'];
+      }
+
+      if (!vsOpenTabs.includes(vsActiveFile) && vsOpenTabs.length > 0) {
+        vsActiveFile = vsOpenTabs[0];
+      }
+
+      renderVSCodeFileTree();
+      renderVSCodeTabs();
+      openVSCodeFile(vsActiveFile || Object.keys(vsFiles)[0] || null);
+      runWorkspaceLinter();
+    }
+
+    function saveVSCodeToStorage() {
+      localStorage.setItem('serverside_vscode_files', JSON.stringify(vsFiles));
+      localStorage.setItem('serverside_vscode_tabs', JSON.stringify(vsOpenTabs));
+    }
+
+    function getFileIcon(filename) {
+      if (filename.endsWith('.js')) return '<span class="text-amber-400 font-bold text-[11px]">JS</span>';
+      if (filename.endsWith('.json')) return '<span class="text-amber-500 font-bold text-[11px]">{}</span>';
+      if (filename.endsWith('.env') || filename.includes('.env.')) return '<span class="text-emerald-400 font-bold text-[11px]">ENV</span>';
+      if (filename.startsWith('Dockerfile') || filename.endsWith('.dockerfile')) return '<span class="text-sky-400 font-bold text-[11px]">🐳</span>';
+      if (filename.endsWith('.yml') || filename.endsWith('.yaml')) return '<span class="text-pink-400 font-bold text-[11px]">YML</span>';
+      if (filename.endsWith('.gitignore')) return '<span class="text-orange-400 font-bold text-[11px]">GIT</span>';
+      if (filename.endsWith('.md')) return '<span class="text-blue-400 font-bold text-[11px]">MD</span>';
+      if (filename.endsWith('.sql')) return '<span class="text-cyan-400 font-bold text-[11px]">SQL</span>';
+      return '<span class="text-slate-400 font-bold text-[11px]">📄</span>';
+    }
+
+    function getFileLanguage(filename) {
+      if (!filename) return 'Plain Text';
+      if (filename.endsWith('.js')) return 'JavaScript';
+      if (filename.endsWith('.json')) return 'JSON';
+      if (filename.endsWith('.env') || filename.includes('.env.')) return 'ENV Config';
+      if (filename.startsWith('Dockerfile')) return 'Dockerfile';
+      if (filename.endsWith('.yml') || filename.endsWith('.yaml')) return 'YAML';
+      if (filename.endsWith('.gitignore')) return 'Ignore File';
+      if (filename.endsWith('.md')) return 'Markdown';
+      if (filename.endsWith('.sql')) return 'SQL';
+      return 'Plain Text';
+    }
+
+    function renderVSCodeFileTree() {
+      const container = document.getElementById('vscode-filetree');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const filePaths = Object.keys(vsFiles).sort();
+      document.getElementById('vscode-file-count').innerText = `${filePaths.length} files`;
+
+      // Group files into folders
+      const tree = { folders: {}, files: [] };
+      filePaths.forEach(path => {
+        const parts = path.split('/');
+        if (parts.length === 1) {
+          tree.files.push(path);
+        } else {
+          const folder = parts[0];
+          if (!tree.folders[folder]) tree.folders[folder] = [];
+          tree.folders[folder].push(path);
+        }
+      });
+
+      // Render Folders first
+      Object.keys(tree.folders).sort().forEach(folder => {
+        const isCollapsed = vsCollapsedFolders[folder];
+        const folderDiv = document.createElement('div');
+        folderDiv.className = 'space-y-0.5';
+
+        const folderRow = document.createElement('div');
+        folderRow.className = 'file-tree-item flex items-center justify-between px-2 py-1 rounded text-slate-300 text-[11px] font-mono';
+        folderRow.onclick = () => {
+          vsCollapsedFolders[folder] = !vsCollapsedFolders[folder];
+          renderVSCodeFileTree();
+        };
+
+        folderRow.innerHTML = `
+          <div class="flex items-center gap-1.5">
+            <span class="text-slate-500 text-[10px] transform transition-transform ${isCollapsed ? '' : 'rotate-90'}">▶</span>
+            <span class="text-amber-400">📁</span>
+            <span class="font-semibold text-slate-200">${folder}</span>
+          </div>
+          <span class="text-[10px] text-slate-500">${tree.folders[folder].length}</span>
+        `;
+        folderDiv.appendChild(folderRow);
+
+        if (!isCollapsed) {
+          const innerFilesDiv = document.createElement('div');
+          innerFilesDiv.className = 'pl-4 space-y-0.5 border-l border-slate-800 ml-2';
+
+          tree.folders[folder].forEach(filePath => {
+            const fileName = filePath.split('/')[1];
+            const fileRow = document.createElement('div');
+            const isActive = filePath === vsActiveFile;
+            fileRow.className = `file-tree-item flex items-center justify-between px-2 py-1 rounded text-[11px] font-mono ${isActive ? 'active' : 'text-slate-300'}`;
+            
+            // Check invalid extension
+            const hasValidExt = fileName.includes('.') || fileName === 'Dockerfile';
+            const warnIcon = !hasValidExt ? '<span class="text-rose-400 text-[10px]" title="เตือน: ไม่มีนามสกุลไฟล์">⚠️</span>' : '';
+
+            fileRow.innerHTML = `
+              <div class="flex items-center gap-1.5 truncate flex-1" onclick="openVSCodeFile('${filePath}')">
+                ${getFileIcon(fileName)}
+                <span class="truncate ${isActive ? 'font-bold text-white' : ''}">${fileName}</span>
+                ${warnIcon}
+              </div>
+              <div class="flex items-center gap-1 opacity-0 hover:opacity-100 group-hover:opacity-100">
+                <button onclick="promptRenameFile('${filePath}', event)" class="p-0.5 text-slate-400 hover:text-amber-300" title="เปลี่ยนชื่อ">✏️</button>
+                <button onclick="deleteVSCodeFile('${filePath}', event)" class="p-0.5 text-slate-400 hover:text-rose-400" title="ลบไฟล์">🗑️</button>
+              </div>
+            `;
+            innerFilesDiv.appendChild(fileRow);
+          });
+          folderDiv.appendChild(innerFilesDiv);
+        }
+
+        container.appendChild(folderDiv);
+      });
+
+      // Render Root Files
+      tree.files.forEach(filePath => {
+        const fileRow = document.createElement('div');
+        const isActive = filePath === vsActiveFile;
+        fileRow.className = `file-tree-item flex items-center justify-between px-2 py-1 rounded text-[11px] font-mono ${isActive ? 'active' : 'text-slate-300'}`;
+        
+        const hasValidExt = filePath.includes('.') || filePath === 'Dockerfile';
+        const warnIcon = !hasValidExt ? '<span class="text-rose-400 text-[10px]" title="เตือน: ไม่มีนามสกุลไฟล์">⚠️</span>' : '';
+
+        fileRow.innerHTML = `
+          <div class="flex items-center gap-1.5 truncate flex-1" onclick="openVSCodeFile('${filePath}')">
+            ${getFileIcon(filePath)}
+            <span class="truncate ${isActive ? 'font-bold text-white' : ''}">${filePath}</span>
+            ${warnIcon}
+          </div>
+          <div class="flex items-center gap-1">
+            <button onclick="promptRenameFile('${filePath}', event)" class="p-0.5 text-slate-500 hover:text-amber-300" title="เปลี่ยนชื่อ">✏️</button>
+            <button onclick="deleteVSCodeFile('${filePath}', event)" class="p-0.5 text-slate-500 hover:text-rose-400" title="ลบไฟล์">🗑️</button>
+          </div>
+        `;
+        container.appendChild(fileRow);
+      });
+
+      lucide.createIcons();
+    }
+
+    function renderVSCodeTabs() {
+      const container = document.getElementById('vscode-tabs-bar');
+      if (!container) return;
+      container.innerHTML = '';
+
+      vsOpenTabs.forEach(filePath => {
+        const isActive = filePath === vsActiveFile;
+        const fileName = filePath.split('/').pop();
+        const tab = document.createElement('div');
+        tab.className = `vscode-tab flex items-center gap-2 px-3 py-2 text-[11px] font-mono border-r border-[#232530] cursor-pointer shrink-0 ${isActive ? 'vscode-tab-active' : ''}`;
+        
+        tab.innerHTML = `
+          <span onclick="openVSCodeFile('${filePath}')" class="flex items-center gap-1.5">
+            ${getFileIcon(fileName)}
+            <span class="${isActive ? 'text-white font-medium' : 'text-slate-400'}">${fileName}</span>
+          </span>
+          <button onclick="closeVSCodeTab('${filePath}', event)" class="hover:bg-slate-700/60 text-slate-400 hover:text-white rounded p-0.5 ml-1" title="Close Tab">
+            ✕
+          </button>
+        `;
+        container.appendChild(tab);
+      });
+    }
+
+    function openVSCodeFile(filePath) {
+      if (!filePath || vsFiles[filePath] === undefined) {
+        if (Object.keys(vsFiles).length > 0) {
+          filePath = Object.keys(vsFiles)[0];
+        } else {
+          showEmptyEditorState();
+          return;
+        }
+      }
+
+      vsActiveFile = filePath;
+      if (!vsOpenTabs.includes(filePath)) {
+        vsOpenTabs.push(filePath);
+      }
+
+      hideEmptyEditorState();
+      saveVSCodeToStorage();
+      renderVSCodeFileTree();
+      renderVSCodeTabs();
+
+      const textarea = document.getElementById('vscode-editor-textarea');
+      const code = vsFiles[filePath] || '';
+      textarea.value = code;
+
+      // Update Breadcrumbs & Status
+      document.getElementById('vscode-breadcrumb-file').innerText = filePath;
+      document.getElementById('vscode-titlebar-filename').innerText = filePath;
+      document.getElementById('vscode-lang-badge').innerText = getFileLanguage(filePath);
+      document.getElementById('stb-lang').innerText = getFileLanguage(filePath);
+
+      syncVSCodeGutter(code);
+      updateDocStats(code);
+    }
+
+    function closeVSCodeTab(filePath, event) {
+      if (event) event.stopPropagation();
+      vsOpenTabs = vsOpenTabs.filter(t => t !== filePath);
+      
+      if (vsActiveFile === filePath) {
+        if (vsOpenTabs.length > 0) {
+          openVSCodeFile(vsOpenTabs[vsOpenTabs.length - 1]);
+        } else {
+          vsActiveFile = null;
+          showEmptyEditorState();
+          renderVSCodeFileTree();
+          renderVSCodeTabs();
+        }
+      } else {
+        renderVSCodeTabs();
+      }
+      saveVSCodeToStorage();
+    }
+
+    function closeAllTabs() {
+      vsOpenTabs = [];
+      vsActiveFile = null;
+      showEmptyEditorState();
+      renderVSCodeTabs();
+      saveVSCodeToStorage();
+    }
+
+    function showEmptyEditorState() {
+      document.getElementById('vscode-editor-pane').classList.add('hidden');
+      document.getElementById('vscode-empty-state').classList.remove('hidden');
+      document.getElementById('vscode-breadcrumb-file').innerText = 'No Open File';
+      document.getElementById('vscode-doc-stats').innerText = '0 lines • 0 chars';
+    }
+
+    function hideEmptyEditorState() {
+      document.getElementById('vscode-editor-pane').classList.remove('hidden');
+      document.getElementById('vscode-empty-state').classList.add('hidden');
+    }
+
+    function handleVSCodeTextareaInput() {
+      if (!vsActiveFile) return;
+      const code = document.getElementById('vscode-editor-textarea').value;
+      vsFiles[vsActiveFile] = code;
+      saveVSCodeToStorage();
+      syncVSCodeGutter(code);
+      updateDocStats(code);
+      runWorkspaceLinter();
+    }
+
+    function syncVSCodeGutter(code) {
+      const gutter = document.getElementById('vscode-gutter');
+      if (!gutter) return;
+      const lines = code.split('\n').length;
+      let gutterHtml = '';
+      for (let i = 1; i <= lines; i++) {
+        gutterHtml += `<div>${i}</div>`;
+      }
+      gutter.innerHTML = gutterHtml;
+    }
+
+    function syncVSCodeGutterScroll() {
+      const textarea = document.getElementById('vscode-editor-textarea');
+      const gutter = document.getElementById('vscode-gutter');
+      if (textarea && gutter) {
+        gutter.scrollTop = textarea.scrollTop;
+      }
+    }
+
+    function updateDocStats(code) {
+      const lines = code.split('\n').length;
+      const chars = code.length;
+      document.getElementById('vscode-doc-stats').innerText = `Ln ${lines}, Col 1 • ${chars} chars`;
+    }
+
+    function updateCursorPosition() {
+      const textarea = document.getElementById('vscode-editor-textarea');
+      if (!textarea) return;
+      const pos = textarea.selectionStart;
+      const lines = textarea.value.substring(0, pos).split('\n');
+      const curLine = lines.length;
+      const curCol = lines[lines.length - 1].length + 1;
+      document.getElementById('stb-cursor').innerText = `Ln ${curLine}, Col ${curCol}`;
+    }
+
+    function handleVSCodeEditorKeydown(e) {
+      const textarea = document.getElementById('vscode-editor-textarea');
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        textarea.value = textarea.value.substring(0, start) + '  ' + textarea.value.substring(end);
+        textarea.selectionStart = textarea.selectionEnd = start + 2;
+        handleVSCodeTextareaInput();
+      } else if (e.key === 'Enter') {
+        // Auto-indent
+        const start = textarea.selectionStart;
+        const line = textarea.value.substring(0, start).split('\n').pop();
+        const match = line.match(/^(\s+)/);
+        if (match) {
+          e.preventDefault();
+          const indent = match[1];
+          textarea.value = textarea.value.substring(0, start) + '\n' + indent + textarea.value.substring(start);
+          textarea.selectionStart = textarea.selectionEnd = start + indent.length + 1;
+          handleVSCodeTextareaInput();
+        }
+      } else if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        saveVSCodeToStorage();
+        showVSCodeStatusNotification('💾 บันทึกไฟล์เรียบร้อย (Saved)');
+      }
+    }
+
+    function showVSCodeStatusNotification(msg) {
+      const stbLang = document.getElementById('stb-lang');
+      const originalText = stbLang.innerText;
+      stbLang.innerText = msg;
+      stbLang.classList.add('bg-emerald-600');
+      setTimeout(() => {
+        stbLang.innerText = originalText;
+        stbLang.classList.remove('bg-emerald-600');
+      }, 2000);
+    }
+
+    // --- PROMPT & CREATION ACTIONS ---
+    function promptCreateNewFile() {
+      document.getElementById('vscode-new-item-box').classList.remove('hidden');
+      document.getElementById('vscode-new-item-title').innerText = 'ตั้งชื่อไฟล์ใหม่ (พร้อมนามสกุล เช่น server.js):';
+      const input = document.getElementById('vscode-new-item-input');
+      input.value = '';
+      input.focus();
+      validateNewItemName('');
+    }
+
+    function promptCreateNewFolder() {
+      const folderName = prompt('ระบุชื่อโฟลเดอร์ใหม่ (เช่น routes, models, config, middleware):');
+      if (folderName && folderName.trim()) {
+        const cleanFolder = folderName.trim().replace(/^\/+/, '').replace(/\/+$/, '');
+        // create dummy file inside folder
+        const placeholderFile = `${cleanFolder}/.keep`;
+        vsFiles[placeholderFile] = `# ${cleanFolder} directory`;
+        saveVSCodeToStorage();
+        renderVSCodeFileTree();
+        openVSCodeFile(placeholderFile);
+      }
+    }
+
+    function cancelCreateItem() {
+      document.getElementById('vscode-new-item-box').classList.add('hidden');
+    }
+
+    function quickSetNewFileName(name) {
+      const input = document.getElementById('vscode-new-item-input');
+      input.value = name;
+      validateNewItemName(name);
+      input.focus();
+    }
+
+    function validateNewItemName(name) {
+      const feedback = document.getElementById('vscode-name-feedback');
+      if (!name) {
+        feedback.innerHTML = '<span class="text-slate-400">พิมพ์ชื่อไฟล์แล้วกด Enter เพื่อสร้าง</span>';
+        return;
+      }
+
+      const clean = name.trim();
+      const parts = clean.split('/');
+      const fileName = parts[parts.length - 1];
+
+      if (!fileName.includes('.') && fileName !== 'Dockerfile') {
+        feedback.innerHTML = `<span class="text-rose-400 font-medium">⚠️ คำเตือน: ไฟล์ไม่มีนามสกุล! Node.js จะรันไม่ได้ (เช่น ควรใช้ <code class="text-amber-300">${clean}.js</code>)</span>`;
+      } else if (fileName.endsWith('.js')) {
+        feedback.innerHTML = `<span class="text-emerald-400">✅ นามสกุลถูกต้อง: JavaScript CommonJS Module</span>`;
+      } else if (fileName === 'Dockerfile') {
+        feedback.innerHTML = `<span class="text-sky-400">✅ ชื่อถูกต้อง: Dockerfile สำหรับ Build Image</span>`;
+      } else if (fileName.endsWith('.yml') || fileName.endsWith('.yaml')) {
+        feedback.innerHTML = `<span class="text-pink-400">✅ นามสกุลถูกต้อง: YAML สำหรับ Docker Compose</span>`;
+      } else if (fileName.startsWith('.env')) {
+        feedback.innerHTML = `<span class="text-emerald-400">✅ ชื่อถูกต้อง: Environment Variable File</span>`;
+      } else {
+        feedback.innerHTML = `<span class="text-blue-400">📄 ไฟล์นามสกุล: .${fileName.split('.').pop()}</span>`;
+      }
+    }
+
+    function handleNewItemKeydown(e) {
+      if (e.key === 'Enter') {
+        const input = document.getElementById('vscode-new-item-input');
+        const rawName = input.value.trim();
+        if (!rawName) return;
+
+        let cleanPath = rawName.replace(/^\/+/, '').replace(/\/+$/, '');
+        
+        // Auto-correct / warning if user forgot extension
+        if (!cleanPath.includes('.') && cleanPath !== 'Dockerfile') {
+          if (!confirm(`ชื่อไฟล์ "${cleanPath}" ไม่มีนามสกุลไฟล์ (.js, .json ฯลฯ) ซึ่งอาจทำให้ระบบหาโมดูลไม่พบ\n\nต้องการบันทึกเป็น "${cleanPath}.js" ใช่หรือไม่?`)) {
+            // Keep original if insisted
+          } else {
+            cleanPath = cleanPath + '.js';
+          }
+        }
+
+        if (vsFiles[cleanPath] !== undefined) {
+          alert('ไฟล์ชื่อนี้มีอยู่แล้วใน Workspace! กำลังเปิดไฟล์ดังกล่าว...');
+        } else {
+          vsFiles[cleanPath] = DEFAULT_VSCODE_WORKSPACE[cleanPath] || `// File: ${cleanPath}\n`;
+        }
+
+        cancelCreateItem();
+        saveVSCodeToStorage();
+        renderVSCodeFileTree();
+        openVSCodeFile(cleanPath);
+      } else if (e.key === 'Escape') {
+        cancelCreateItem();
+      }
+    }
+
+    function promptRenameFile(oldPath, event) {
+      if (event) event.stopPropagation();
+      const newPath = prompt(`เปลี่ยนชื่อไฟล์ "${oldPath}" เป็น:`, oldPath);
+      if (newPath && newPath.trim() && newPath.trim() !== oldPath) {
+        const clean = newPath.trim();
+        vsFiles[clean] = vsFiles[oldPath];
+        delete vsFiles[oldPath];
+
+        // Update tabs
+        const tabIdx = vsOpenTabs.indexOf(oldPath);
+        if (tabIdx !== -1) vsOpenTabs[tabIdx] = clean;
+        if (vsActiveFile === oldPath) vsActiveFile = clean;
+
+        saveVSCodeToStorage();
+        renderVSCodeFileTree();
+        renderVSCodeTabs();
+        openVSCodeFile(clean);
+      }
+    }
+
+    function deleteVSCodeFile(filePath, event) {
+      if (event) event.stopPropagation();
+      if (confirm(`คุณต้องการลบไฟล์ "${filePath}" ใช่หรือไม่?`)) {
+        delete vsFiles[filePath];
+        closeVSCodeTab(filePath);
+        saveVSCodeToStorage();
+        renderVSCodeFileTree();
+      }
+    }
+
+    function loadExamBlueprintToVSCode() {
+      if (confirm('คุณต้องการโหลด Exam Blueprint ครบ 8 ไฟล์มาตรฐานลงใน Workspace ใช่หรือไม่? (จะเขียนทับไฟล์ที่มีชื่อซ้ำกัน)')) {
+        vsFiles = { ...DEFAULT_VSCODE_WORKSPACE };
+        vsOpenTabs = ['server.js', 'routes/studentRoutes.js', 'models/Student.js', 'Dockerfile', 'docker-compose.yml', '.env'];
+        vsActiveFile = 'server.js';
+        saveVSCodeToStorage();
+        initVSCodeSimulator();
+        alert('🎉 โหลด Exam Blueprint สำเร็จเรียบร้อยแล้ว!');
+      }
+    }
+
+    function clearVSCodeWorkspace() {
+      if (confirm('คุณต้องการล้าง Workspace ทั้งหมดเพื่อเริ่มเขียนใหม่จากศูนย์ใช่หรือไม่?')) {
+        vsFiles = { "server.js": "// เริ่มเขียน server.js ที่นี่\n" };
+        vsOpenTabs = ['server.js'];
+        vsActiveFile = 'server.js';
+        saveVSCodeToStorage();
+        initVSCodeSimulator();
+      }
+    }
+
+    function fillActiveFileBoilerplate() {
+      if (!vsActiveFile) return;
+      const boilerplate = DEFAULT_VSCODE_WORKSPACE[vsActiveFile];
+      if (boilerplate) {
+        document.getElementById('vscode-editor-textarea').value = boilerplate;
+        handleVSCodeTextareaInput();
+        showVSCodeStatusNotification('⚡ โหลดโค้ดมาตรฐานสำเร็จ');
+      } else {
+        alert(`ไม่มี Template เริ่มต้นสำหรับไฟล์ "${vsActiveFile}"`);
+      }
+    }
+
+    function copyActiveVSCodeFile() {
+      if (!vsActiveFile) return;
+      const code = vsFiles[vsActiveFile] || '';
+      navigator.clipboard.writeText(code).then(() => {
+        showVSCodeStatusNotification('📋 คัดลอกโค้ดลง Clipboard แล้ว');
+      });
+    }
+
+    function copyAllVSCodeFiles() {
+      let bundle = '';
+      Object.keys(vsFiles).forEach(path => {
+        bundle += `// ==========================================\n// FILE: ${path}\n// ==========================================\n${vsFiles[path]}\n\n`;
+      });
+      navigator.clipboard.writeText(bundle).then(() => {
+        alert('คัดลอกไฟล์ทั้งหมดใน Workspace (All Project Bundle) ลงใน Clipboard สำเร็จแล้ว!');
+      });
+    }
+
+    function formatVSCodeCode() {
+      const textarea = document.getElementById('vscode-editor-textarea');
+      if (!textarea) return;
+      let val = textarea.value;
+      // Basic indent clean
+      val = val.split('\n').map(l => l.replace(/\s+$/, '')).join('\n');
+      textarea.value = val;
+      handleVSCodeTextareaInput();
+      showVSCodeStatusNotification('🧹 ปรับ Indentation แล้ว');
+    }
+
+    function auditCurrentFileTraps() {
+      if (!vsActiveFile) return;
+      setVSCodePanelTab('problems');
+      runWorkspaceLinter();
+    }
+
+    // --- INTEGRATED TERMINAL ENGINE ---
+    function setVSCodePanelTab(tab) {
+      document.getElementById('pntab-terminal').className = tab === 'terminal' ? 'text-white border-b-2 border-indigo-500 pb-0.5 flex items-center gap-1.5' : 'text-slate-400 hover:text-white border-b-2 border-transparent pb-0.5 flex items-center gap-1.5';
+      document.getElementById('pntab-problems').className = tab === 'problems' ? 'text-white border-b-2 border-indigo-500 pb-0.5 flex items-center gap-1.5' : 'text-slate-400 hover:text-white border-b-2 border-transparent pb-0.5 flex items-center gap-1.5';
+      document.getElementById('pntab-rubric').className = tab === 'rubric' ? 'text-white border-b-2 border-indigo-500 pb-0.5 flex items-center gap-1.5' : 'text-slate-400 hover:text-white border-b-2 border-transparent pb-0.5 flex items-center gap-1.5';
+
+      document.getElementById('pnb-terminal').classList.toggle('hidden', tab !== 'terminal');
+      document.getElementById('pnb-problems').classList.toggle('hidden', tab !== 'problems');
+      document.getElementById('pnb-rubric').classList.toggle('hidden', tab !== 'rubric');
+
+      if (tab === 'problems') runWorkspaceLinter();
+      if (tab === 'rubric') calculateExamRubric();
+    }
+
+    function toggleVSCodeBottomPanel() {
+      const panel = document.getElementById('vscode-bottom-panel');
+      panel.classList.toggle('hidden');
+    }
+
+    function toggleVSCodeSidebar() {
+      const sidebar = document.getElementById('vscode-sidebar');
+      sidebar.classList.toggle('hidden');
+    }
+
+    function handleVSCodeTerminalKeydown(e) {
+      if (e.key === 'Enter') {
+        submitVSCodeTerminalInput();
+      }
+    }
+
+    function submitVSCodeTerminalInput() {
+      const input = document.getElementById('vscode-terminal-input');
+      const cmd = input.value.trim();
+      if (!cmd) return;
+      runVSCodeTerminalCmd(cmd);
+      input.value = '';
+    }
+
+    function clearVSCodeTerminal() {
+      document.getElementById('vscode-terminal-output').innerHTML = '<div class="text-slate-500"># Terminal cleared.</div>';
+    }
+
+    function runVSCodeTerminalCmd(cmd) {
+      setVSCodePanelTab('terminal');
+      const output = document.getElementById('vscode-terminal-output');
+      
+      const cmdRow = document.createElement('div');
+      cmdRow.className = 'text-emerald-400 mt-2 font-bold';
+      cmdRow.innerHTML = `tawan@kmitl-exam:~$ <span class="text-white font-normal">${cmd}</span>`;
+      output.appendChild(cmdRow);
+
+      const resDiv = document.createElement('div');
+      resDiv.className = 'space-y-1 text-slate-300 text-xs pl-2 border-l-2 border-slate-700 ml-1';
+
+      if (cmd === 'npm run dev' || cmd === 'npm start') {
+        resDiv.innerHTML = `
+          <div class="text-slate-400">> server-side-midterm-exam@1.0.0 dev</div>
+          <div class="text-slate-400">> nodemon server.js</div>
+          <div class="text-emerald-400">✅ MongoDB Connected: 127.0.0.1:27017/examdb</div>
+          <div class="text-cyan-300">🚀 Server running on http://localhost:5000</div>
+          <div class="text-slate-400">[Express] Mounted routes: /api/students (GET, POST, PUT, DELETE)</div>
+        `;
+      } else if (cmd.includes('docker compose up') || cmd.includes('docker-compose up')) {
+        resDiv.innerHTML = `
+          <div class="text-slate-400">[+] Running 2/2</div>
+          <div class="text-slate-400">✔ Network server-exam_default    Created</div>
+          <div class="text-sky-400">✔ Container exam_mongodb        Started (ports 27017:27017)</div>
+          <div class="text-emerald-400">✅ MongoDB Database is ready to accept connections!</div>
+        `;
+      } else if (cmd === 'docker ps') {
+        resDiv.innerHTML = `
+          <div class="text-slate-400 font-mono text-[11px]">CONTAINER ID   IMAGE       COMMAND                  CREATED         STATUS         PORTS                      NAMES</div>
+          <div class="text-slate-200 font-mono text-[11px]">8f3b21a9c1e0   mongo:6.0   "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes   0.0.0.0:27017->27017/tcp   exam_mongodb</div>
+        `;
+      } else if (cmd.includes('curl') && cmd.includes('POST')) {
+        resDiv.innerHTML = `
+          <div class="text-amber-300 font-bold">HTTP/1.1 201 Created</div>
+          <pre class="text-emerald-300 text-[11px] bg-[#1a1b26] p-2 rounded">{
+  "_id": "66ce78a1f9e2b1001a4e5f01",
+  "studentId": "66070001",
+  "name": "Thanatphat Promthong",
+  "major": "IT",
+  "gpa": 3.85,
+  "isActive": true,
+  "createdAt": "2026-08-28T09:00:00.000Z",
+  "updatedAt": "2026-08-28T09:00:00.000Z"
+}</pre>
+        `;
+      } else if (cmd.includes('curl')) {
+        resDiv.innerHTML = `
+          <div class="text-emerald-300 font-bold">HTTP/1.1 200 OK</div>
+          <pre class="text-cyan-300 text-[11px] bg-[#1a1b26] p-2 rounded">[
+  {
+    "_id": "66ce78a1f9e2b1001a4e5f01",
+    "studentId": "66070001",
+    "name": "Thanatphat Promthong",
+    "major": "IT",
+    "gpa": 3.85,
+    "isActive": true
+  }
+]</pre>
+        `;
+      } else if (cmd === 'git status') {
+        resDiv.innerHTML = `
+          <div class="text-slate-300">On branch main</div>
+          <div class="text-slate-400">Your branch is up to date with 'origin/main'.</div>
+          <div class="text-emerald-400 mt-1">Changes to be committed:</div>
+          <div class="text-emerald-300 pl-4">• modified: server.js</div>
+          <div class="text-emerald-300 pl-4">• modified: routes/studentRoutes.js</div>
+          <div class="text-emerald-300 pl-4">• modified: models/Student.js</div>
+        `;
+      } else if (cmd.includes('git commit')) {
+        resDiv.innerHTML = `
+          <div class="text-slate-300">[main a8f9c12] feat: complete express mongoose crud exam</div>
+          <div class="text-slate-400"> 8 files changed, 280 insertions(+)</div>
+        `;
+      } else if (cmd === 'ls' || cmd === 'ls -la') {
+        const filesList = Object.keys(vsFiles).map(f => `<span class="text-sky-300">${f}</span>`).join('   ');
+        resDiv.innerHTML = `<div>${filesList}</div>`;
+      } else if (cmd === 'clear') {
+        clearVSCodeTerminal();
+        return;
+      } else {
+        resDiv.innerHTML = `<div class="text-slate-400">Command executed: <span class="text-white">${cmd}</span></div>`;
+      }
+
+      output.appendChild(resDiv);
+      output.scrollTop = output.scrollHeight;
+    }
+
+    // --- WORKSPACE LIVE LINTER (PROBLEMS SCANNER) ---
+    function runWorkspaceLinter() {
+      const container = document.getElementById('vscode-problems-list');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const problems = [];
+
+      // Check 1: server.js express.json()
+      if (vsFiles['server.js']) {
+        const code = vsFiles['server.js'];
+        if (!code.includes('express.json()')) {
+          problems.push({
+            file: 'server.js',
+            line: 14,
+            type: 'error',
+            msg: 'ลืมใส่ app.use(express.json()) ทำให้ req.body จะเป็น undefined เมื่อยิง POST/PUT'
+          });
+        }
+        if (!code.includes('connectDB()')) {
+          problems.push({
+            file: 'server.js',
+            line: 10,
+            type: 'error',
+            msg: 'ยังไม่ได้เรียกใช้ connectDB() เพื่อเชื่อมต่อฐานข้อมูล MongoDB'
+          });
+        }
+        if (!code.includes('dotenv')) {
+          problems.push({
+            file: 'server.js',
+            line: 1,
+            type: 'warning',
+            msg: 'ควร require("dotenv").config() บรรทัดแรกสุดเพื่ออ่านค่า .env'
+          });
+        }
+      } else {
+        problems.push({
+          file: 'server.js',
+          line: 1,
+          type: 'error',
+          msg: 'ไม่พบไฟล์ server.js ในโปรเจกต์ (Entry point สำคัญ)'
+        });
+      }
+
+      // Check 2: routes/studentRoutes.js
+      const routesCode = vsFiles['routes/studentRoutes.js'] || vsFiles['studentRoutes.js'];
+      if (routesCode) {
+        if (!routesCode.includes('runValidators: true')) {
+          problems.push({
+            file: 'routes/studentRoutes.js',
+            line: 52,
+            type: 'warning',
+            msg: 'findByIdAndUpdate ควรใส่ { new: true, runValidators: true } เพื่อบังคับ Schema validation'
+          });
+        }
+        if (!routesCode.includes('11000')) {
+          problems.push({
+            file: 'routes/studentRoutes.js',
+            line: 12,
+            type: 'warning',
+            msg: 'ควรดักจับ err.code === 11000 สำหรับ Duplicate Student ID Error'
+          });
+        }
+      }
+
+      // Check 3: models/Student.js
+      const modelCode = vsFiles['models/Student.js'] || vsFiles['Student.js'];
+      if (modelCode) {
+        if (!modelCode.includes('timestamps: true') && !modelCode.includes('timestamps:true')) {
+          problems.push({
+            file: 'models/Student.js',
+            line: 25,
+            type: 'warning',
+            msg: 'Schema ควรเปิด { timestamps: true } เพื่อสร้าง createdAt/updatedAt อัตโนมัติ'
+          });
+        }
+      }
+
+      // Check 4: Dockerfile
+      if (vsFiles['Dockerfile']) {
+        const dCode = vsFiles['Dockerfile'];
+        const copyPkgIdx = dCode.indexOf('COPY package*.json');
+        const npmInstIdx = dCode.indexOf('npm install');
+        const copyAllIdx = dCode.indexOf('COPY . .');
+        if (copyAllIdx !== -1 && copyPkgIdx !== -1 && copyAllIdx < npmInstIdx) {
+          problems.push({
+            file: 'Dockerfile',
+            line: 4,
+            type: 'warning',
+            msg: 'ควร COPY package*.json ./ ก่อน npm install แล้วค่อย COPY . . เพื่อใช้ประโยชน์จาก Docker Layer Caching'
+          });
+        }
+      }
+
+      // Check 5: .gitignore
+      if (!vsFiles['.gitignore']) {
+        problems.push({
+          file: '.gitignore',
+          line: 1,
+          type: 'warning',
+          msg: 'ไม่พบ .gitignore เสี่ยงที่จะเผลอ push โฟลเดอร์ node_modules ขึ้น GitHub'
+        });
+      }
+
+      // Check missing extensions
+      Object.keys(vsFiles).forEach(f => {
+        if (!f.includes('.') && f !== 'Dockerfile') {
+          problems.push({
+            file: f,
+            line: 1,
+            type: 'error',
+            msg: `ไฟล์ "${f}" ขาดนามสกุลไฟล์ (.js, .json ฯลฯ)`
+          });
+        }
+      });
+
+      // Render
+      document.getElementById('vscode-problem-badge').innerText = problems.length;
+      document.getElementById('stb-errors').innerText = problems.filter(p => p.type === 'error').length;
+      document.getElementById('stb-warnings').innerText = problems.filter(p => p.type === 'warning').length;
+
+      if (problems.length === 0) {
+        container.innerHTML = `
+          <div class="p-3 rounded-lg bg-emerald-950/30 border border-emerald-800/40 text-emerald-300 text-xs flex items-center gap-2">
+            <span class="text-base">🎉</span>
+            <span>ไม่พบปัญหาใน Workspace! โค้ดและโครงสร้างไฟล์ทั้งหมดถูกต้อง 100% ตามมาตรฐานสอบ</span>
+          </div>
+        `;
+      } else {
+        problems.forEach(p => {
+          const item = document.createElement('div');
+          const isErr = p.type === 'error';
+          item.className = `p-2 rounded bg-[#161720] border ${isErr ? 'border-rose-800/40 text-rose-300' : 'border-amber-800/40 text-amber-300'} flex items-start justify-between gap-2`;
+          item.innerHTML = `
+            <div class="flex items-start gap-2">
+              <span class="mt-0.5">${isErr ? '❌' : '⚠️'}</span>
+              <div>
+                <div class="font-bold text-white">${p.file} <span class="text-slate-500 font-normal">[Line ${p.line}]</span></div>
+                <div class="text-[11px] text-slate-300 mt-0.5">${p.msg}</div>
+              </div>
+            </div>
+            <button onclick="openVSCodeFile('${p.file}')" class="text-[10px] px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300">เปิดไฟล์</button>
+          `;
+          container.appendChild(item);
+        });
+      }
+    }
+
+    // --- MIDTERM EXAM RUBRIC (20 POINTS) ---
+    function calculateExamRubric() {
+      const container = document.getElementById('vscode-rubric-items');
+      if (!container) return;
+      container.innerHTML = '';
+
+      let score = 0;
+      const rubrics = [
+        {
+          name: '1. Git & Repo Setup (2 pts)',
+          check: !!vsFiles['.gitignore'] && !!vsFiles['package.json'],
+          points: 2,
+          desc: 'มีไฟล์ .gitignore และ package.json ครบถ้วน'
+        },
+        {
+          name: '2. Docker & Compose (4 pts)',
+          check: !!vsFiles['Dockerfile'] && (!!vsFiles['docker-compose.yml'] || !!vsFiles['docker-compose.yaml']),
+          points: 4,
+          desc: 'มี Dockerfile พร้อม Layer Caching และ docker-compose สำหรับ MongoDB'
+        },
+        {
+          name: '3. Node & Express Server Setup (4 pts)',
+          check: !!vsFiles['server.js'] && vsFiles['server.js'].includes('express.json()') && vsFiles['server.js'].includes('cors'),
+          points: 4,
+          desc: 'Express Server พร้อม Built-in Middleware และ Error Handler 4 params'
+        },
+        {
+          name: '4. MongoDB Connection Module (2 pts)',
+          check: (vsFiles['config/db.js'] && vsFiles['config/db.js'].includes('mongoose.connect')) || (vsFiles['server.js'] && vsFiles['server.js'].includes('mongoose.connect')),
+          points: 2,
+          desc: 'เชื่อมต่อ MongoDB ด้วย Mongoose พร้อม Error Try-Catch'
+        },
+        {
+          name: '5. Mongoose Schema & Validation (3 pts)',
+          check: (vsFiles['models/Student.js'] || vsFiles['Student.js']) && (vsFiles['models/Student.js'] || vsFiles['Student.js']).includes('required') && (vsFiles['models/Student.js'] || vsFiles['Student.js']).includes('timestamps'),
+          points: 3,
+          desc: 'Mongoose Model พร้อม Validations (required, unique, min/max, timestamps)'
+        },
+        {
+          name: '6. Full 5-Route CRUD Operations (5 pts)',
+          check: (vsFiles['routes/studentRoutes.js'] || vsFiles['server.js']) && (vsFiles['routes/studentRoutes.js'] || vsFiles['server.js']).includes('POST') && (vsFiles['routes/studentRoutes.js'] || vsFiles['server.js']).includes('findByIdAndUpdate'),
+          points: 5,
+          desc: 'ครบ 5 เส้นทาง RESTful API: CREATE (201), READ ALL (200), READ ONE (200), UPDATE (200), DELETE (200)'
+        }
+      ];
+
+      rubrics.forEach(r => {
+        if (r.check) score += r.points;
+        const card = document.createElement('div');
+        card.className = `p-3 rounded-xl border ${r.check ? 'bg-emerald-950/20 border-emerald-800/40' : 'bg-rose-950/20 border-rose-800/40'}`;
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-xs ${r.check ? 'text-emerald-300' : 'text-rose-300'}">${r.check ? '✓' : '✗'} ${r.name}</span>
+            <span class="font-mono text-xs font-bold ${r.check ? 'text-emerald-400' : 'text-slate-500'}">${r.check ? `+${r.points}` : '0'} / ${r.points}</span>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1">${r.desc}</p>
+        `;
+        container.appendChild(card);
+      });
+
+      document.getElementById('vscode-rubric-score').innerText = `${score} / 20`;
+    }
+
+    function openVSCodeSettingsModal() {
+      alert('⚙️ การตั้งค่า Editor:\n• Font Family: Fira Code\n• Tab Size: 2 Spaces\n• Theme: Visual Studio Code Dark+\n• Storage: LocalStorage Sync Enabled');
+    }
+
 
     function resetAllProgress() {
       if (confirm('คุณต้องการรีเซ็ตประวัติการฝึกทำแล็บและคะแนนสอบทั้งหมดใช่หรือไม่?')) {
