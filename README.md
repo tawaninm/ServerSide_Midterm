@@ -38,7 +38,7 @@
 ```
 [0. Git & Repo] ➔ [1. NPM Init] ➔ [2. .env Config] ➔ [3. Docker & Compose] 
        ➔ [4. DB Connection] ➔ [5. Mongoose Schema] ➔ [6. Express Server] 
-       ➔ [7. 5-Route CRUD] ➔ [8. cURL Test] ➔ [9. Git Push]
+       ➔ [7. 5-Route CRUD] ➔ [8. Postman & cURL Test] ➔ [9. Git Push]
 ```
 
 ### สรุปคำสั่งด่วน (Quick Run Commands)

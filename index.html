@@ -220,6 +220,17 @@
 
       <!-- Quick Stats, Tour & Action -->
       <div id="header-stats-wrap" class="flex items-center gap-2.5 sm:gap-3">
+                <!-- Omni-Search Bar (Global Instant Finder) -->
+        <div class="relative w-full max-w-xs lg:max-w-sm hidden md:block">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+            <i data-lucide="search" class="w-4 h-4"></i>
+          </div>
+          <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาด่วน: docker, 11000, postman, schema..." class="w-full pl-9 pr-8 py-1.5 bg-surfaceDark border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
+          <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
+            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+
         <!-- Interactive Website Tutorial Button -->
         <button onclick="startWebsiteTour()" id="tour-nav-btn" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-brandIndigo/30 via-purple-500/20 to-brandCyan/30 hover:from-brandIndigo/50 hover:to-brandCyan/50 text-white border border-brandIndigo/50 text-xs font-medium flex items-center gap-2 shadow-lg shadow-brandIndigo/20 hover:scale-105 transition-all">
           <span class="relative flex h-2 w-2">
@@ -314,315 +325,7 @@
         <div class="glass-card rounded-xl p-6 hover:border-brandIndigo/50 transition-all">
           <div class="flex items-center justify-between mb-4">
             <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-              <div class="p-2.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                <i data-lucide="globe" class="w-5 h-5"></i>
-              </div>
-              <h3 class="font-bold text-lg text-white">1. Intro to Server-Side & HTTP Architecture</h3>
-            </div>
-            <span class="text-xs font-mono bg-blue-500/10 text-blue-300 px-2 py-0.5 rounded border border-blue-500/20">Day 01</span>
-          </div>
-          <ul class="text-sm space-y-2.5 text-slate-300">
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
-              <span><strong>Client-Server Model:</strong> Client (Presentation/UI ส่ง Request) ⇄ Server (Business Logic, Auth, Database ประมวลผลและตอบกลับ Response)</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
-              <span><strong>SSR vs CSR:</strong> <code>SSR (Server-Side Rendering)</code> Server สร้าง HTML สำเร็จรูป เหมาะกับ SEO & Fast First Paint / <code>CSR (Client-Side Rendering)</code> Browser โหลด JS เปล่าแล้ว Render เอง เหมาะกับ Rich App (SPA)</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-400 shrink-0 mt-0.5"></i>
-              <span><strong>HTTP Protocol & REST:</strong> Stateless Protocol อาศัย JWT/Session/Cookie • Methods: <code>GET</code> (Read), <code>POST</code> (Create - 201), <code>PUT/PATCH</code> (Update), <code>DELETE</code> (Delete)</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Card 2: Git Master Guide & Collaboration -->
-        <div class="glass-card rounded-xl p-6 hover:border-brandIndigo/50 transition-all">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-              <div class="p-2.5 rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20">
-                <i data-lucide="git-branch" class="w-5 h-5"></i>
-              </div>
-              <h3 class="font-bold text-lg text-white">2. Git Architecture & Version Control</h3>
-            </div>
-            <span class="text-xs font-mono bg-orange-500/10 text-orange-300 px-2 py-0.5 rounded border border-orange-500/20">Day 02 • Git</span>
-          </div>
-          <ul class="text-sm space-y-2.5 text-slate-300">
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-orange-400 shrink-0 mt-0.5"></i>
-              <span><strong>4 Git States:</strong> Working Directory ➔ <code>git add</code> ➔ Staging Area (Index) ➔ <code>git commit</code> ➔ Local Repo ➔ <code>git push</code> ➔ Remote Repo</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-orange-400 shrink-0 mt-0.5"></i>
-              <span><strong>Branching & Switching:</strong> <code>git branch &lt;name&gt;</code>, <code>git checkout -b &lt;name&gt;</code> หรือ <code>git switch -c &lt;name&gt;</code></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-orange-400 shrink-0 mt-0.5"></i>
-              <span><strong>Merge & Conflict Resolution:</strong> <code>git merge &lt;branch&gt;</code> หากเกิดข้อขัดแย้ง ให้เปิดไฟล์แก้จุด <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> แล้วสั่ง <code>git add .</code> และ <code>git commit</code></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-orange-400 shrink-0 mt-0.5"></i>
-              <span><strong>.gitignore Essentials:</strong> ต้องใส่ <code>node_modules/</code>, <code>.env</code>, <code>*.log</code> เสมอเพื่อความปลอดภัย</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Card 3: Docker & Containerization -->
-        <div class="glass-card rounded-xl p-6 hover:border-brandIndigo/50 transition-all">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-              <div class="p-2.5 rounded-lg bg-sky-500/10 text-sky-400 border border-sky-500/20">
-                <i data-lucide="box" class="w-5 h-5"></i>
-              </div>
-              <h3 class="font-bold text-lg text-white">3. Docker & Containerization Infrastructure</h3>
-            </div>
-            <span class="text-xs font-mono bg-sky-500/10 text-sky-300 px-2 py-0.5 rounded border border-sky-500/20">Day 02 • Docker</span>
-          </div>
-          <ul class="text-sm space-y-2.5 text-slate-300">
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
-              <span><strong>VM vs Container:</strong> VM ต้องมี Guest OS ทุกตัว (หนัก/ช้า) ส่วน Container แชร์ Host OS Kernel ผ่าน <code>Namespaces</code> (แยก PID, NET, MNT) และ <code>cgroups</code> (จำกัด CPU/RAM)</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
-              <span><strong>Dockerfile Layer Caching:</strong> วาง <code>COPY package*.json ./</code> และ <code>RUN npm install</code> ก่อน <code>COPY . .</code> เพื่อไม่ต้องติดตั้ง dependencies ซ้ำเมื่อแก้โค้ด</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
-              <span><strong>Port Mapping & Named Volumes:</strong> <code>-p HOST:CONTAINER</code> (เช่น <code>3307:3306</code> หรือ <code>27017:27017</code>) และ <code>volumes: [mongo_data:/data/db]</code> เพื่อรักษาข้อมูลไม่ให้สูญหาย</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Card 4: Day 04 Node.js Core & Async Programming -->
-        <div class="glass-card rounded-xl p-6 hover:border-brandIndigo/50 transition-all">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-              <div class="p-2.5 rounded-lg bg-green-500/10 text-green-400 border border-green-500/20">
-                <i data-lucide="cpu" class="w-5 h-5"></i>
-              </div>
-              <h3 class="font-bold text-lg text-white">4. Node.js Core Modules & Asynchronous Flow</h3>
-            </div>
-            <span class="text-xs font-mono bg-green-500/10 text-green-300 px-2 py-0.5 rounded border border-green-500/20">Day 04</span>
-          </div>
-          <ul class="text-sm space-y-2.5 text-slate-300">
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-green-400 shrink-0 mt-0.5"></i>
-              <span><strong>V8 Engine & Event-Driven:</strong> Single-threaded Event Loop แบบ Non-blocking I/O รองรับ Request ปริมาณมากพร้อมกันได้อย่างมีประสิทธิภาพ</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-green-400 shrink-0 mt-0.5"></i>
-              <span><strong>Async/Await vs Promise vs Callback:</strong> ใช้ <code>async/await</code> คู่กับ <code>try...catch</code> เพื่อให้อ่านเข้าใจง่ายและจัดการ Error ได้รอบด้าน</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-green-400 shrink-0 mt-0.5"></i>
-              <span><strong>Core Modules:</strong> <code>fs</code> (readFile/writeFile), <code>path</code> (path.join/resolve ป้องกัน path issue ข้าม OS), <code>os</code> (os.platform, os.freemem), <code>http</code> (http.createServer)</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-green-400 shrink-0 mt-0.5"></i>
-              <span><strong>CommonJS vs ESM:</strong> CommonJS ใช้ <code>require()</code> และ <code>module.exports</code> (โหลด Synchronous เหมาะกับ Backend Node.js)</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Card 5: Express Middleware & Error Handling -->
-        <div class="glass-card rounded-xl p-6 hover:border-brandIndigo/50 transition-all">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-              <div class="p-2.5 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                <i data-lucide="workflow" class="w-5 h-5"></i>
-              </div>
-              <h3 class="font-bold text-lg text-white">5. Express Middleware, Router & Error Pipeline</h3>
-            </div>
-            <span class="text-xs font-mono bg-purple-500/10 text-purple-300 px-2 py-0.5 rounded border border-purple-500/20">Day 04 • Day 06</span>
-          </div>
-          <ul class="text-sm space-y-2.5 text-slate-300">
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-purple-400 shrink-0 mt-0.5"></i>
-              <span><strong>Middleware Sequence & next():</strong> ฟังก์ชันที่เข้าถึง <code>(req, res, next)</code> หากไม่ส่ง Response ต้องเรียก <code>next()</code> เสมอ มิฉะนั้น Request จะค้าง (Hang)</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-purple-400 shrink-0 mt-0.5"></i>
-              <span><strong>Built-in & Third-party:</strong> <code>app.use(express.json())</code> (แยก Parse Body ก่อน Routes) และ <code>app.use(cors())</code></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-purple-400 shrink-0 mt-0.5"></i>
-              <span><strong>Express Router:</strong> แยก Router ออกเป็นโมดูล เช่น <code>routes/studentRoutes.js</code> แล้วนำมา mount ด้วย <code>app.use('/api/students', studentRouter)</code></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-purple-400 shrink-0 mt-0.5"></i>
-              <span><strong>Global Error Handler:</strong> ฟังก์ชัน 4 พารามิเตอร์ <code>(err, req, res, next)</code> วางไว้บรรทัดล่างสุดเพื่อดักจับ Error ทุกรูปแบบ</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Card 6: MySQL, Parameterized Queries & Soft Delete -->
-        <div class="glass-card rounded-xl p-6 hover:border-brandIndigo/50 transition-all">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-              <div class="p-2.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                <i data-lucide="database" class="w-5 h-5"></i>
-              </div>
-              <h3 class="font-bold text-lg text-white">6. MySQL, Prepared Statements & Soft Delete</h3>
-            </div>
-            <span class="text-xs font-mono bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded border border-amber-500/20">Day 06 • MySQL</span>
-          </div>
-          <ul class="text-sm space-y-2.5 text-slate-300">
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
-              <span><strong>Connection Pool:</strong> ใช้ <code>mysql2/promise</code> ผ่าน <code>mysql.createPool()</code> เพื่อ reuse connection รองรับ concurrent users</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
-              <span><strong>SQL Injection Prevention:</strong> ใช้ Parameterized Query (<code>?</code> placeholders) เช่น <code>SELECT * FROM users WHERE email = ?</code> ห้ามต่อ String เด็ดขาด!</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400 shrink-0 mt-0.5"></i>
-              <span><strong>Soft Delete Pattern:</strong> ห้าม <code>DELETE FROM</code> แต่ใช้ <code>UPDATE users SET deleted_at = NOW() WHERE email = ? AND deleted_at IS NULL</code> และ Query ดึงเฉพาะ <code>WHERE deleted_at IS NULL</code></span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Card 7: MongoDB & Mongoose ODM Master -->
-        <div class="glass-card rounded-xl p-6 hover:border-brandIndigo/50 transition-all">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-              <div class="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                <i data-lucide="layers" class="w-5 h-5"></i>
-              </div>
-              <h3 class="font-bold text-lg text-white">7. MongoDB & Mongoose ODM (Exam Core)</h3>
-            </div>
-            <span class="text-xs font-mono bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/20">Day 06 • MongoDB</span>
-          </div>
-          <ul class="text-sm space-y-2.5 text-slate-300">
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
-              <span><strong>Connecting:</strong> <code>mongoose.connect(process.env.MONGO_URI)</code> ในไฟล์ <code>config/db.js</code></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
-              <span><strong>Schema & Validations:</strong> <code>required</code>, <code>unique</code>, <code>min</code>, <code>max</code>, <code>enum</code>, <code>trim</code>, <code>default</code>, และ <code>{ timestamps: true }</code></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
-              <span><strong>CRUD Methods:</strong> <code>Model.create()</code>, <code>Model.find(filter)</code>, <code>Model.findById(id)</code>, <code>Model.findByIdAndUpdate(id, body, { new: true, runValidators: true })</code>, <code>Model.findByIdAndDelete(id)</code></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5"></i>
-              <span><strong>Duplicate Key Trap:</strong> ดักจับ <code>err.code === 11000</code> แล้วคืนค่า <code>400 Bad Request</code></span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Card 8: Day 07 Advanced SQL (Joins, Views) & Prisma ORM -->
-        <div class="glass-card rounded-xl p-6 hover:border-brandIndigo/50 transition-all">
-          <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-              <div class="p-2.5 rounded-lg bg-teal-500/10 text-teal-400 border border-teal-500/20">
-                <i data-lucide="table" class="w-5 h-5"></i>
-              </div>
-              <h3 class="font-bold text-lg text-white">8. SQL Joins, Constraints, Views & Prisma ORM</h3>
-            </div>
-            <span class="text-xs font-mono bg-teal-500/10 text-teal-300 px-2 py-0.5 rounded border border-teal-500/20">Day 07</span>
-          </div>
-          <ul class="text-sm space-y-2.5 text-slate-300">
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-400 shrink-0 mt-0.5"></i>
-              <span><strong>SQL Joins:</strong> <code>INNER JOIN</code> (เฉพาะแถวที่ Match กันทั้ง 2 ตาราง), <code>LEFT JOIN</code> (เอาทุกแถวฝั่งซ้าย ถ้าขวาไม่มีเป็น NULL), <code>RIGHT JOIN</code>, <code>FULL JOIN</code> (MySQL ใช้ UNION เชื่อม LEFT + RIGHT), <code>SELF JOIN</code> (เชื่อมตารางตัวเอง เช่น ลำดับขั้นพนักงาน/หัวหน้า)</span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-400 shrink-0 mt-0.5"></i>
-              <span><strong>Constraints & Logic:</strong> <code>PRIMARY KEY</code>, <code>FOREIGN KEY</code> (รักษา Referential Integrity), <code>EXISTS</code> Operator สำหรับ Correlated Subquery, <code>CASE WHEN ... THEN ... ELSE ... END</code></span>
-            </li>
-            <li class="flex items-start gap-2">
-              <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-400 shrink-0 mt-0.5"></i>
-              <span><strong>Views & Prisma ORM:</strong> <code>CREATE VIEW</code> เป็น Virtual Table เก็บ Query Logic • <code>Prisma ORM</code> กำหนด Model ใน <code>schema.prisma</code> และเรียกใช้งานผ่าน <code>prisma.user.findMany()</code>, <code>prisma.user.create()</code></span>
-            </li>
-          </ul>
-        </div>
-
-      </div>
+      
 
       <!-- Architectural Comparison Diagram -->
       <div class="glass-card rounded-xl p-6">
@@ -710,27 +413,7 @@
       <div id="terminal-trainer-card" class="glass-card rounded-2xl p-6 border-brandEmerald/40 relative overflow-hidden shadow-2xl">
         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-surfaceBorder pb-4 mb-4">
           <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-            <div class="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              <i data-lucide="terminal-square" class="w-5 h-5"></i>
-            </div>
-            <div>
-              <h3 class="font-bold text-white text-base flex items-center gap-2">
-                <span>Interactive Terminal Command Practice Sandbox</span>
-                <span class="text-xs font-normal text-slate-400 font-mono">(ฝึกพิมพ์คำสั่งจริงสร้าง Muscle Memory)</span>
-              </h3>
-              <p class="text-xs text-slate-400">พิมพ์คำสั่งตามที่โจทย์กำหนด แล้วกด <kbd class="px-1.5 py-0.5 bg-bgDark border border-surfaceBorder rounded text-[10px] text-slate-300">Enter</kbd> เพื่อตรวจสอบ</p>
-            </div>
-          </div>
+      
 
           <!-- Mode Picker & Streak -->
           <div class="flex items-center gap-3 w-full md:w-auto justify-between">
@@ -857,22 +540,7 @@
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-brandEmerald" data-cat="git">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">STEP 0</span>
-                <div>
-                  <h4 class="font-bold text-white text-base">สร้างโฟลเดอร์โปรเจกต์ & ตั้งค่า Git Repository</h4>
-                  <p class="text-xs text-slate-400">Initialize Git, ตั้งชื่อ branch เป็น main, และสร้าง .gitignore ก่อนเป็นอันดับแรก</p>
-                </div>
-              </div>
+      
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('.gitignore');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด .gitignore ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
@@ -921,22 +589,7 @@ git branch -M main</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-sky-500" data-cat="git">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/30">STEP 1</span>
-                <div>
-                  <h4 class="font-bold text-white text-base">Initialize Node.js Project & ติดตั้ง Dependencies</h4>
-                  <p class="text-xs text-slate-400">สร้าง package.json และลงแพ็กเกจ Express, Mongoose, Dotenv, Cors, และ Nodemon</p>
-                </div>
-              </div>
+      
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('package.json');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด package.json ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
@@ -979,22 +632,7 @@ npm install -D nodemon</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-indigo-500" data-cat="git">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">STEP 2</span>
-                <div>
-                  <h4 class="font-bold text-white text-base">สร้างไฟล์ Environment Variables (.env และ .env.example)</h4>
-                  <p class="text-xs text-slate-400">แยกตัวแปร Configuration ตามหลัก 12-Factor App เพื่อความปลอดภัย</p>
-                </div>
-              </div>
+      
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('.env');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด .env ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~1 นาที</span>
@@ -1033,22 +671,7 @@ MONGO_URI=mongodb://localhost:27017/examdb</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-cyan-500" data-cat="docker">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">STEP 3</span>
-                <div>
-                  <h4 class="font-bold text-white text-base">สร้าง Dockerfile & docker-compose.yml สำหรับ MongoDB</h4>
-                  <p class="text-xs text-slate-400">รัน Database Container พร้อมเปิด Port และเชื่อมต่อ Named Volume เพื่อ Data Persistence</p>
-                </div>
-              </div>
+      
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('Dockerfile');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด Dockerfile / docker-compose ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~4 นาที</span>
@@ -1116,22 +739,7 @@ docker compose ps</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-emerald-500" data-cat="mongo">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">STEP 4</span>
-                <div>
-                  <h4 class="font-bold text-white text-base">สร้างโมดูลเชื่อมต่อ MongoDB (config/db.js)</h4>
-                  <p class="text-xs text-slate-400">ใช้ Mongoose Connect พร้อม Async/Await และ Try...Catch ป้องกันแอป Crash</p>
-                </div>
-              </div>
+      
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('config/db.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด config/db.js ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
@@ -1170,22 +778,7 @@ module.exports = connectDB;</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-purple-500" data-cat="mongo">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30">STEP 5</span>
-                <div>
-                  <h4 class="font-bold text-white text-base">สร้าง Mongoose Schema & Model (models/Student.js)</h4>
-                  <p class="text-xs text-slate-400">กำหนด Field Types พร้อมตัวตรวจจับความถูกต้อง (Strict Validations) และ Timestamps</p>
-                </div>
-              </div>
+      
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('models/Student.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด models/Student.js ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~3 นาที</span>
@@ -1246,22 +839,7 @@ module.exports = mongoose.model('Student', studentSchema);</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-amber-500" data-cat="express">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30">STEP 6</span>
-                <div>
-                  <h4 class="font-bold text-white text-base">เขียน Main Server & Middleware Pipeline (server.js)</h4>
-                  <p class="text-xs text-slate-400">โหลด Dotenv, เชื่อมต่อ DB, วาง express.json(), Mount Router, และ Global Error Handler</p>
-                </div>
-              </div>
+      
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('server.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด server.js ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~3 นาที</span>
@@ -1327,22 +905,7 @@ app.listen(PORT, () => {
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-rose-500" data-cat="express">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30">STEP 7</span>
-                <div>
-                  <h4 class="font-bold text-white text-base">เขียน 5-Route MongoDB CRUD Handlers (routes/studentRoutes.js)</h4>
-                  <p class="text-xs text-slate-400">ครบทั้ง 5 เส้นทาง: POST(201), GET All(200), GET by ID(200/404), PUT(200/404), DELETE(200/404)</p>
-                </div>
-              </div>
+      
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('routes/studentRoutes.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด routes/studentRoutes.js ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~5 นาที</span>
@@ -1439,29 +1002,26 @@ module.exports = router;</code></pre>
             </div>
           </div>
 
-          <!-- STEP 8 -->
-          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-brandCyan" data-cat="test">
+                    <!-- STEP 8: Postman & cURL API Testing Suite -->
+          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-orange-500" data-cat="test">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">STEP 8</span>
+                <span class="font-mono text-xs font-bold bg-orange-500/20 text-orange-300 px-2.5 py-1 rounded border border-orange-500/30">STEP 8</span>
                 <div>
-                  <h4 class="font-bold text-white text-base">ทดสอบยิง API ครบ 5 เส้นทางด้วย cURL (Command Line Test Suite)</h4>
-                  <p class="text-xs text-slate-400">ใช้ทดสอบใน Terminal ทันทีโดยไม่ต้องเปิด Postman ให้เปลืองเวลาสอบ</p>
+                  <h4 class="font-bold text-white text-base">ทดสอบยิง API ครบทุกเส้นทางด้วย Postman & cURL (Complete API Testing Suite)</h4>
+                  <p class="text-xs text-slate-400">คู่มือทดสอบแบบ Step-by-Step พร้อมภาพจำลอง Postman UI และปุ่มดาวน์โหลด Collection ไป Import ได้ทันที</p>
                 </div>
               </div>
               <div class="flex items-center gap-2">
-                <button onclick="switchTab('vscode'); runVSCodeTerminalCmd('curl http://localhost:5000/api/students');" class="px-2.5 py-1 rounded bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="play" class="w-3 h-3"></i><span>ทดสอบ cURL ใน Terminal</span></button>
-                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
+                <button onclick="copyPostmanCollection()" class="px-3 py-1.5 rounded-lg bg-orange-600/30 hover:bg-orange-600 text-orange-300 hover:text-white border border-orange-500/40 text-xs font-semibold flex items-center gap-1.5 shadow-lg shadow-orange-500/10 transition-all">
+                  <i data-lucide="download" class="w-3.5 h-3.5 text-orange-400"></i>
+                  <span>คัดลอก Postman Collection JSON (v2.1)</span>
+                </button>
+                <button onclick="downloadPostmanCollectionFile()" class="px-2.5 py-1.5 rounded-lg bg-surfaceDark hover:bg-slate-800 text-slate-300 hover:text-white border border-surfaceBorder text-xs flex items-center gap-1" title="ดาวน์โหลดไฟล์ .json สำหรับ Postman">
+                  <i data-lucide="file-json" class="w-3.5 h-3.5 text-amber-400"></i>
+                  <span>โหลด .json</span>
+                </button>
+                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~3 นาที</span>
                 <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
                   <input type="checkbox" onchange="toggleStepDone('step8', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
                   <span>ทำเสร็จแล้ว</span>
@@ -1469,19 +1029,234 @@ module.exports = router;</code></pre>
               </div>
             </div>
 
-            <!-- cURL snippets -->
-            <div class="space-y-3">
+            <!-- Testing Tool Switcher Tabs -->
+            <div class="flex border-b border-surfaceBorder text-xs font-medium">
+              <button onclick="switchStep8Tool('postman')" id="step8-btn-postman" class="px-4 py-2 border-b-2 border-orange-500 text-white font-semibold flex items-center gap-2 bg-orange-500/10 transition-all">
+                <span class="h-2 w-2 rounded-full bg-orange-400"></span>
+                <span>📮 Postman Master Guide (การตั้งค่า & ยิงทุก Method)</span>
+              </button>
+              <button onclick="switchStep8Tool('curl')" id="step8-btn-curl" class="px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all">
+                <span class="h-2 w-2 rounded-full bg-cyan-400"></span>
+                <span>⚡ cURL Command Line (สำหรับยิงใน Terminal)</span>
+              </button>
+            </div>
+
+            <!-- View 1: Postman GUI Visual Guide -->
+            <div id="step8-view-postman" class="space-y-4 pt-2">
+              <!-- Postman Setup Checklist Alert -->
+              <div class="p-4 rounded-xl bg-orange-950/20 border border-orange-500/30 text-xs text-orange-200 space-y-2">
+                <div class="font-bold flex items-center gap-2 text-sm text-orange-400">
+                  <i data-lucide="info" class="w-4 h-4"></i>
+                  <span>3 กฎเหล็กในการตั้งค่า Postman สำหรับยิง Express API (กันติด Bug):</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+                  <div class="bg-black/30 p-2.5 rounded-lg border border-orange-500/20">
+                    <strong class="text-orange-300 block mb-1">1. Headers Content-Type:</strong>
+                    <span>สำหรับ Method <code>POST</code> และ <code>PUT</code> ต้องมี Header <code>Content-Type: application/json</code> เสมอ (Postman จะใส่ให้อัตโนมัติเมื่อเลือก raw ➔ JSON)</span>
+                  </div>
+                  <div class="bg-black/30 p-2.5 rounded-lg border border-orange-500/20">
+                    <strong class="text-orange-300 block mb-1">2. Body ➔ raw ➔ JSON:</strong>
+                    <span>ห้ามเลือก <code>form-data</code> หรือ <code>x-www-form-urlencoded</code> เพราะ <code>app.use(express.json())</code> จะอ่านค่าไม่ออกและ <code>req.body</code> จะเป็น <code>undefined</code></span>
+                  </div>
+                  <div class="bg-black/30 p-2.5 rounded-lg border border-orange-500/20">
+                    <strong class="text-orange-300 block mb-1">3. เก็บ _id จาก POST:</strong>
+                    <span>เมื่อยิง POST สร้างข้อมูลสำเร็จ ให้ก๊อปปี้ <code>_id</code> ใน Response (เช่น <code>66cd89...</code>) ไปต่อท้าย URL ในการทดสอบ <code>GET by ID</code>, <code>PUT</code>, <code>DELETE</code></span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Postman UI Diagram / Visual Blueprint -->
+              <div class="p-4 rounded-xl bg-surfaceDark border border-surfaceBorder space-y-3 font-mono text-xs">
+                <div class="text-slate-400 font-sans font-bold flex items-center gap-2">
+                  <i data-lucide="layout" class="w-4 h-4 text-orange-400"></i>
+                  <span>🗺️ ภาพจำลองหน้าต่าง Postman UI (ตำแหน่งการกดปุ่มสำคัญ):</span>
+                </div>
+                <div class="bg-bgDark p-3 rounded-lg border border-surfaceBorder overflow-x-auto text-slate-300 text-[11px] leading-relaxed">
+<span class="text-orange-400">┌────────────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="text-orange-400">│</span> [POST] ▼  <span class="text-white bg-slate-800 px-2 py-0.5 rounded">http://localhost:5000/api/students</span>                                 [Send 🚀] <span class="text-orange-400">│</span>
+<span class="text-orange-400">├────────────────────────────────────────────────────────────────────────────────────────┤</span>
+<span class="text-orange-400">│</span> Params  •  Authorization  •  <span class="text-cyan-400">Headers (1)</span>  •  <span class="text-emerald-400 font-bold underline">Body (●)</span>  •  Scripts  •  Settings          <span class="text-orange-400">│</span>
+<span class="text-orange-400">│</span> ( ) none   ( ) form-data   ( ) x-www-form-urlencoded   <span class="text-emerald-400">(●) raw</span> ➔ [ <span class="text-emerald-300 font-bold">JSON</span> ▼ ]             <span class="text-orange-400">│</span>
+<span class="text-orange-400">│</span> 1  {                                                                                   <span class="text-orange-400">│</span>
+<span class="text-orange-400">│</span> 2    <span class="text-purple-300">"studentId"</span>: <span class="text-amber-300">"66070001"</span>,                                                          <span class="text-orange-400">│</span>
+<span class="text-orange-400">│</span> 3    <span class="text-purple-300">"name"</span>: <span class="text-amber-300">"Thanatphat Promthong"</span>,                                                    <span class="text-orange-400">│</span>
+<span class="text-orange-400">│</span> 4    <span class="text-purple-300">"major"</span>: <span class="text-amber-300">"IT"</span>,                                                                     <span class="text-orange-400">│</span>
+<span class="text-orange-400">│</span> 5    <span class="text-purple-300">"gpa"</span>: <span class="text-amber-300">3.85</span>                                                                      <span class="text-orange-400">│</span>
+<span class="text-orange-400">│</span> 6  }                                                                                   <span class="text-orange-400">│</span>
+<span class="text-orange-400">├────────────────────────────────────────────────────────────────────────────────────────┤</span>
+<span class="text-orange-400">│</span> Response: <span class="text-emerald-400 font-bold bg-emerald-950/60 px-2 py-0.5 rounded">Status: 201 Created</span>   Time: 32 ms   Size: 240 B                      <span class="text-orange-400">│</span>
+<span class="text-orange-400">│</span> { <span class="text-purple-300">"_id"</span>: <span class="text-amber-300">"66d01a4b..."</span>, <span class="text-purple-300">"studentId"</span>: <span class="text-amber-300">"66070001"</span>, <span class="text-purple-300">"createdAt"</span>: <span class="text-amber-300">"2026-08-27..."</span> }                  <span class="text-orange-400">│</span>
+<span class="text-orange-400">└────────────────────────────────────────────────────────────────────────────────────────┘</span>
+                </div>
+              </div>
+
+              <!-- 7 Detailed Postman Request Test Cases Grid -->
+              <div class="space-y-3 font-sans">
+                <h5 class="text-sm font-bold text-white flex items-center gap-2">
+                  <i data-lucide="list-checks" class="w-4 h-4 text-emerald-400"></i>
+                  <span>7 ขั้นตอนการยิงทดสอบจริงใน Postman (เรียงตามลำดับ):</span>
+                </h5>
+
+                <!-- Case 0: Healthcheck -->
+                <div class="bg-surfaceDark p-3.5 rounded-xl border border-surfaceBorder space-y-2">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-xs font-bold border border-blue-500/30">GET</span>
+                      <code class="text-xs text-white font-mono">http://localhost:5000/</code>
+                      <span class="text-xs text-slate-400">— 0. ทดสอบว่า Express Server รันติด</span>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/20">Expected: 200 OK</span>
+                  </div>
+                  <div class="text-xs text-slate-300 bg-bgDark p-2 rounded font-mono text-slate-400">
+                    Response Body: <span class="text-emerald-300">{"message": "Server-Side Practical Exam API is running!"}</span>
+                  </div>
+                </div>
+
+                <!-- Case 1: POST Create -->
+                <div class="bg-surfaceDark p-3.5 rounded-xl border border-surfaceBorder space-y-2">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold border border-emerald-500/30">POST</span>
+                      <code class="text-xs text-white font-mono">http://localhost:5000/api/students</code>
+                      <span class="text-xs text-slate-400">— 1. สร้างข้อมูลนักศึกษาใหม่</span>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/20">Expected: 201 Created</span>
+                  </div>
+                  <div class="space-y-1">
+                    <div class="flex justify-between items-center text-xs text-slate-400">
+                      <span>Body ➔ raw ➔ JSON:</span>
+                      <button onclick="copySnippet('postman-req-1')" class="text-brandCyan hover:underline text-xs">คัดลอก JSON</button>
+                    </div>
+                    <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-emerald-300 overflow-x-auto"><code id="postman-req-1">{
+  "studentId": "66070001",
+  "name": "Thanatphat Promthong",
+  "major": "IT",
+  "gpa": 3.85,
+  "isActive": true
+}</code></pre>
+                  </div>
+                  <p class="text-xs text-amber-300 flex items-center gap-1.5">
+                    <i data-lucide="alert-triangle" class="w-3.5 h-3.5 shrink-0"></i>
+                    <span><strong>จุดสำคัญ:</strong> ให้คัดลอกค่า <code>_id</code> ใน Response (เช่น <code>66d01a4b9c8e7f...</code>) ไว้ใช้ในข้อ 5, 6, 7!</span>
+                  </p>
+                </div>
+
+                <!-- Case 2: POST Duplicate Trap -->
+                <div class="bg-surfaceDark p-3.5 rounded-xl border border-surfaceBorder space-y-2">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold border border-emerald-500/30">POST</span>
+                      <code class="text-xs text-white font-mono">http://localhost:5000/api/students</code>
+                      <span class="text-xs text-rose-400 font-semibold">— 2. ทดสอบยิง ID ซ้ำ (เช็ค Error Trap err.code === 11000)</span>
+                    </div>
+                    <span class="text-xs font-mono text-rose-400 bg-rose-950/40 px-2 py-0.5 rounded border border-rose-500/20">Expected: 400 Bad Request</span>
+                  </div>
+                  <div class="space-y-1">
+                    <div class="text-xs text-slate-400">กดปุ่ม <strong>Send</strong> อีกครั้งด้วย <code>studentId</code> เดิม ➔ ต้องได้ Status 400 ไม่ใช่ Server Crash 500</div>
+                    <pre class="bg-bgDark p-2 rounded text-xs font-mono text-rose-300">{ "error": "Duplicate studentId error" }</pre>
+                  </div>
+                </div>
+
+                <!-- Case 3: GET All -->
+                <div class="bg-surfaceDark p-3.5 rounded-xl border border-surfaceBorder space-y-2">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-xs font-bold border border-blue-500/30">GET</span>
+                      <code class="text-xs text-white font-mono">http://localhost:5000/api/students</code>
+                      <span class="text-xs text-slate-400">— 3. ดึงข้อมูลนักศึกษาทั้งหมด</span>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/20">Expected: 200 OK</span>
+                  </div>
+                  <p class="text-xs text-slate-300">Response คืนค่าเป็น Array ของ Document ทั้งหมด <code>[ { "_id": "...", "name": "..." }, ... ]</code></p>
+                </div>
+
+                <!-- Case 4: GET with Query Params Filter -->
+                <div class="bg-surfaceDark p-3.5 rounded-xl border border-surfaceBorder space-y-2">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-xs font-bold border border-blue-500/30">GET</span>
+                      <code class="text-xs text-white font-mono">http://localhost:5000/api/students?major=IT&isActive=true</code>
+                      <span class="text-xs text-slate-400">— 4. กรองข้อมูลด้วย Query Params (req.query)</span>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/20">Expected: 200 OK</span>
+                  </div>
+                  <div class="text-xs text-slate-400 bg-bgDark p-2.5 rounded-lg space-y-1">
+                    <div>วิธีใส่ใน Postman: กดแท็บ <strong>Params</strong> ใต้ URL Bar ➔ ใส่ Key: <code>major</code>, Value: <code>IT</code> และ Key: <code>isActive</code>, Value: <code>true</code></div>
+                  </div>
+                </div>
+
+                <!-- Case 5: GET by ID -->
+                <div class="bg-surfaceDark p-3.5 rounded-xl border border-surfaceBorder space-y-2">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 font-mono text-xs font-bold border border-blue-500/30">GET</span>
+                      <code class="text-xs text-white font-mono">http://localhost:5000/api/students/:id</code>
+                      <span class="text-xs text-slate-400">— 5. ดึงข้อมูลรายคนด้วย ObjectId</span>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/20">Expected: 200 OK / 404</span>
+                  </div>
+                  <p class="text-xs text-slate-300">นำ <code>_id</code> ที่ได้จาก POST มาใส่ท้าย URL เช่น <code>http://localhost:5000/api/students/66d01a4b9c8e7f0012ab34cd</code></p>
+                </div>
+
+                <!-- Case 6: PUT Update -->
+                <div class="bg-surfaceDark p-3.5 rounded-xl border border-surfaceBorder space-y-2">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-mono text-xs font-bold border border-amber-500/30">PUT</span>
+                      <code class="text-xs text-white font-mono">http://localhost:5000/api/students/:id</code>
+                      <span class="text-xs text-slate-400">— 6. อัปเดตข้อมูลนักศึกษา</span>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/20">Expected: 200 OK</span>
+                  </div>
+                  <div class="space-y-1">
+                    <div class="text-xs text-slate-400">Body ➔ raw ➔ JSON:</div>
+                    <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-amber-300 overflow-x-auto"><code>{
+  "gpa": 4.00,
+  "major": "SE"
+}</code></pre>
+                  </div>
+                  <p class="text-xs text-slate-400">สังเกตว่าข้อมูลที่ Response กลับมา ต้องมีค่า <code>gpa: 4.00</code> ทันที (เพราะใส่ option <code>{ new: true, runValidators: true }</code>)</p>
+                </div>
+
+                <!-- Case 7: DELETE -->
+                <div class="bg-surfaceDark p-3.5 rounded-xl border border-surfaceBorder space-y-2">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                      <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 font-mono text-xs font-bold border border-rose-500/30">DELETE</span>
+                      <code class="text-xs text-white font-mono">http://localhost:5000/api/students/:id</code>
+                      <span class="text-xs text-slate-400">— 7. ลบข้อมูลนักศึกษา</span>
+                    </div>
+                    <span class="text-xs font-mono text-emerald-400 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/20">Expected: 200 OK</span>
+                  </div>
+                  <div class="text-xs text-slate-300 bg-bgDark p-2 rounded font-mono text-slate-400">
+                    Response: <span class="text-emerald-300">{"message": "Student deleted successfully", "id": "66d01a4b..."}</span>
+                  </div>
+                  <p class="text-xs text-slate-400">💡 <strong>Verification:</strong> ลองยิง <code>GET /api/students/:id</code> ซ้ำอีกครั้ง ➔ ต้องตอบกลับ <code>404 Student not found</code></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- View 2: cURL CLI Suite -->
+            <div id="step8-view-curl" class="hidden space-y-3 pt-2">
               <div class="space-y-1">
                 <div class="flex items-center justify-between text-xs text-slate-400">
-                  <span class="font-mono text-emerald-400 font-semibold">1. Test POST Create:</span>
+                  <span class="font-mono text-emerald-400 font-semibold">1. Test POST Create Student (Status 201):</span>
                   <button onclick="copySnippet('curl-1')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
                 </div>
-                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-1">curl -X POST http://localhost:5000/api/students -H "Content-Type: application/json" -d "{\"studentId\":\"66070001\",\"name\":\"Tawan Promthong\",\"major\":\"IT\",\"gpa\":3.85}"</code></pre>
+                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-1">curl -X POST http://localhost:5000/api/students -H "Content-Type: application/json" -d "{"studentId":"66070001","name":"Tawan Promthong","major":"IT","gpa":3.85}"</code></pre>
               </div>
 
               <div class="space-y-1">
                 <div class="flex items-center justify-between text-xs text-slate-400">
-                  <span class="font-mono text-sky-400 font-semibold">2. Test GET All:</span>
+                  <span class="font-mono text-rose-400 font-semibold">2. Test POST Duplicate studentId Trap (Status 400):</span>
+                  <button onclick="copySnippet('curl-dup')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
+                </div>
+                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-dup">curl -X POST http://localhost:5000/api/students -H "Content-Type: application/json" -d "{"studentId":"66070001","name":"Duplicate","major":"IT","gpa":3.00}"</code></pre>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span class="font-mono text-sky-400 font-semibold">3. Test GET All Students (Status 200):</span>
                   <button onclick="copySnippet('curl-2')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
                 </div>
                 <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-2">curl http://localhost:5000/api/students</code></pre>
@@ -1489,42 +1264,44 @@ module.exports = router;</code></pre>
 
               <div class="space-y-1">
                 <div class="flex items-center justify-between text-xs text-slate-400">
-                  <span class="font-mono text-amber-400 font-semibold">3. Test PUT Update (แก้ GPA เป็น 4.00):</span>
-                  <button onclick="copySnippet('curl-3')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
+                  <span class="font-mono text-sky-400 font-semibold">4. Test GET with Query Filter (?major=IT):</span>
+                  <button onclick="copySnippet('curl-query')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
                 </div>
-                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-3">curl -X PUT http://localhost:5000/api/students/PASTE_ID_HERE -H "Content-Type: application/json" -d "{\"gpa\":4.00}"</code></pre>
+                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-query">curl "http://localhost:5000/api/students?major=IT&isActive=true"</code></pre>
               </div>
 
               <div class="space-y-1">
                 <div class="flex items-center justify-between text-xs text-slate-400">
-                  <span class="font-mono text-rose-400 font-semibold">4. Test DELETE:</span>
+                  <span class="font-mono text-purple-400 font-semibold">5. Test GET by ID (Status 200 / 404):</span>
+                  <button onclick="copySnippet('curl-3')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
+                </div>
+                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-3">curl http://localhost:5000/api/students/&lt;PASTE_OBJECT_ID&gt;</code></pre>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span class="font-mono text-amber-400 font-semibold">6. Test PUT Update Student by ID (Status 200):</span>
                   <button onclick="copySnippet('curl-4')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
                 </div>
-                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-4">curl -X DELETE http://localhost:5000/api/students/PASTE_ID_HERE</code></pre>
+                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-4">curl -X PUT http://localhost:5000/api/students/&lt;PASTE_OBJECT_ID&gt; -H "Content-Type: application/json" -d "{"gpa":4.00,"major":"SE"}"</code></pre>
+              </div>
+
+              <div class="space-y-1">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span class="font-mono text-rose-400 font-semibold">7. Test DELETE Student by ID (Status 200):</span>
+                  <button onclick="copySnippet('curl-5')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
+                </div>
+                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-5">curl -X DELETE http://localhost:5000/api/students/&lt;PASTE_OBJECT_ID&gt;</code></pre>
               </div>
             </div>
           </div>
+
 
           <!-- STEP 9 -->
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-brandEmerald" data-cat="test">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-                <span class="font-mono text-sm font-bold px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">STEP 9</span>
-                <div>
-                  <h4 class="font-bold text-white text-base">Git Checkpoint, Commit & Push ส่งงานอาจารย์</h4>
-                  <p class="text-xs text-slate-400">ตรวจสอบสถานะ git status, บันทึก commit ข้อความชัดเจน และ Push ขึ้น Remote Repository</p>
-                </div>
-              </div>
+      
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); runVSCodeTerminalCmd('git status');" class="px-2.5 py-1 rounded bg-orange-600/20 hover:bg-orange-600 text-orange-300 hover:text-white border border-orange-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="git-branch" class="w-3 h-3"></i><span>รันคำสั่ง Git ใน Terminal</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
@@ -1638,32 +1415,7 @@ git push -u origin main</code></pre>
         <!-- VS Code Window Titlebar -->
         <div class="bg-[#18191f] px-3 py-2 border-b border-[#282a36] flex items-center justify-between text-xs">
           <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-3 h-3 rounded-full bg-[#ff5f56] inline-block"></span>
-              <span class="w-3 h-3 rounded-full bg-[#ffbd2e] inline-block"></span>
-              <span class="w-3 h-3 rounded-full bg-[#27c93f] inline-block"></span>
-            </div>
-            <div class="hidden sm:flex items-center gap-3 text-slate-400 text-[11px] ml-2">
-              <span class="hover:text-white cursor-pointer">File</span>
-              <span class="hover:text-white cursor-pointer">Edit</span>
-              <span class="hover:text-white cursor-pointer">Selection</span>
-              <span class="hover:text-white cursor-pointer">View</span>
-              <span class="hover:text-white cursor-pointer">Go</span>
-              <span class="hover:text-white cursor-pointer">Run</span>
-              <span class="hover:text-white cursor-pointer" onclick="toggleVSCodeBottomPanel()">Terminal</span>
-              <span class="hover:text-white cursor-pointer">Help</span>
-            </div>
-          </div>
+      
 
           <div class="text-slate-400 font-mono text-[11px] flex items-center gap-1.5 truncate">
             <i data-lucide="code" class="w-3.5 h-3.5 text-blue-400"></i>
@@ -2035,39 +1787,7 @@ git push -u origin main</code></pre>
         <!-- VS Code Bottom Status Bar -->
         <div class="vscode-statusbar px-3 flex items-center justify-between select-none">
           <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-            <span class="flex items-center gap-1 hover:bg-indigo-700 px-1.5 py-0.5 rounded cursor-pointer">
-              <i data-lucide="git-branch" class="w-3 h-3"></i>
-              <span>main*</span>
-            </span>
-            <span class="flex items-center gap-1 hover:bg-indigo-700 px-1.5 py-0.5 rounded cursor-pointer" onclick="setVSCodePanelTab('problems')">
-              <i data-lucide="x-circle" class="w-3 h-3 text-rose-300"></i>
-              <span id="stb-errors">0</span>
-              <i data-lucide="alert-triangle" class="w-3 h-3 text-amber-300 ml-1"></i>
-              <span id="stb-warnings">0</span>
-            </span>
-            <span class="hidden sm:inline hover:bg-indigo-700 px-1.5 py-0.5 rounded cursor-pointer" onclick="runVSCodeTerminalCmd('npm run dev')">
-              <i data-lucide="radio" class="w-3 h-3 inline text-emerald-300 mr-1"></i>
-              <span>Port: 5000</span>
-            </span>
-          </div>
-
-          <div class="flex items-center gap-4">
-            <span id="stb-cursor">Ln 1, Col 1</span>
-            <span class="hidden sm:inline">Spaces: 2</span>
-            <span class="hidden sm:inline">UTF-8</span>
-            <span id="stb-lang" class="font-medium bg-indigo-700 px-2 py-0.5 rounded">JavaScript</span>
-          </div>
-        </div>
+      
 
       </div>
 
@@ -2079,24 +1799,7 @@ git push -u origin main</code></pre>
       <!-- Lab Selector Header -->
       <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 glass-card p-4 rounded-xl">
         <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-          <div class="p-2 rounded-lg bg-brandEmerald/10 text-brandEmerald border border-brandEmerald/20">
-            <i data-lucide="code" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h2 class="font-bold text-white text-base">Server-Side Practical Coding Workbench</h2>
-            <p class="text-xs text-slate-400">เลือกข้อสอบปฏิบัติ เขียนโค้ดลงใน Editor และกด 'ตรวจสอบโค้ด (Check Code)' เพื่อประเมินผลอัตโนมัติ</p>
-          </div>
-        </div>
+      
 
         <div class="flex items-center gap-2 w-full lg:w-auto">
           <label for="lab-select" class="text-xs text-slate-400 whitespace-nowrap">เลือกข้อแล็บ:</label>
@@ -2234,27 +1937,7 @@ git push -u origin main</code></pre>
         </div>
 
         <div class="flex items-center gap-3">
-      <!-- Omni-Search Bar (Global Instant Finder) -->
-      <div class="relative w-full max-w-xs md:max-w-md hidden sm:block">
-        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-          <i data-lucide="search" class="w-4 h-4"></i>
-        </div>
-        <input type="text" id="omni-search-input" oninput="handleOmniSearch(this.value)" placeholder="ค้นหาคำสั่ง, ทฤษฎี, โค้ด, จุดหลอก (เช่น docker, 11000, findByIdAndUpdate)..." class="w-full pl-9 pr-8 py-2 bg-surfaceDark/90 border border-surfaceBorder rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brandIndigo focus:ring-1 focus:ring-brandIndigo transition-all font-sans">
-        <button id="omni-search-clear" onclick="clearOmniSearch()" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white">
-          <i data-lucide="x" class="w-3.5 h-3.5"></i>
-        </button>
-      </div>
-          <!-- Timer Display -->
-          <div class="flex items-center gap-2 bg-surfaceDark px-4 py-2 rounded-xl border border-surfaceBorder">
-            <i data-lucide="clock" class="w-5 h-5 text-brandAmber animate-pulse"></i>
-            <span id="quiz-timer" class="font-mono text-lg font-bold text-white">20:00</span>
-          </div>
-          <button id="start-quiz-btn" onclick="toggleQuizTimer()" class="px-4 py-2 rounded-lg bg-brandAmber hover:bg-amber-600 text-slate-950 font-bold text-sm transition-all flex items-center gap-1.5">
-            <i data-lucide="play" class="w-4 h-4 fill-slate-950"></i>
-            <span id="quiz-btn-text">เริ่มจับเวลา</span>
-          </button>
-        </div>
-      </div>
+      
 
       <!-- Quiz Question Cards Container -->
       <div id="quiz-container" class="space-y-6">
@@ -2566,7 +2249,39 @@ const users = await prisma.user.findMany({
 });</code></pre>
         </div>
 
-      </div>
+              <!-- Card 9: Postman & API Testing Master Cheat Sheet -->
+        <div class="glass-card rounded-xl p-5 hover:border-orange-500/50 transition-all space-y-3">
+          <div class="flex items-center justify-between border-b border-surfaceBorder pb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="p-2 rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20">
+                <i data-lucide="send" class="w-4 h-4"></i>
+              </div>
+              <h4 class="font-bold text-white text-sm">Postman & API Testing Quick Reference</h4>
+            </div>
+            <span class="text-xs font-mono bg-orange-500/10 text-orange-300 px-2 py-0.5 rounded border border-orange-500/20">Testing Guide</span>
+          </div>
+          <div class="text-xs space-y-2 text-slate-300">
+            <div class="grid grid-cols-2 gap-2 font-mono text-[11px]">
+              <div class="p-2 rounded bg-bgDark border border-surfaceBorder"><span class="text-blue-400 font-bold">GET</span> /api/students<br><span class="text-slate-400">ดึงข้อมูล (ไม่มี Body)</span></div>
+              <div class="p-2 rounded bg-bgDark border border-surfaceBorder"><span class="text-emerald-400 font-bold">POST</span> /api/students<br><span class="text-slate-400">สร้าง (Body: raw JSON, 201)</span></div>
+              <div class="p-2 rounded bg-bgDark border border-surfaceBorder"><span class="text-amber-400 font-bold">PUT</span> /api/students/:id<br><span class="text-slate-400">แก้ไข (Body: raw JSON, 200)</span></div>
+              <div class="p-2 rounded bg-bgDark border border-surfaceBorder"><span class="text-rose-400 font-bold">DELETE</span> /api/students/:id<br><span class="text-slate-400">ลบข้อมูล (Status 200)</span></div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-black/40 border border-orange-500/20 text-[11px] space-y-1">
+              <strong class="text-orange-300 block">⚡ Postman Setup Steps:</strong>
+              <div>1. ใส่ Method + URL (เช่น <code>http://localhost:5000/api/students</code>)</div>
+              <div>2. แท็บ <strong>Headers</strong>: ตรวจสอบว่ามี <code>Content-Type: application/json</code></div>
+              <div>3. แท็บ <strong>Body</strong>: เลือก <code>raw</code> ➔ เปลี่ยน Dropdown ขวาสุดเป็น <code>JSON</code></div>
+              <div>4. กดปุ่ม <strong>Send (Ctrl+Enter)</strong> ➔ ดู Status Code และ Response JSON</div>
+            </div>
+            <button onclick="copyPostmanCollection()" class="w-full py-1.5 rounded-lg bg-orange-600/20 hover:bg-orange-600 text-orange-300 hover:text-white border border-orange-500/30 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              <span>คัดลอก Postman Collection JSON (v2.1)</span>
+            </button>
+          </div>
+        </div>
+
+        </div>
 
     </div>
 
@@ -7013,6 +6728,286 @@ git push -u origin main
       renderVSCodeStepGuide();
       lucide.createIcons();
     });
+  
+    // --- POSTMAN COLLECTION & TESTING HELPERS ---
+    const EXAM_POSTMAN_COLLECTION = {
+  "info": {
+    "_postman_id": "exam-serverside-midterm-2026",
+    "name": "06016418 Server-Side Exam - Student API",
+    "description": "Postman Collection for Server-Side Web Development Midterm Exam (Express + Mongoose CRUD)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "0. Healthcheck (GET /)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            ""
+          ]
+        },
+        "description": "Test if Express Server is running (Expected: 200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "1. Create Student (POST /api/students)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"studentId\": \"66070001\",\n  \"name\": \"Thanatphat Promthong\",\n  \"major\": \"IT\",\n  \"gpa\": 3.85,\n  \"isActive\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/students",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "students"
+          ]
+        },
+        "description": "Create a new student record (Expected: 201 Created)"
+      },
+      "response": []
+    },
+    {
+      "name": "2. Test Duplicate Student ID (POST Trap)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"studentId\": \"66070001\",\n  \"name\": \"Duplicate User\",\n  \"major\": \"CS\",\n  \"gpa\": 2.50\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/students",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "students"
+          ]
+        },
+        "description": "Test duplicate studentId error handling (Expected: 400 Bad Request with err.code === 11000)"
+      },
+      "response": []
+    },
+    {
+      "name": "3. Get All Students (GET /api/students)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/students",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "students"
+          ]
+        },
+        "description": "Get all student records (Expected: 200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "4. Filter Students by Major (GET with Params)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/students?major=IT&isActive=true",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "students"
+          ],
+          "query": [
+            {
+              "key": "major",
+              "value": "IT"
+            },
+            {
+              "key": "isActive",
+              "value": "true"
+            }
+          ]
+        },
+        "description": "Filter students with query params (Expected: 200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "5. Get Single Student by ID (GET /api/students/:id)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/students/REPLACE_WITH_MONGO_ID",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "students",
+            "REPLACE_WITH_MONGO_ID"
+          ]
+        },
+        "description": "Fetch single student by Mongo ObjectId (Expected: 200 OK or 404 Not Found)"
+      },
+      "response": []
+    },
+    {
+      "name": "6. Update Student by ID (PUT /api/students/:id)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"gpa\": 4.00,\n  \"major\": \"SE\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/students/REPLACE_WITH_MONGO_ID",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "students",
+            "REPLACE_WITH_MONGO_ID"
+          ]
+        },
+        "description": "Update student with runValidators: true and new: true (Expected: 200 OK)"
+      },
+      "response": []
+    },
+    {
+      "name": "7. Delete Student by ID (DELETE /api/students/:id)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/students/REPLACE_WITH_MONGO_ID",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "students",
+            "REPLACE_WITH_MONGO_ID"
+          ]
+        },
+        "description": "Delete student by ObjectId (Expected: 200 OK)"
+      },
+      "response": []
+    }
+  ]
+};
+
+    function copyPostmanCollection() {
+      const jsonStr = JSON.stringify(EXAM_POSTMAN_COLLECTION, null, 2);
+      navigator.clipboard.writeText(jsonStr).then(() => {
+        alert("✅ คัดลอก Postman Collection JSON (v2.1) ลง Clipboard สำเร็จ!\n\nวิธีใช้งานใน Postman:\n1. เปิดโปรแกรม Postman\n2. กดปุ่ม 'Import' มุมซ้ายบน\n3. กดแท็บ 'Paste Raw Text' หรือกด Ctrl+V วางโค้ดลงไป\n4. กดปุ่ม 'Import' จะได้ 7 Requests พร้อมทดสอบทันที!");
+      }).catch(err => {
+        console.error("Clipboard copy failed:", err);
+      });
+    }
+
+    function downloadPostmanCollectionFile() {
+      const jsonStr = JSON.stringify(EXAM_POSTMAN_COLLECTION, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = '06016418_ServerSide_Exam_Postman_Collection.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function switchStep8Tool(tool) {
+      const btnPostman = document.getElementById('step8-btn-postman');
+      const btnCurl = document.getElementById('step8-btn-curl');
+      const viewPostman = document.getElementById('step8-view-postman');
+      const viewCurl = document.getElementById('step8-view-curl');
+
+      if (tool === 'postman') {
+        btnPostman.className = 'px-4 py-2 border-b-2 border-orange-500 text-white font-semibold flex items-center gap-2 bg-orange-500/10 transition-all';
+        btnCurl.className = 'px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all';
+        viewPostman.classList.remove('hidden');
+        viewCurl.classList.add('hidden');
+      } else {
+        btnCurl.className = 'px-4 py-2 border-b-2 border-cyan-500 text-white font-semibold flex items-center gap-2 bg-cyan-500/10 transition-all';
+        btnPostman.className = 'px-4 py-2 border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2 transition-all';
+        viewCurl.classList.remove('hidden');
+        viewPostman.classList.add('hidden');
+      }
+      lucide.createIcons();
+    }
+
   </script>
 
   <!-- Floating Quick Tour Launcher Button -->
