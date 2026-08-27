@@ -147,6 +147,57 @@
       color: #ffffff;
     }
 
+    /* Guided Step Wizard Styles */
+    .step-pill-btn {
+      transition: all 0.15s ease;
+    }
+    .step-pill-btn.active {
+      background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+      color: #ffffff;
+      border-color: #818cf8;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+    }
+    .step-pill-btn.completed {
+      border-color: #10b981;
+      color: #34d399;
+    }
+
+    /* Interactive Tutorial Tour Spotlight & Backdrop */
+    #tutorial-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 5, 10, 0.78);
+      backdrop-filter: blur(3px);
+      z-index: 9998;
+      transition: opacity 0.25s ease;
+    }
+    #tutorial-spotlight {
+      position: fixed;
+      border-radius: 14px;
+      box-shadow: 0 0 0 9999px rgba(3, 5, 10, 0.78), 0 0 30px 4px rgba(99, 102, 241, 0.75);
+      border: 2.5px solid #818cf8;
+      pointer-events: none;
+      z-index: 9999;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: tourPulse 2.2s infinite ease-in-out;
+    }
+    @keyframes tourPulse {
+      0%, 100% {
+        box-shadow: 0 0 0 9999px rgba(3, 5, 10, 0.78), 0 0 24px 3px rgba(99, 102, 241, 0.65);
+        border-color: #818cf8;
+      }
+      50% {
+        box-shadow: 0 0 0 9999px rgba(3, 5, 10, 0.78), 0 0 42px 8px rgba(129, 140, 248, 0.95);
+        border-color: #c7d2fe;
+      }
+    }
+    #tutorial-popover {
+      position: fixed;
+      z-index: 10000;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      max-width: 440px;
+      width: calc(100vw - 32px);
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col font-sans selection:bg-brandIndigo selection:text-white">
@@ -154,7 +205,7 @@
   <!-- Top Navigation Bar -->
   <header class="sticky top-0 z-50 glass-card border-b border-surfaceBorder px-4 lg:px-8 py-3.5">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
+      <div id="header-brand-wrap" class="flex items-center gap-3">
         <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-brandIndigo to-brandCyan flex items-center justify-center shadow-lg shadow-brandIndigo/20">
           <i data-lucide="server" class="w-5 h-5 text-white"></i>
         </div>
@@ -167,8 +218,18 @@
         </div>
       </div>
 
-      <!-- Quick Stats & Action -->
-      <div class="flex items-center gap-3">
+      <!-- Quick Stats, Tour & Action -->
+      <div id="header-stats-wrap" class="flex items-center gap-2.5 sm:gap-3">
+        <!-- Interactive Website Tutorial Button -->
+        <button onclick="startWebsiteTour()" id="tour-nav-btn" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-brandIndigo/30 via-purple-500/20 to-brandCyan/30 hover:from-brandIndigo/50 hover:to-brandCyan/50 text-white border border-brandIndigo/50 text-xs font-medium flex items-center gap-2 shadow-lg shadow-brandIndigo/20 hover:scale-105 transition-all">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-brandCyan"></span>
+          </span>
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-brandCyan"></i>
+          <span>ทัวร์สอนใช้งานเว็บ (Tutorial)</span>
+        </button>
+
         <div class="hidden sm:flex items-center gap-2 bg-surfaceDark px-3 py-1.5 rounded-lg border border-surfaceBorder text-xs">
           <span class="text-slate-400">Lab Solved:</span>
           <span id="stat-solved" class="font-bold text-brandEmerald font-mono">0 / 10</span>
@@ -1322,6 +1383,10 @@ git push -u origin main</code></pre>
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
+          <button onclick="setVSCodeActiveActivity('steps')" class="px-3.5 py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-emerald-600 hover:from-indigo-500 hover:to-emerald-500 text-white font-medium text-xs flex items-center gap-1.5 shadow-lg shadow-indigo-600/25 hover:scale-105 transition-all" title="เปิดแผงผู้ช่วยพาทำทีละ Step (0-9)">
+            <i data-lucide="compass" class="w-4 h-4 text-emerald-300"></i>
+            <span>🧭 โหมดพาทำทีละ Step (Guided Mode)</span>
+          </button>
           <button onclick="loadExamBlueprintToVSCode()" class="px-3.5 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs flex items-center gap-1.5 shadow-lg shadow-blue-600/25 transition-all">
             <i data-lucide="download-cloud" class="w-4 h-4"></i>
             <span>โหลด Exam Blueprint ครบชุด</span>
@@ -1418,8 +1483,12 @@ git push -u origin main</code></pre>
           <!-- Activity Bar (Far Left) -->
           <div class="vscode-activitybar flex flex-col items-center justify-between py-3">
             <div class="flex flex-col items-center gap-4 text-slate-400">
-              <button onclick="setVSCodeActiveActivity('explorer')" id="act-explorer" class="p-2 text-white border-l-2 border-indigo-500 hover:text-white" title="Explorer (Ctrl+Shift+E)">
+              <button onclick="setVSCodeActiveActivity('explorer')" id="act-explorer" class="p-2 text-white border-l-2 border-indigo-500 hover:text-white" title="Explorer (ไฟล์ทั้งหมด)">
                 <i data-lucide="files" class="w-5 h-5"></i>
+              </button>
+              <button onclick="setVSCodeActiveActivity('steps')" id="act-steps" class="p-2 text-slate-500 hover:text-white border-l-2 border-transparent relative" title="Guided Step-by-Step (โหมดพาทำ 0-9)">
+                <i data-lucide="compass" class="w-5 h-5"></i>
+                <span id="vscode-steps-badge" class="absolute top-1 right-1 px-1 py-0.2 rounded-full bg-emerald-500 text-[9px] text-white font-bold leading-none">0/10</span>
               </button>
               <button onclick="setVSCodeActiveActivity('search')" id="act-search" class="p-2 text-slate-500 hover:text-white border-l-2 border-transparent" title="Search in Workspace">
                 <i data-lucide="search" class="w-5 h-5"></i>
@@ -1439,62 +1508,116 @@ git push -u origin main</code></pre>
             </div>
           </div>
 
-          <!-- Side Bar: Explorer & File Tree -->
+          <!-- Side Bar: Dynamic Views (Explorer / Step Guide / Search / Git) -->
           <div id="vscode-sidebar" class="vscode-sidebar flex flex-col overflow-hidden">
             
-            <!-- Explorer Header -->
-            <div class="px-3 py-2.5 bg-[#14151b] border-b border-[#232530] flex items-center justify-between text-xs">
-              <span class="font-bold text-slate-300 tracking-wider text-[11px]">EXPLORER: SERVER-EXAM</span>
-              <div class="flex items-center gap-1">
-                <button onclick="promptCreateNewFile()" class="p-1 hover:bg-slate-700/50 rounded text-slate-400 hover:text-emerald-400" title="New File (+ ไฟล์ใหม่)">
-                  <i data-lucide="file-plus" class="w-3.5 h-3.5"></i>
-                </button>
-                <button onclick="promptCreateNewFolder()" class="p-1 hover:bg-slate-700/50 rounded text-slate-400 hover:text-sky-400" title="New Folder (+ โฟลเดอร์ใหม่)">
-                  <i data-lucide="folder-plus" class="w-3.5 h-3.5"></i>
-                </button>
-                <button onclick="loadExamBlueprintToVSCode()" class="p-1 hover:bg-slate-700/50 rounded text-slate-400 hover:text-blue-400" title="Restore Standard Exam Blueprint">
-                  <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                </button>
+            <!-- VIEW 1: EXPLORER VIEW -->
+            <div id="vsside-explorer" class="flex-1 flex flex-col overflow-hidden">
+              <!-- Explorer Header -->
+              <div class="px-3 py-2.5 bg-[#14151b] border-b border-[#232530] flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-300 tracking-wider text-[11px]">EXPLORER: SERVER-EXAM</span>
+                <div class="flex items-center gap-1">
+                  <button onclick="promptCreateNewFile()" class="p-1 hover:bg-slate-700/50 rounded text-slate-400 hover:text-emerald-400" title="New File (+ ไฟล์ใหม่)">
+                    <i data-lucide="file-plus" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button onclick="promptCreateNewFolder()" class="p-1 hover:bg-slate-700/50 rounded text-slate-400 hover:text-sky-400" title="New Folder (+ โฟลเดอร์ใหม่)">
+                    <i data-lucide="folder-plus" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button onclick="loadExamBlueprintToVSCode()" class="p-1 hover:bg-slate-700/50 rounded text-slate-400 hover:text-blue-400" title="Restore Standard Exam Blueprint">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- New File/Folder Inline Creation Prompt -->
+              <div id="vscode-new-item-box" class="hidden p-2 bg-[#1c1e27] border-b border-indigo-500/40 text-xs space-y-1.5">
+                <div class="flex items-center justify-between text-[11px] text-slate-400">
+                  <span id="vscode-new-item-title">ตั้งชื่อไฟล์ใหม่ (พร้อมนามสกุล):</span>
+                  <button onclick="cancelCreateItem()" class="text-slate-500 hover:text-slate-300">✕</button>
+                </div>
+                <input type="text" id="vscode-new-item-input" oninput="validateNewItemName(this.value)" onkeydown="handleNewItemKeydown(event)" placeholder="เช่น server.js หรือ models/User.js" class="w-full bg-[#111218] border border-slate-700 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+                
+                <!-- Validation Hint Box -->
+                <div id="vscode-name-feedback" class="text-[10px] leading-tight text-slate-400">
+                  พิมพ์ชื่อไฟล์และกด Enter เพื่อสร้าง
+                </div>
+
+                <!-- Quick File Presets -->
+                <div class="pt-1 flex flex-wrap gap-1 text-[10px]">
+                  <button onclick="quickSetNewFileName('server.js')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-300 font-mono border border-slate-700">+ server.js</button>
+                  <button onclick="quickSetNewFileName('models/Student.js')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-300 font-mono border border-slate-700">+ models/Student.js</button>
+                  <button onclick="quickSetNewFileName('routes/studentRoutes.js')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-300 font-mono border border-slate-700">+ routes/studentRoutes.js</button>
+                  <button onclick="quickSetNewFileName('config/db.js')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-300 font-mono border border-slate-700">+ config/db.js</button>
+                  <button onclick="quickSetNewFileName('Dockerfile')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-sky-300 font-mono border border-slate-700">+ Dockerfile</button>
+                  <button onclick="quickSetNewFileName('docker-compose.yml')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-pink-300 font-mono border border-slate-700">+ docker-compose.yml</button>
+                  <button onclick="quickSetNewFileName('.env')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-emerald-300 font-mono border border-slate-700">+ .env</button>
+                  <button onclick="quickSetNewFileName('.gitignore')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-orange-300 font-mono border border-slate-700">+ .gitignore</button>
+                  <button onclick="quickSetNewFileName('package.json')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-400 font-mono border border-slate-700">+ package.json</button>
+                </div>
+              </div>
+
+              <!-- Workspace File Tree List -->
+              <div id="vscode-filetree" class="flex-1 overflow-y-auto p-1 space-y-0.5 text-xs font-mono">
+                <!-- Populated dynamically via JavaScript -->
+              </div>
+
+              <!-- Workspace Stats Footer -->
+              <div class="px-3 py-2 bg-[#14151b] border-t border-[#232530] text-[10px] text-slate-400 flex items-center justify-between">
+                <span id="vscode-file-count">0 files</span>
+                <button onclick="promptCreateNewFolder()" class="text-sky-400 hover:underline">+ New Folder</button>
               </div>
             </div>
 
-            <!-- New File/Folder Inline Creation Prompt (Hidden by default) -->
-            <div id="vscode-new-item-box" class="hidden p-2 bg-[#1c1e27] border-b border-indigo-500/40 text-xs space-y-1.5">
-              <div class="flex items-center justify-between text-[11px] text-slate-400">
-                <span id="vscode-new-item-title">ตั้งชื่อไฟล์ใหม่ (พร้อมนามสกุล):</span>
-                <button onclick="cancelCreateItem()" class="text-slate-500 hover:text-slate-300">✕</button>
-              </div>
-              <input type="text" id="vscode-new-item-input" oninput="validateNewItemName(this.value)" onkeydown="handleNewItemKeydown(event)" placeholder="เช่น server.js หรือ models/User.js" class="w-full bg-[#111218] border border-slate-700 rounded px-2 py-1 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
-              
-              <!-- Validation Hint Box -->
-              <div id="vscode-name-feedback" class="text-[10px] leading-tight text-slate-400">
-                พิมพ์ชื่อไฟล์และกด Enter เพื่อสร้าง
+            <!-- VIEW 2: GUIDED STEP-BY-STEP WIZARD VIEW -->
+            <div id="vsside-steps" class="hidden flex-1 flex flex-col overflow-hidden bg-[#13141a]">
+              <!-- Step Wizard Header -->
+              <div class="px-3 py-2 bg-[#181922] border-b border-[#232530] flex items-center justify-between">
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="compass" class="w-3.5 h-3.5 text-emerald-400"></i>
+                  <span class="font-bold text-white text-[11px] tracking-wide">GUIDED STEP WIZARD</span>
+                </div>
+                <span id="wizard-progress-badge" class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-mono border border-emerald-500/30">0/10 Done</span>
               </div>
 
-              <!-- Quick File Presets -->
-              <div class="pt-1 flex flex-wrap gap-1 text-[10px]">
-                <button onclick="quickSetNewFileName('server.js')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-300 font-mono border border-slate-700">+ server.js</button>
-                <button onclick="quickSetNewFileName('models/Student.js')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-300 font-mono border border-slate-700">+ models/Student.js</button>
-                <button onclick="quickSetNewFileName('routes/studentRoutes.js')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-300 font-mono border border-slate-700">+ routes/studentRoutes.js</button>
-                <button onclick="quickSetNewFileName('config/db.js')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-300 font-mono border border-slate-700">+ config/db.js</button>
-                <button onclick="quickSetNewFileName('Dockerfile')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-sky-300 font-mono border border-slate-700">+ Dockerfile</button>
-                <button onclick="quickSetNewFileName('docker-compose.yml')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-pink-300 font-mono border border-slate-700">+ docker-compose.yml</button>
-                <button onclick="quickSetNewFileName('.env')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-emerald-300 font-mono border border-slate-700">+ .env</button>
-                <button onclick="quickSetNewFileName('.gitignore')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-orange-300 font-mono border border-slate-700">+ .gitignore</button>
-                <button onclick="quickSetNewFileName('package.json')" class="px-1.5 py-0.5 rounded bg-surfaceDark hover:bg-slate-700 text-amber-400 font-mono border border-slate-700">+ package.json</button>
+              <!-- Step Pills Navigation Strip -->
+              <div class="px-2 py-1.5 bg-[#101117] border-b border-[#232530] flex items-center gap-1 overflow-x-auto select-none" id="wizard-pills-strip">
+                <!-- Step Pills (0-9) generated dynamically -->
+              </div>
+
+              <!-- Active Step Content Area -->
+              <div id="wizard-active-step-content" class="flex-1 overflow-y-auto p-3 space-y-3 text-xs">
+                <!-- Populated dynamically via renderVSCodeStepGuide() -->
               </div>
             </div>
 
-            <!-- Workspace File Tree List -->
-            <div id="vscode-filetree" class="flex-1 overflow-y-auto p-1 space-y-0.5 text-xs font-mono">
-              <!-- Populated dynamically via JavaScript -->
+            <!-- VIEW 3: WORKSPACE SEARCH VIEW -->
+            <div id="vsside-search" class="hidden flex-1 flex flex-col p-3 space-y-3 overflow-hidden bg-[#13141a]">
+              <div class="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Search in Workspace</div>
+              <input type="text" id="vscode-search-input" oninput="runWorkspaceSearch(this.value)" placeholder="ค้นหาข้อความหรือฟังก์ชัน..." class="w-full bg-[#111218] border border-slate-700 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono">
+              <div id="vscode-search-results" class="flex-1 overflow-y-auto space-y-1 text-xs font-mono">
+                <div class="text-slate-500 text-[11px]">พิมพ์ข้อความเพื่อค้นหาในทุกไฟล์</div>
+              </div>
             </div>
 
-            <!-- Workspace Stats Footer -->
-            <div class="px-3 py-2 bg-[#14151b] border-t border-[#232530] text-[10px] text-slate-400 flex items-center justify-between">
-              <span id="vscode-file-count">0 files</span>
-              <button onclick="promptCreateNewFolder()" class="text-sky-400 hover:underline">+ New Folder</button>
+            <!-- VIEW 4: GIT SOURCE CONTROL VIEW -->
+            <div id="vsside-git" class="hidden flex-1 flex flex-col p-3 space-y-3 overflow-hidden bg-[#13141a]">
+              <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 uppercase tracking-wider border-b border-[#232530] pb-2">
+                <span>Source Control (Git)</span>
+                <span class="text-emerald-400 font-mono font-normal">main*</span>
+              </div>
+              <textarea id="vscode-git-commit-msg" placeholder="ข้อความ Commit (เช่น feat: complete crud exam)" class="w-full bg-[#111218] border border-slate-700 rounded p-2 text-xs text-white focus:outline-none focus:border-indigo-500 font-mono h-20 resize-none"></textarea>
+              <button onclick="commitAndPushVSCodeGit()" class="w-full py-2 rounded bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-indigo-600/30">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                <span>Commit & Push (main)</span>
+              </button>
+              <div class="text-[10px] text-slate-400 pt-2 border-t border-[#232530] space-y-1 font-mono">
+                <div class="font-bold text-slate-300">Staged Changes:</div>
+                <div id="vscode-git-file-list" class="space-y-1">
+                  <!-- List files -->
+                </div>
+              </div>
             </div>
+
           </div>
 
           <!-- Main Editor Workspace (Tabs + Editor Canvas + Bottom Panel) -->
@@ -5097,9 +5220,1316 @@ module.exports = router;`
       alert('⚙️ การตั้งค่า Editor:\n• Font Family: Fira Code\n• Tab Size: 2 Spaces\n• Theme: Visual Studio Code Dark+\n• Storage: LocalStorage Sync Enabled');
     }
 
+    // =========================================================================
+    // --- 8. GUIDED STEP-BY-STEP EXAM WIZARD ENGINE (VS CODE MODE) ---
+    // =========================================================================
+    const STEP_GUIDE_DATA = [
+      {
+        step: 0,
+        title: "สร้างโฟลเดอร์ & กำหนด Git Repo + .gitignore",
+        cat: "Git Setup",
+        points: 2,
+        time: "2 นาที",
+        targetFile: ".gitignore",
+        command: "mkdir server-exam-2026 && cd server-exam-2026 && git init && git branch -M main",
+        tips: "ห้ามลืมสร้าง .gitignore เด็ดขาด มิฉะนั้น node_modules และ .env จะหลุดขึ้น GitHub และถูกหักคะแนน",
+        checklist: [
+          "ตั้งชื่อ main branch: git branch -M main",
+          "สร้างไฟล์ .gitignore เพื่อป้องกัน node_modules และ .env หลุดขึ้น repo",
+          "ระบุ node_modules/, .env, .DS_Store, *.log ใน .gitignore"
+        ],
+        skeleton: `# Git Ignore Rules for Server-Side Exam
+node_modules/
+.env
+.DS_Store
+*.log
+`,
+        solution: `node_modules/
+.env
+.DS_Store
+*.log
+`,
+        validate: (files) => {
+          const code = files['.gitignore'] || '';
+          return [
+            { desc: "มีไฟล์ .gitignore ใน Workspace", pass: !!files['.gitignore'] },
+            { desc: "ละเว้นโฟลเดอร์ node_modules/", pass: code.includes('node_modules') },
+            { desc: "ละเว้นไฟล์ความลับ .env", pass: code.includes('.env') }
+          ];
+        }
+      },
+      {
+        step: 1,
+        title: "Node Project & ติดตั้ง Dependencies (package.json)",
+        cat: "Node / NPM",
+        points: 2,
+        time: "2 นาที",
+        targetFile: "package.json",
+        command: "npm init -y && npm install express mongoose dotenv cors && npm install -D nodemon",
+        tips: "ตั้งค่า scripts ให้มี \"dev\": \"nodemon server.js\" สำหรับรันเซิร์ฟเวอร์",
+        checklist: [
+          "กำหนด entry point เป็น server.js",
+          "เพิ่ม script: \"dev\": \"nodemon server.js\"",
+          "ติดตั้ง express, mongoose, dotenv, cors และ nodemon"
+        ],
+        skeleton: `{
+  "name": "server-side-midterm-exam",
+  "version": "1.0.0",
+  "description": "KMITL Server-Side Web Development Practical Exam",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
+`,
+        solution: `{
+  "name": "server-side-midterm-exam",
+  "version": "1.0.0",
+  "description": "KMITL Server-Side Web Development Practical Exam",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
+`,
+        validate: (files) => {
+          const code = files['package.json'] || '';
+          return [
+            { desc: "มีไฟล์ package.json ใน Workspace", pass: !!files['package.json'] },
+            { desc: "มี script dev (nodemon)", pass: code.includes('nodemon') },
+            { desc: "มี dependencies express & mongoose", pass: code.includes('express') && code.includes('mongoose') }
+          ];
+        }
+      },
+      {
+        step: 2,
+        title: "ตั้งค่า Environment Variables (.env & .env.example)",
+        cat: "Config",
+        points: 1,
+        time: "1 นาที",
+        targetFile: ".env",
+        tips: "ไฟล์ .env ใช้เก็บ PORT และ MONGO_URI ห้าม hardcode ลงใน server.js",
+        checklist: [
+          "กำหนด PORT=5000",
+          "กำหนด MONGO_URI=mongodb://localhost:27017/examdb",
+          "สร้าง .env.example ไว้เป็นตัวอย่างสำหรับส่งอาจารย์"
+        ],
+        skeleton: `PORT=5000
+NODE_ENV=development
+MONGO_URI=mongodb://localhost:27017/examdb
+`,
+        solution: `PORT=5000
+NODE_ENV=development
+MONGO_URI=mongodb://localhost:27017/examdb
+`,
+        validate: (files) => {
+          const code = files['.env'] || '';
+          return [
+            { desc: "มีไฟล์ .env ใน Workspace", pass: !!files['.env'] },
+            { desc: "กำหนดตัวแปร PORT", pass: /PORT=\d+/.test(code) },
+            { desc: "กำหนดตัวแปร MONGO_URI", pass: code.includes('mongodb://') }
+          ];
+        }
+      },
+      {
+        step: 3,
+        title: "Dockerfile & docker-compose.yml (Containerization)",
+        cat: "Docker",
+        points: 4,
+        time: "4 นาที",
+        targetFile: "Dockerfile",
+        command: "docker compose up -d && docker ps",
+        tips: "จุดตรวจสำคัญ: COPY package*.json ./ ก่อน npm install เพื่อรักษา Layer Caching",
+        checklist: [
+          "Dockerfile: FROM node:20-alpine พร้อม Layer Caching",
+          "Dockerfile: EXPOSE 5000 และ CMD [\"npm\", \"start\"]",
+          "docker-compose.yml: service mongodb (mongo:6.0, port 27017, volume mongo_data)"
+        ],
+        skeleton: `# Dockerfile Skeleton
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 5000
+CMD ["npm", "start"]
+`,
+        solution: `FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 5000
+CMD ["npm", "start"]
+`,
+        validate: (files) => {
+          const dCode = files['Dockerfile'] || '';
+          const cCode = files['docker-compose.yml'] || files['docker-compose.yaml'] || '';
+          const copyPkgIdx = dCode.indexOf('COPY package*.json');
+          const npmInstIdx = dCode.indexOf('npm install');
+          const copyAllIdx = dCode.indexOf('COPY . .');
+          return [
+            { desc: "มีไฟล์ Dockerfile", pass: !!files['Dockerfile'] },
+            { desc: "Layer Caching: COPY package*.json ก่อน npm install", pass: copyPkgIdx !== -1 && npmInstIdx !== -1 && copyAllIdx > npmInstIdx },
+            { desc: "มี docker-compose สำหรับ MongoDB", pass: cCode.includes('mongo') && (cCode.includes('27017:27017') || cCode.includes('27017')) },
+            { desc: "มี Named Volume (mongo_data)", pass: cCode.includes('mongo_data') }
+          ];
+        }
+      },
+      {
+        step: 4,
+        title: "โมดูลเชื่อมต่อ MongoDB (config/db.js)",
+        cat: "DB Connect",
+        points: 2,
+        time: "2 นาที",
+        targetFile: "config/db.js",
+        tips: "ใช้ mongoose.connect() พร้อม try...catch ดักจับข้อผิดพลาด",
+        checklist: [
+          "require('mongoose')",
+          "async function connectDB()",
+          "mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/examdb')",
+          "try...catch ครอบพร้อม console.error และ process.exit(1) เมื่อพัง"
+        ],
+        skeleton: `const mongoose = require('mongoose');
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/examdb');
+    console.log(\`✅ MongoDB Connected: \${conn.connection.host}\`);
+  } catch (error) {
+    console.error(\`❌ MongoDB Connection Error: \${error.message}\`);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDB;
+`,
+        solution: `const mongoose = require('mongoose');
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/examdb');
+    console.log(\`✅ MongoDB Connected: \${conn.connection.host}\`);
+  } catch (error) {
+    console.error(\`❌ MongoDB Connection Error: \${error.message}\`);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDB;
+`,
+        validate: (files) => {
+          const code = files['config/db.js'] || files['db.js'] || files['server.js'] || '';
+          return [
+            { desc: "มีไฟล์ config/db.js หรือเชื่อมใน server.js", pass: !!files['config/db.js'] || !!files['db.js'] || code.includes('mongoose.connect') },
+            { desc: "เรียก mongoose.connect()", pass: code.includes('mongoose.connect') },
+            { desc: "มี try...catch จัดการ Connection Error", pass: /try\s*\{[\s\S]*mongoose\.connect[\s\S]*\}\s*catch/i.test(code) }
+          ];
+        }
+      },
+      {
+        step: 5,
+        title: "Mongoose Schema & Model (models/Student.js)",
+        cat: "Mongoose ODM",
+        points: 3,
+        time: "3 นาที",
+        targetFile: "models/Student.js",
+        tips: "อย่าลืมเปิด { timestamps: true } ใน option argument ตัวที่ 2 ของ Schema",
+        checklist: [
+          "studentId: { type: String, required: true, unique: true, trim: true }",
+          "name: { type: String, required: true, trim: true }",
+          "major: { type: String, enum: ['IT', 'CS', 'DS', 'SE'], default: 'IT' }",
+          "gpa: { type: Number, min: 0.0, max: 4.0, default: 0.0 }",
+          "isActive: { type: Boolean, default: true }",
+          "options: { timestamps: true }",
+          "module.exports = mongoose.model('Student', studentSchema)"
+        ],
+        skeleton: `const mongoose = require('mongoose');
+
+const studentSchema = new mongoose.Schema({
+  studentId: {
+    type: String,
+    required: [true, 'Student ID is required'],
+    unique: true,
+    trim: true
+  },
+  name: {
+    type: String,
+    required: [true, 'Student name is required'],
+    trim: true
+  },
+  major: {
+    type: String,
+    required: true,
+    enum: ['IT', 'CS', 'DS', 'SE'],
+    default: 'IT'
+  },
+  gpa: {
+    type: Number,
+    min: [0.0, 'GPA cannot be less than 0.0'],
+    max: [4.0, 'GPA cannot be more than 4.0'],
+    default: 0.0
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  }
+}, {
+  timestamps: true
+});
+
+module.exports = mongoose.model('Student', studentSchema);
+`,
+        solution: `const mongoose = require('mongoose');
+
+const studentSchema = new mongoose.Schema({
+  studentId: {
+    type: String,
+    required: [true, 'Student ID is required'],
+    unique: true,
+    trim: true
+  },
+  name: {
+    type: String,
+    required: [true, 'Student name is required'],
+    trim: true
+  },
+  major: {
+    type: String,
+    required: true,
+    enum: ['IT', 'CS', 'DS', 'SE'],
+    default: 'IT'
+  },
+  gpa: {
+    type: Number,
+    min: [0.0, 'GPA cannot be less than 0.0'],
+    max: [4.0, 'GPA cannot be more than 4.0'],
+    default: 0.0
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  }
+}, {
+  timestamps: true
+});
+
+module.exports = mongoose.model('Student', studentSchema);
+`,
+        validate: (files) => {
+          const code = files['models/Student.js'] || files['Student.js'] || '';
+          return [
+            { desc: "มีไฟล์ models/Student.js", pass: !!files['models/Student.js'] || !!files['Student.js'] },
+            { desc: "มี studentId พร้อม unique & required", pass: code.includes('studentId') && code.includes('unique') && code.includes('required') },
+            { desc: "มี name พร้อม trim & required", pass: code.includes('name') && code.includes('trim') && code.includes('required') },
+            { desc: "มี gpa พร้อม min/max validation", pass: code.includes('gpa') && code.includes('min') && code.includes('max') },
+            { desc: "เปิดใช้งาน { timestamps: true }", pass: code.includes('timestamps') },
+            { desc: "export mongoose.model('Student', ...)", pass: /mongoose\.model\(['"]Student['"]/i.test(code) }
+          ];
+        }
+      },
+      {
+        step: 6,
+        title: "Main Express Server (server.js)",
+        cat: "Express Core",
+        points: 4,
+        time: "4 นาที",
+        targetFile: "server.js",
+        tips: "app.use(express.json()) ต้องวางก่อน Routes เสมอ และ Error Handler ต้องมีครบ 4 พารามิเตอร์",
+        checklist: [
+          "require('dotenv').config() บรรทัดบนสุด",
+          "connectDB() เพื่อเชื่อมต่อ MongoDB",
+          "app.use(cors()) และ app.use(express.json())",
+          "Mount API Route: app.use('/api/students', studentRoutes)",
+          "404 Route Not Found Handler",
+          "Global Error Handling Middleware ครบ 4 params (err, req, res, next)",
+          "app.listen(PORT, ...)"
+        ],
+        skeleton: `require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db');
+const studentRoutes = require('./routes/studentRoutes');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+connectDB();
+
+app.use(cors());
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Server-Side Practical Exam API is running!' });
+});
+
+app.use('/api/students', studentRoutes);
+
+app.use((req, res, next) => {
+  res.status(404).json({ error: \`Route \${req.originalUrl} not found\` });
+});
+
+app.use((err, req, res, next) => {
+  console.error('Unhandled Error:', err.stack);
+  res.status(err.status || 500).json({
+    error: err.message || 'Internal Server Error'
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(\`🚀 Server running on http://localhost:\${PORT}\`);
+});
+`,
+        solution: `require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db');
+const studentRoutes = require('./routes/studentRoutes');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+// 1. Connect MongoDB
+connectDB();
+
+// 2. Built-in Middlewares
+app.use(cors());
+app.use(express.json());
+
+// 3. Healthcheck
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Server-Side Practical Exam API is running!' });
+});
+
+// 4. API Routes
+app.use('/api/students', studentRoutes);
+
+// 5. 404 Handler
+app.use((req, res, next) => {
+  res.status(404).json({ error: \`Route \${req.originalUrl} not found\` });
+});
+
+// 6. Global Error Handler (4 params)
+app.use((err, req, res, next) => {
+  console.error('Unhandled Error:', err.stack);
+  res.status(err.status || 500).json({
+    error: err.message || 'Internal Server Error'
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(\`🚀 Server running on http://localhost:\${PORT}\`);
+});
+`,
+        validate: (files) => {
+          const code = files['server.js'] || '';
+          return [
+            { desc: "มีไฟล์ server.js", pass: !!files['server.js'] },
+            { desc: "เรียก connectDB()", pass: code.includes('connectDB()') },
+            { desc: "ใช้ app.use(express.json())", pass: code.includes('express.json()') },
+            { desc: "Mount route /api/students", pass: code.includes('/api/students') },
+            { desc: "มี Global Error Handler (err, req, res, next)", pass: /\(err,\s*req,\s*res,\s*next\)/i.test(code) },
+            { desc: "มี app.listen()", pass: code.includes('app.listen') }
+          ];
+        }
+      },
+      {
+        step: 7,
+        title: "5-Route MongoDB CRUD Handlers (routes/studentRoutes.js)",
+        cat: "CRUD Router",
+        points: 5,
+        time: "5 นาที",
+        targetFile: "routes/studentRoutes.js",
+        tips: "จุดหลอก: POST ดักจับ err.code === 11000 ส่ง 400 และ PUT ต้องใส่ { new: true, runValidators: true }",
+        checklist: [
+          "1. POST /api/students -> Model.create (201 Created + err.code === 11000 trap)",
+          "2. GET /api/students -> Model.find (200 OK พร้อม Query Filter)",
+          "3. GET /api/students/:id -> Model.findById (200 / 404)",
+          "4. PUT /api/students/:id -> Model.findByIdAndUpdate พร้อม { new: true, runValidators: true }",
+          "5. DELETE /api/students/:id -> Model.findByIdAndDelete (200 / 404)",
+          "module.exports = router"
+        ],
+        skeleton: `const express = require('express');
+const router = express.Router();
+const Student = require('../models/Student');
+
+// 1. POST / (Create - 201)
+router.post('/', async (req, res) => {
+  try {
+    const student = await Student.create(req.body);
+    res.status(201).json(student);
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(400).json({ error: 'Duplicate studentId error' });
+    }
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// 2. GET / (Read All - 200)
+router.get('/', async (req, res) => {
+  try {
+    const filter = {};
+    if (req.query.major) filter.major = req.query.major;
+    if (req.query.isActive !== undefined) filter.isActive = req.query.isActive === 'true';
+
+    const students = await Student.find(filter).sort({ createdAt: -1 });
+    res.status(200).json(students);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 3. GET /:id (Read One - 200/404)
+router.get('/:id', async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    if (!student) return res.status(404).json({ message: 'Student not found' });
+    res.status(200).json(student);
+  } catch (err) {
+    res.status(400).json({ error: 'Invalid ID format or Error: ' + err.message });
+  }
+});
+
+// 4. PUT /:id (Update - 200/404 + { new: true, runValidators: true })
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedStudent = await Student.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!updatedStudent) return res.status(404).json({ message: 'Student not found' });
+    res.status(200).json(updatedStudent);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// 5. DELETE /:id (Delete - 200/404)
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedStudent = await Student.findByIdAndDelete(req.params.id);
+    if (!deletedStudent) return res.status(404).json({ message: 'Student not found' });
+    res.status(200).json({ message: 'Student deleted successfully', id: req.params.id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+module.exports = router;
+`,
+        solution: `const express = require('express');
+const router = express.Router();
+const Student = require('../models/Student');
+
+// 1. CREATE: POST /api/students
+router.post('/', async (req, res) => {
+  try {
+    const student = await Student.create(req.body);
+    res.status(201).json(student);
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(400).json({ error: 'Duplicate studentId error' });
+    }
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// 2. READ ALL: GET /api/students (รองรับ Query Filter)
+router.get('/', async (req, res) => {
+  try {
+    const filter = {};
+    if (req.query.major) filter.major = req.query.major;
+    if (req.query.isActive !== undefined) filter.isActive = req.query.isActive === 'true';
+
+    const students = await Student.find(filter).sort({ createdAt: -1 });
+    res.status(200).json(students);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 3. READ ONE BY ID: GET /api/students/:id
+router.get('/:id', async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.status(200).json(student);
+  } catch (err) {
+    res.status(400).json({ error: 'Invalid ID format or Error: ' + err.message });
+  }
+});
+
+// 4. UPDATE: PUT /api/students/:id (สำคัญมาก: ต้องมี { new: true, runValidators: true })
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedStudent = await Student.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (!updatedStudent) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.status(200).json(updatedStudent);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// 5. DELETE: DELETE /api/students/:id
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedStudent = await Student.findByIdAndDelete(req.params.id);
+    if (!deletedStudent) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    res.status(200).json({ message: 'Student deleted successfully', id: req.params.id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+module.exports = router;
+`,
+        validate: (files) => {
+          const code = files['routes/studentRoutes.js'] || files['studentRoutes.js'] || files['server.js'] || '';
+          return [
+            { desc: "มีไฟล์ routes/studentRoutes.js", pass: !!files['routes/studentRoutes.js'] || !!files['studentRoutes.js'] },
+            { desc: "POST คืนสถานะ 201 Created", pass: code.includes('201') },
+            { desc: "ดักจับ Duplicate Error (11000)", pass: code.includes('11000') },
+            { desc: "GET All รองรับ Filter / Sort", pass: /find\(/i.test(code) },
+            { desc: "PUT มี { new: true, runValidators: true }", pass: code.includes('new: true') && code.includes('runValidators: true') },
+            { desc: "DELETE เรียก findByIdAndDelete()", pass: code.includes('findByIdAndDelete') }
+          ];
+        }
+      },
+      {
+        step: 8,
+        title: "ทดสอบยิง cURL ทั้ง 5 เส้นทางใน Terminal",
+        cat: "API Testing",
+        points: 1,
+        time: "2 นาที",
+        command: "curl -X POST http://localhost:5000/api/students -H \"Content-Type: application/json\" -d \"{\\\"studentId\\\":\\\"66070001\\\",\\\"name\\\":\\\"Tawan Promthong\\\",\\\"major\\\":\\\"IT\\\",\\\"gpa\\\":3.85}\"",
+        tips: "ทดสอบผ่าน Terminal รวดเร็ว ไม่ต้องเสียเวลาเปิด Postman ในห้องสอบ",
+        checklist: [
+          "1. รัน npm run dev ใน Terminal",
+          "2. ยิง cURL POST สร้างนักศึกษา -> เช็ค status 201",
+          "3. ยิง cURL GET ดึงรายชื่อ -> เช็ค array JSON 200",
+          "4. ยิง cURL PUT แก้ไข GPA -> เช็ค data เปลี่ยน 200",
+          "5. ยิง cURL DELETE ลบนักศึกษา -> เช็ค success 200"
+        ],
+        skeleton: `# cURL Test Suite
+curl -X POST http://localhost:5000/api/students -H "Content-Type: application/json" -d "{\\"studentId\\":\\"66070001\\",\\"name\\":\\"Tawan Promthong\\",\\"major\\":\\"IT\\",\\"gpa\\":3.85}"
+curl http://localhost:5000/api/students
+`,
+        solution: `curl -X POST http://localhost:5000/api/students -H "Content-Type: application/json" -d "{\\"studentId\\":\\"66070001\\",\\"name\\":\\"Tawan Promthong\\",\\"major\\":\\"IT\\",\\"gpa\\":3.85}"
+curl http://localhost:5000/api/students
+curl -X PUT http://localhost:5000/api/students/<ID> -H "Content-Type: application/json" -d "{\\"gpa\\":4.00}"
+curl -X DELETE http://localhost:5000/api/students/<ID>
+`,
+        validate: (files) => {
+          return [
+            { desc: "Server พร้อมรับ Request (server.js)", pass: !!files['server.js'] },
+            { desc: "CRUD Routes พร้อมทดสอบ (routes/studentRoutes.js)", pass: !!files['routes/studentRoutes.js'] }
+          ];
+        }
+      },
+      {
+        step: 9,
+        title: "Git Checkpoint, Commit & Push ส่งงาน",
+        cat: "Git Push",
+        points: 1,
+        time: "2 นาที",
+        command: "git status && git add . && git commit -m \"feat: complete server-side exam express mongoose crud\" && git push -u origin main",
+        tips: "ก่อน push ตรวจ git status ให้แน่ใจว่าไม่มี node_modules ติดมา",
+        checklist: [
+          "เช็ค git status ให้แน่ใจว่าไม่มี node_modules ติดมา",
+          "git add . และ git commit -m \"feat: complete server-side exam\"",
+          "git remote add origin <URL>",
+          "git push -u origin main ส่งงานอาจารย์"
+        ],
+        skeleton: `git status
+git add .
+git commit -m "feat: complete server-side exam express mongoose crud with docker"
+git push -u origin main
+`,
+        solution: `git status
+git add .
+git commit -m "feat: complete server-side exam express mongoose crud with docker"
+git remote add origin https://github.com/YOUR_USERNAME/server-side-exam.git
+git push -u origin main
+`,
+        validate: (files) => {
+          return [
+            { desc: "มี .gitignore ป้องกันขยะ", pass: !!files['.gitignore'] },
+            { desc: "มีไฟล์โปรเจกต์ครบถ้วน", pass: Object.keys(files).length >= 6 }
+          ];
+        }
+      }
+    ];
+
+    let vsActiveActivity = 'explorer';
+    let vsGuidedStepIndex = 0;
+    let vsStepCompleted = {};
+
+    function setVSCodeActiveActivity(activity) {
+      vsActiveActivity = activity;
+      
+      // Update Activity Bar Icons
+      const activities = ['explorer', 'steps', 'search', 'git', 'rubric'];
+      activities.forEach(act => {
+        const btn = document.getElementById(`act-${act}`);
+        if (!btn) return;
+        if (act === activity) {
+          btn.className = 'p-2 text-white border-l-2 border-indigo-500 hover:text-white relative';
+        } else {
+          btn.className = 'p-2 text-slate-500 hover:text-white border-l-2 border-transparent relative';
+        }
+      });
+
+      // Show/Hide SideBar Views
+      document.getElementById('vsside-explorer').classList.toggle('hidden', activity !== 'explorer');
+      document.getElementById('vsside-steps').classList.toggle('hidden', activity !== 'steps');
+      document.getElementById('vsside-search').classList.toggle('hidden', activity !== 'search');
+      document.getElementById('vsside-git').classList.toggle('hidden', activity !== 'git');
+
+      // Ensure sidebar is visible
+      const sidebar = document.getElementById('vscode-sidebar');
+      if (sidebar && sidebar.classList.contains('hidden')) {
+        sidebar.classList.remove('hidden');
+      }
+
+      if (activity === 'steps') {
+        renderVSCodeStepGuide();
+      } else if (activity === 'rubric') {
+        setVSCodePanelTab('rubric');
+        const panel = document.getElementById('vscode-bottom-panel');
+        if (panel && panel.classList.contains('hidden')) panel.classList.remove('hidden');
+      } else if (activity === 'git') {
+        updateVSCodeGitView();
+      }
+
+      lucide.createIcons();
+    }
+
+    function loadSavedGuidedSteps() {
+      const saved = localStorage.getItem('serverside_guided_steps');
+      if (saved) {
+        try {
+          vsStepCompleted = JSON.parse(saved);
+        } catch (e) {
+          vsStepCompleted = {};
+        }
+      }
+      updateGuidedStepsBadge();
+    }
+
+    function saveGuidedStepsProgress() {
+      localStorage.setItem('serverside_guided_steps', JSON.stringify(vsStepCompleted));
+      updateGuidedStepsBadge();
+    }
+
+    function updateGuidedStepsBadge() {
+      const completedCount = Object.values(vsStepCompleted).filter(Boolean).length;
+      const total = STEP_GUIDE_DATA.length;
+      const badge = document.getElementById('vscode-steps-badge');
+      if (badge) badge.innerText = `${completedCount}/${total}`;
+      const progBadge = document.getElementById('wizard-progress-badge');
+      if (progBadge) progBadge.innerText = `${completedCount}/${total} Done`;
+    }
+
+    function renderVSCodeStepGuide() {
+      // 1. Render Step Pills Navigation Strip
+      const strip = document.getElementById('wizard-pills-strip');
+      if (strip) {
+        strip.innerHTML = '';
+        STEP_GUIDE_DATA.forEach((s, idx) => {
+          const isActive = idx === vsGuidedStepIndex;
+          const isDone = !!vsStepCompleted[idx];
+          const pill = document.createElement('button');
+          pill.className = `step-pill-btn px-2 py-1 rounded text-[10px] font-mono border flex items-center gap-1 shrink-0 ${isActive ? 'active' : isDone ? 'completed bg-emerald-950/40 border-emerald-800/40' : 'bg-surfaceDark/80 border-surfaceBorder text-slate-400'}`;
+          pill.onclick = () => {
+            vsGuidedStepIndex = idx;
+            renderVSCodeStepGuide();
+          };
+          pill.innerHTML = `<span>${isDone ? '✓' : ''} S${s.step}</span>`;
+          strip.appendChild(pill);
+        });
+      }
+
+      // 2. Render Active Step Content
+      const step = STEP_GUIDE_DATA[vsGuidedStepIndex];
+      const container = document.getElementById('wizard-active-step-content');
+      if (!container || !step) return;
+
+      const isDone = !!vsStepCompleted[vsGuidedStepIndex];
+      const checks = step.validate ? step.validate(vsFiles) : [];
+      const allPassed = checks.length > 0 && checks.every(c => c.pass);
+
+      let checksHtml = '';
+      checks.forEach(c => {
+        checksHtml += `
+          <div class="flex items-center gap-1.5 text-[11px] ${c.pass ? 'text-emerald-400' : 'text-slate-400'}">
+            <span>${c.pass ? '✓' : '○'}</span>
+            <span class="${c.pass ? 'text-slate-200 font-medium' : ''}">${c.desc}</span>
+          </div>
+        `;
+      });
+
+      let checklistHtml = '';
+      step.checklist.forEach(item => {
+        checklistHtml += `
+          <li class="flex items-start gap-1.5 text-[11px] text-slate-300">
+            <span class="text-indigo-400 shrink-0 mt-0.5">•</span>
+            <span>${item}</span>
+          </li>
+        `;
+      });
+
+      container.innerHTML = `
+        <div class="p-2.5 rounded-xl bg-[#181922] border border-[#2e3247] space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">STEP ${step.step} • ${step.cat}</span>
+            <span class="text-[10px] font-mono text-emerald-400 font-bold">+${step.points} คะแนน</span>
+          </div>
+          <h4 class="font-bold text-white text-xs leading-snug">${step.title}</h4>
+          <p class="text-[11px] text-slate-400 leading-relaxed">${step.tips || ''}</p>
+          ${step.targetFile ? `
+            <div class="flex items-center gap-1.5 text-[11px] font-mono text-amber-300 bg-[#12131a] p-1.5 rounded border border-slate-800">
+              <i data-lucide="file-code" class="w-3.5 h-3.5 text-amber-400"></i>
+              <span>เป้าหมาย: <strong>${step.targetFile}</strong></span>
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- Checklist Requirements -->
+        <div class="p-2.5 rounded-xl bg-[#14151e] border border-[#232530] space-y-1.5">
+          <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">สิ่งที่ต้องทำในข้อนี้:</div>
+          <ul class="space-y-1">
+            ${checklistHtml}
+          </ul>
+        </div>
+
+        <!-- Live Step Verification Card -->
+        <div class="p-2.5 rounded-xl border ${allPassed ? 'bg-emerald-950/20 border-emerald-800/40' : 'bg-slate-900/60 border-slate-800'} space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] font-bold ${allPassed ? 'text-emerald-400' : 'text-slate-400'} uppercase tracking-wider flex items-center gap-1">
+              <i data-lucide="${allPassed ? 'check-circle' : 'shield-alert'}" class="w-3.5 h-3.5"></i>
+              <span>ผลการตรวจสอบสเต็ปนี้:</span>
+            </span>
+            <span class="text-[10px] font-mono ${allPassed ? 'text-emerald-400 font-bold' : 'text-slate-500'}">${allPassed ? 'PASSED 100%' : 'ยังไม่สมบูรณ์'}</span>
+          </div>
+          <div class="space-y-1 pt-1">
+            ${checksHtml}
+          </div>
+        </div>
+
+        <!-- Action Buttons Grid -->
+        <div class="space-y-1.5 pt-1">
+          ${step.targetFile ? `
+            <button onclick="openOrSetupStepFile(${vsGuidedStepIndex})" class="w-full py-1.5 px-2.5 rounded-lg bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs font-medium flex items-center justify-center gap-1.5 transition-all">
+              <i data-lucide="file-edit" class="w-3.5 h-3.5"></i>
+              <span>เปิด/สร้างไฟล์ ${step.targetFile}</span>
+            </button>
+            <div class="grid grid-cols-2 gap-1.5">
+              <button onclick="fillStepSkeleton(${vsGuidedStepIndex})" class="py-1.5 px-2 rounded-lg bg-[#1e202c] hover:bg-slate-700 text-amber-300 border border-slate-700 text-[11px] font-mono flex items-center justify-center gap-1" title="ใส่โค้ดโครงสร้างเริ่มต้น">
+                <i data-lucide="code" class="w-3 h-3"></i> โครงสร้าง (Skeleton)
+              </button>
+              <button onclick="fillStepSolution(${vsGuidedStepIndex})" class="py-1.5 px-2 rounded-lg bg-[#1e202c] hover:bg-slate-700 text-emerald-300 border border-slate-700 text-[11px] font-mono flex items-center justify-center gap-1" title="ใส่เฉลยเต็ม">
+                <i data-lucide="sparkles" class="w-3 h-3"></i> เฉลยเต็ม (Solution)
+              </button>
+            </div>
+          ` : ''}
+
+          ${step.command ? `
+            <button onclick="runStepCommand(${vsGuidedStepIndex})" class="w-full py-1.5 px-2.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-xs font-medium flex items-center justify-center gap-1.5 transition-all">
+              <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
+              <span>รันคำสั่งใน Terminal</span>
+            </button>
+          ` : ''}
+
+          <button onclick="verifyStepInVSCode(${vsGuidedStepIndex})" class="w-full py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-emerald-600 hover:from-indigo-500 hover:to-emerald-500 text-white font-medium text-xs flex items-center justify-center gap-1.5 shadow-lg shadow-indigo-600/25 transition-all">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-300"></i>
+            <span>🧪 ตรวจสอบสเต็ปนี้ (Verify Step)</span>
+          </button>
+        </div>
+
+        <!-- Next / Prev Step Navigation -->
+        <div class="flex items-center justify-between pt-2 border-t border-[#232530]">
+          <button onclick="prevGuidedStep()" ${vsGuidedStepIndex === 0 ? 'disabled class="opacity-40 cursor-not-allowed text-slate-600 text-xs flex items-center gap-1"' : 'class="text-slate-300 hover:text-white text-xs flex items-center gap-1"'}>
+            <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+            <span>ก่อนหน้า</span>
+          </button>
+          <span class="text-[10px] font-mono text-slate-500">${vsGuidedStepIndex + 1} / ${STEP_GUIDE_DATA.length}</span>
+          <button onclick="nextGuidedStep()" ${vsGuidedStepIndex === STEP_GUIDE_DATA.length - 1 ? 'disabled class="opacity-40 cursor-not-allowed text-slate-600 text-xs flex items-center gap-1"' : 'class="text-emerald-400 hover:text-emerald-300 font-medium text-xs flex items-center gap-1"'}>
+            <span>ถัดไป</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      `;
+
+      updateGuidedStepsBadge();
+      lucide.createIcons();
+    }
+
+    function openOrSetupStepFile(idx) {
+      const step = STEP_GUIDE_DATA[idx];
+      if (!step || !step.targetFile) return;
+      
+      const target = step.targetFile;
+      if (vsFiles[target] === undefined) {
+        vsFiles[target] = step.skeleton || `// File: ${target}\n`;
+        saveVSCodeToStorage();
+        renderVSCodeFileTree();
+      }
+      openVSCodeFile(target);
+      showVSCodeStatusNotification(`📂 เปิดไฟล์ ${target} แล้ว`);
+    }
+
+    function fillStepSkeleton(idx) {
+      const step = STEP_GUIDE_DATA[idx];
+      if (!step || !step.targetFile) return;
+      openOrSetupStepFile(idx);
+      vsFiles[step.targetFile] = step.skeleton;
+      saveVSCodeToStorage();
+      openVSCodeFile(step.targetFile);
+      renderVSCodeStepGuide();
+      showVSCodeStatusNotification('📝 ใส่โครงสร้าง Skeleton สำเร็จ');
+    }
+
+    function fillStepSolution(idx) {
+      const step = STEP_GUIDE_DATA[idx];
+      if (!step || !step.targetFile) return;
+      openOrSetupStepFile(idx);
+      vsFiles[step.targetFile] = step.solution;
+      saveVSCodeToStorage();
+      openVSCodeFile(step.targetFile);
+      renderVSCodeStepGuide();
+      showVSCodeStatusNotification('✨ ใส่โค้ด Solution เต็มแล้ว');
+    }
+
+    function verifyStepInVSCode(idx) {
+      const step = STEP_GUIDE_DATA[idx];
+      if (!step) return;
+
+      const checks = step.validate ? step.validate(vsFiles) : [];
+      const allPassed = checks.length > 0 && checks.every(c => c.pass);
+
+      if (allPassed) {
+        vsStepCompleted[idx] = true;
+        saveGuidedStepsProgress();
+        renderVSCodeStepGuide();
+        showVSCodeStatusNotification(`🎉 ผ่านสเต็ป ${step.step} เรียบร้อย! (+${step.points} คะแนน)`);
+        
+        // Auto progress to next step after brief delay if not last
+        if (idx < STEP_GUIDE_DATA.length - 1) {
+          setTimeout(() => {
+            vsGuidedStepIndex = idx + 1;
+            renderVSCodeStepGuide();
+          }, 800);
+        } else {
+          alert('🏆 ยินดีด้วยครับ! คุณทำครบทุกขั้นตอน 0-9 ใน Exam Step Wizard เรียบร้อยแล้ว พร้อมลุยสอบ 20 คะแนนเต็ม!');
+        }
+      } else {
+        renderVSCodeStepGuide();
+        showVSCodeStatusNotification(`⚠️ ยังมีข้อกำหนดที่ยังไม่ผ่าน โปรดตรวจเช็คในรายการ`);
+      }
+    }
+
+    function nextGuidedStep() {
+      if (vsGuidedStepIndex < STEP_GUIDE_DATA.length - 1) {
+        vsGuidedStepIndex++;
+        renderVSCodeStepGuide();
+      }
+    }
+
+    function prevGuidedStep() {
+      if (vsGuidedStepIndex > 0) {
+        vsGuidedStepIndex--;
+        renderVSCodeStepGuide();
+      }
+    }
+
+    function runStepCommand(idx) {
+      const step = STEP_GUIDE_DATA[idx];
+      if (!step || !step.command) return;
+      runVSCodeTerminalCmd(step.command);
+    }
+
+    function runWorkspaceSearch(query) {
+      const container = document.getElementById('vscode-search-results');
+      if (!container) return;
+      if (!query || !query.trim()) {
+        container.innerHTML = '<div class="text-slate-500 text-[11px]">พิมพ์ข้อความเพื่อค้นหาในทุกไฟล์</div>';
+        return;
+      }
+
+      const q = query.trim().toLowerCase();
+      let matchCount = 0;
+      let html = '';
+
+      Object.keys(vsFiles).forEach(fileName => {
+        const lines = vsFiles[fileName].split('\n');
+        const fileMatches = [];
+        lines.forEach((line, lIdx) => {
+          if (line.toLowerCase().includes(q)) {
+            fileMatches.push({ lineNum: lIdx + 1, content: line.trim() });
+          }
+        });
+
+        if (fileMatches.length > 0) {
+          matchCount += fileMatches.length;
+          html += `
+            <div class="p-1.5 rounded bg-[#161722] border border-slate-800 space-y-1">
+              <div class="flex items-center justify-between text-[11px] text-amber-300 font-bold cursor-pointer" onclick="openVSCodeFile('${fileName}')">
+                <span>📄 ${fileName}</span>
+                <span class="text-[10px] text-slate-500 font-normal">${fileMatches.length} matches</span>
+              </div>
+              <div class="pl-2 space-y-0.5 text-[10px] text-slate-300">
+                ${fileMatches.slice(0, 4).map(m => `
+                  <div class="truncate hover:text-white cursor-pointer" onclick="openVSCodeFile('${fileName}')">
+                    <span class="text-slate-500 mr-1">${m.lineNum}:</span>
+                    <span>${escapeHtml(m.content)}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      if (matchCount === 0) {
+        container.innerHTML = '<div class="text-rose-400 text-[11px]">ไม่พบข้อความที่ตรงกันใน Workspace</div>';
+      } else {
+        container.innerHTML = `<div class="text-emerald-400 text-[10px] pb-1">พบ ${matchCount} จุดที่ตรงกัน:</div>` + html;
+      }
+    }
+
+    function updateVSCodeGitView() {
+      const list = document.getElementById('vscode-git-file-list');
+      if (!list) return;
+      const fileNames = Object.keys(vsFiles);
+      list.innerHTML = fileNames.map(f => `
+        <div class="flex items-center justify-between text-slate-300 text-[11px] p-1 rounded hover:bg-slate-800/60 cursor-pointer" onclick="openVSCodeFile('${f}')">
+          <span class="truncate">M  ${f}</span>
+          <span class="text-[10px] text-emerald-400">+staged</span>
+        </div>
+      `).join('');
+    }
+
+    function commitAndPushVSCodeGit() {
+      const msgInput = document.getElementById('vscode-git-commit-msg');
+      const msg = msgInput.value.trim() || 'feat: complete server-side practical exam';
+      runVSCodeTerminalCmd(`git add . && git commit -m "${msg}" && git push origin main`);
+      msgInput.value = '';
+      showVSCodeStatusNotification('🚀 Commit & Push สำเร็จ');
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+
+    // =========================================================================
+    // --- 9. INTERACTIVE WEBSITE TUTORIAL TOUR ENGINE ---
+    // =========================================================================
+    const TUTORIAL_STEPS = [
+      {
+        id: "welcome",
+        tab: "study",
+        targetSelector: "#header-brand-wrap",
+        title: "ยินดีต้อนรับสู่ Server-Side Midterm Hub!",
+        badge: "1 / 12 • เริ่มต้นใช้งาน",
+        icon: "sparkles",
+        content: "สวัสดีครับตะวัน! ระบบนี้ถูกออกแบบมาเพื่อเป็น <strong>Interactive Drill & Grill Hub</strong> สำหรับเตรียมสอบปฏิบัติวิชา Server-Side Web Development (20 คะแนนเต็ม) สามารถเปิดดูและฝึกทำแบบ Open-Book ได้ตลอดเวลาครับ!"
+      },
+      {
+        id: "stats",
+        tab: "study",
+        targetSelector: "#header-stats-wrap",
+        title: "ระบบติดตามความคืบหน้า (Progress Tracker)",
+        badge: "2 / 12 • สถิติสด",
+        icon: "activity",
+        content: "สถิติคะแนนการทำ <strong>Coding Labs</strong> และ <strong>Grill Quizzes</strong> จะถูกบันทึกลงเบราว์เซอร์อัตโนมัติ ทำให้กลับมาซ้อมต่อได้ตลอดเวลา และมีปุ่ม <strong>รีเซ็ต</strong> เพื่อเริ่มรอบใหม่ได้ทุกเมื่อครับ"
+      },
+      {
+        id: "nav-tabs",
+        tab: "study",
+        targetSelector: "nav",
+        title: "แถบเมนูนำทาง 7 หมวดหมู่หลัก",
+        badge: "3 / 12 • NAVIGATION",
+        icon: "compass",
+        content: "เมนูด้านบนแบ่งออกเป็น 7 ส่วนหลัก: <strong>1. Study Hub</strong> (สรุปทฤษฎีครบทุกสไลด์), <strong>2. Step-by-Step Blueprint</strong> (ขั้นตอนคำสั่งสด), <strong>3. VS Code IDE</strong> (จำลองห้องสอบจริง), <strong>4. Coding Labs</strong> (10 ข้อปฏิบัติ), <strong>5. Grill Quiz</strong> (ข้อสอบจับเวลา), <strong>6. Quick Cheat Sheet</strong> (กู้ชีพหน้าห้องสอบ), และ <strong>7. Readiness Checklist</strong>"
+      },
+      {
+        id: "tab1-study",
+        tab: "study",
+        targetSelector: "#view-study",
+        title: "1. Study Hub: สรุปทฤษฎี 8 เสาหลัก (Day 01 - Day 07)",
+        badge: "4 / 12 • STUDY HUB",
+        icon: "book-open",
+        content: "รวบรวมเนื้อหาครบทุกสไลด์ PDF และไฟล์ Markdown ในโฟลเดอร์: Client-Server Model, 4 Git States, Docker Layer Caching, Node Core Modules, Express Middleware, MySQL Soft Delete, MongoDB Mongoose CRUD, และ SQL Joins / Prisma ORM"
+      },
+      {
+        id: "tab2-blueprint",
+        tab: "steps",
+        targetSelector: "#terminal-trainer-card",
+        title: "2. Terminal Sandbox: ซ้อมพิมพ์คำสั่งจริง",
+        badge: "5 / 12 • MUSCLE MEMORY",
+        icon: "terminal-square",
+        content: "ในแท็บนี้ ตะวันสามารถพิมพ์คำสั่ง Terminal จริง (เช่น git init, docker compose up -d, curl POST) ใน Terminal Trainer เพื่อฝึกความคล่องแคล่ว พร้อมดูคู่มือลำดับสเต็ป 0-9 และกดปุ่ม Copy โค้ดได้ทันที"
+      },
+      {
+        id: "tab3-vscode-main",
+        tab: "vscode",
+        targetSelector: ".vscode-container",
+        title: "3. VS Code IDE Simulator: จำลองห้องสอบจริง 1:1",
+        badge: "6 / 12 • EXAM SIMULATOR",
+        icon: "code-2",
+        content: "หน้าจำลอง Visual Studio Code เสมือนจริงสำหรับฝึกสร้างไฟล์, ตั้งชื่อและนามสกุล, สลับแท็บโค้ด, ตรวจสอบ Lint จุดหลอก, และจำลองรัน Terminal ครบครันเหมือนนั่งหน้าคอมพิวเตอร์ในห้องสอบ!"
+      },
+      {
+        id: "vscode-sidebar-tour",
+        tab: "vscode",
+        targetSelector: "#vscode-sidebar",
+        title: "Explorer & ระบบตรวจนามสกุลไฟล์อัตโนมัติ",
+        badge: "7 / 12 • FILE MANAGEMENT",
+        icon: "folder-tree",
+        content: "คุณสามารถกดปุ่ม <strong>+ File</strong> เพื่อสร้างไฟล์ใหม่ เช่น <code>server.js</code>, <code>models/Student.js</code>, หรือ <code>Dockerfile</code> ระบบจะมี Linter คอยเตือนทันทีหากเผลอตั้งชื่อไฟล์ไม่มีนามสกุล ซึ่งเป็นจุดที่มักโดนหักคะแนน!"
+      },
+      {
+        id: "vscode-guided-tour",
+        tab: "vscode",
+        targetSelector: "#act-steps",
+        title: "🧭 โหมดพาทำทีละ Step (Guided Mode 0-9)",
+        badge: "8 / 12 • STEP WIZARD",
+        icon: "compass",
+        content: "ฟีเจอร์เด็ด! เมื่อกดไอคอนเข็มทิศนี้ แถบด้านข้างจะเปลี่ยนเป็น <strong>Step Wizard</strong> พาคุณทำทีละสเต็ปตั้งแต่ Step 0 ถึง Step 9 พร้อมปุ่มเปิดไฟล์, ปุ่มใส่โค้ด Skeleton, และปุ่ม <strong>Verify Step</strong> ตรวจสอบความถูกต้องทันที!"
+      },
+      {
+        id: "vscode-editor-tour",
+        tab: "vscode",
+        targetSelector: "#vscode-editor-pane",
+        title: "Code Editor Canvas & Floating Tools",
+        badge: "9 / 12 • CODE EDITOR",
+        icon: "edit-3",
+        content: "พื้นที่เขียนโค้ดที่รองรับปุ่ม <strong>Tab (2 spaces)</strong>, <strong>Enter Auto-indent</strong>, และ <strong>Ctrl+S (บันทึกลง LocalStorage)</strong> พร้อมปุ่มเครื่องมือลอยมุมขวาบนสำหรับ Copy โค้ด, เติม Template เริ่มต้น, และปรับ Format โค้ด"
+      },
+      {
+        id: "vscode-panel-tour",
+        tab: "vscode",
+        targetSelector: "#vscode-bottom-panel",
+        title: "Terminal, Problems Scanner & Rubric 20 คะแนน",
+        badge: "10 / 12 • DIAGNOSTIC PANEL",
+        icon: "layout-grid",
+        content: "แผงด้านล่างประกอบด้วย: <strong>TERMINAL</strong> (จำลอง npm run dev, docker compose, cURL), <strong>PROBLEMS</strong> (ตรวจจับจุดหลอก 12 ข้อแบบเรียลไทม์), และ <strong>EXAM RUBRIC</strong> (ประเมินคะแนนสอบ 20 คะแนนเต็มตามเกณฑ์อาจารย์)"
+      },
+      {
+        id: "tab4-labs-tour",
+        tab: "labs",
+        targetSelector: "#view-labs",
+        title: "4. Hands-on Coding Labs: 10 ข้อปฏิบัติพร้อม Auto-Grader",
+        badge: "11 / 12 • CODING LABS",
+        icon: "terminal",
+        content: "ฝึกเขียนโค้ดแก้โจทย์ทีละข้อ เช่น Dockerfile Layer Caching, Express Soft Delete, Mongoose Validations แล้วกดปุ่ม <strong>Check Code</strong> เพื่อให้ระบบตรวจผลลัพธ์ผ่าน Regex แบบสดๆ"
+      },
+      {
+        id: "tab6-cheatsheet-tour",
+        tab: "cheatsheet",
+        targetSelector: "#view-cheatsheet",
+        title: "6. Quick Cheat Sheet: แผ่นกู้ชีพหน้าห้องสอบ",
+        badge: "12 / 12 • READY TO ACE",
+        icon: "zap",
+        content: "ตารางคำสั่งลัดและ Snippet โค้ดย่อ 8 แผ่น สำหรับเปิดดูไวๆ ในห้องสอบ (Git, Docker, Node Core, Express, MySQL Soft Delete, Mongo CRUD, SQL Joins, Prisma) พร้อมลุยสอบ 20 คะแนนเต็มครับ! 🎉"
+      }
+    ];
+
+    let currentTourStep = 0;
+    let isTourActive = false;
+
+    function startWebsiteTour() {
+      isTourActive = true;
+      currentTourStep = 0;
+      document.getElementById('tutorial-backdrop').classList.remove('hidden');
+      document.getElementById('tutorial-spotlight').classList.remove('hidden');
+      document.getElementById('tutorial-popover').classList.remove('hidden');
+      renderTourStep(0);
+    }
+
+    function renderTourStep(stepIdx) {
+      if (stepIdx < 0 || stepIdx >= TUTORIAL_STEPS.length) return;
+      currentTourStep = stepIdx;
+      const step = TUTORIAL_STEPS[stepIdx];
+
+      // 1. Switch tab if needed
+      if (step.tab && currentTab !== step.tab) {
+        switchTab(step.tab);
+      }
+
+      // If step targets guided mode specifically, activate steps activity
+      if (step.id === 'vscode-guided-tour') {
+        setVSCodeActiveActivity('steps');
+      }
+
+      // 2. Wait for DOM render, then highlight element
+      setTimeout(() => {
+        const targetEl = document.querySelector(step.targetSelector);
+        highlightTourElement(targetEl);
+
+        // Update Popover contents
+        document.getElementById('tour-step-badge').innerText = step.badge;
+        document.getElementById('tour-step-title').innerText = step.title;
+        document.getElementById('tour-step-content').innerHTML = step.content;
+
+        // Update Buttons
+        const prevBtn = document.getElementById('tour-prev-btn');
+        const nextBtn = document.getElementById('tour-next-btn');
+
+        if (stepIdx === 0) {
+          prevBtn.disabled = true;
+          prevBtn.className = 'px-3 py-1.5 rounded-lg bg-surfaceDark/50 text-slate-600 text-xs font-medium border border-surfaceBorder cursor-not-allowed';
+        } else {
+          prevBtn.disabled = false;
+          prevBtn.className = 'px-3 py-1.5 rounded-lg bg-surfaceDark hover:bg-slate-800 text-slate-300 text-xs font-medium border border-surfaceBorder transition-all';
+        }
+
+        if (stepIdx === TUTORIAL_STEPS.length - 1) {
+          nextBtn.innerHTML = `<span>เข้าใจแล้ว ลุยสอบเลย! 🚀</span>`;
+          nextBtn.className = 'px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-brandEmerald to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white text-xs font-medium flex items-center gap-1.5 shadow-lg shadow-brandEmerald/30 transition-all';
+        } else {
+          nextBtn.innerHTML = `<span>ถัดไป</span><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>`;
+          nextBtn.className = 'px-3.5 py-1.5 rounded-lg bg-brandIndigo hover:bg-indigo-600 text-white text-xs font-medium flex items-center gap-1.5 shadow-lg shadow-brandIndigo/30 transition-all';
+        }
+
+        // Render Dots
+        const dotsContainer = document.getElementById('tour-step-dots');
+        dotsContainer.innerHTML = '';
+        TUTORIAL_STEPS.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.className = `w-2 h-2 rounded-full transition-all ${i === stepIdx ? 'w-5 bg-brandIndigo' : 'bg-slate-700 hover:bg-slate-500'}`;
+          dot.onclick = () => renderTourStep(i);
+          dotsContainer.appendChild(dot);
+        });
+
+        positionTutorialPopover(targetEl);
+        lucide.createIcons();
+      }, 150);
+    }
+
+    function highlightTourElement(el) {
+      const spotlight = document.getElementById('tutorial-spotlight');
+      if (!el || !spotlight) return;
+
+      const rect = el.getBoundingClientRect();
+      const padding = 8;
+
+      spotlight.style.top = `${Math.max(0, rect.top - padding)}px`;
+      spotlight.style.left = `${Math.max(0, rect.left - padding)}px`;
+      spotlight.style.width = `${rect.width + padding * 2}px`;
+      spotlight.style.height = `${rect.height + padding * 2}px`;
+
+      // Smooth scroll into view
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function positionTutorialPopover(targetEl) {
+      const popover = document.getElementById('tutorial-popover');
+      if (!popover) return;
+
+      if (!targetEl) {
+        // Center in screen
+        popover.style.top = '50%';
+        popover.style.left = '50%';
+        popover.style.transform = 'translate(-50%, -50%)';
+        return;
+      }
+
+      const rect = targetEl.getBoundingClientRect();
+      const popoverHeight = 280;
+      const popoverWidth = Math.min(window.innerWidth - 32, 440);
+
+      let top = 0;
+      let left = Math.max(16, Math.min(window.innerWidth - popoverWidth - 16, rect.left + (rect.width / 2) - (popoverWidth / 2)));
+
+      // If space below element
+      if (rect.bottom + popoverHeight + 20 < window.innerHeight) {
+        top = rect.bottom + 16;
+      } else if (rect.top - popoverHeight - 20 > 0) {
+        // Space above
+        top = rect.top - popoverHeight - 16;
+      } else {
+        // Center vertically on screen
+        top = Math.max(20, (window.innerHeight / 2) - (popoverHeight / 2));
+      }
+
+      popover.style.top = `${top}px`;
+      popover.style.left = `${left}px`;
+      popover.style.transform = 'none';
+    }
+
+    function nextTourStep() {
+      if (currentTourStep < TUTORIAL_STEPS.length - 1) {
+        renderTourStep(currentTourStep + 1);
+      } else {
+        endWebsiteTour();
+      }
+    }
+
+    function prevTourStep() {
+      if (currentTourStep > 0) {
+        renderTourStep(currentTourStep - 1);
+      }
+    }
+
+    function endWebsiteTour() {
+      isTourActive = false;
+      document.getElementById('tutorial-backdrop').classList.add('hidden');
+      document.getElementById('tutorial-spotlight').classList.add('hidden');
+      document.getElementById('tutorial-popover').classList.add('hidden');
+    }
+
+    // Keyboard navigation for tour
+    window.addEventListener('keydown', (e) => {
+      if (!isTourActive) return;
+      if (e.key === 'Escape') endWebsiteTour();
+      if (e.key === 'ArrowRight') nextTourStep();
+      if (e.key === 'ArrowLeft') prevTourStep();
+    });
+
+    window.addEventListener('resize', () => {
+      if (isTourActive && TUTORIAL_STEPS[currentTourStep]) {
+        const targetEl = document.querySelector(TUTORIAL_STEPS[currentTourStep].targetSelector);
+        highlightTourElement(targetEl);
+        positionTutorialPopover(targetEl);
+      }
+    });
 
     function resetAllProgress() {
-      if (confirm('คุณต้องการรีเซ็ตประวัติการฝึกทำแล็บและคะแนนสอบทั้งหมดใช่หรือไม่?')) {
+      if (confirm('คุณต้องการรีเซ็ตประวัติการฝึกทำแล็บ คะแนนควิซ และความคืบหน้า Guided Step ทั้งหมดใช่หรือไม่?')) {
         localStorage.clear();
         window.location.reload();
       }
@@ -5114,8 +6544,62 @@ module.exports = router;`
       renderChecklist();
       initTrainer();
       loadSavedStepProgress();
+      initVSCodeSimulator();
+      loadSavedGuidedSteps();
+      renderVSCodeStepGuide();
       lucide.createIcons();
     });
   </script>
+
+  <!-- Floating Quick Tour Launcher Button -->
+  <button onclick="startWebsiteTour()" class="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-brandIndigo to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white p-3 sm:px-4 sm:py-2.5 rounded-full shadow-2xl shadow-indigo-500/50 border border-indigo-400/40 flex items-center gap-2 text-xs font-semibold hover:scale-105 transition-all group" title="คลิกเพื่อเริ่มทัวร์แนะนำการใช้งานเว็บ">
+    <span class="relative flex h-2 w-2">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-brandCyan"></span>
+    </span>
+    <i data-lucide="sparkles" class="w-4 h-4 text-cyan-300 group-hover:rotate-12 transition-transform"></i>
+    <span class="hidden sm:inline font-sans">ทัวร์สอนใช้งานเว็บ</span>
+  </button>
+
+  <!-- Interactive Tutorial Tour Overlay & Spotlight -->
+  <div id="tutorial-backdrop" class="hidden" onclick="endWebsiteTour()"></div>
+  <div id="tutorial-spotlight" class="hidden"></div>
+  <div id="tutorial-popover" class="hidden glass-card rounded-2xl p-5 border-2 border-brandIndigo/60 shadow-2xl shadow-indigo-950/80 bg-[#0f111c]/95 text-slate-200">
+    <div class="flex items-start justify-between gap-3 border-b border-surfaceBorder pb-3 mb-3">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-brandIndigo to-brandCyan flex items-center justify-center text-white shadow-md shadow-brandIndigo/30">
+          <i id="tour-step-icon" data-lucide="sparkles" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <span id="tour-step-badge" class="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-brandIndigo/20 text-indigo-300 border border-brandIndigo/30">STEP 1 OF 12</span>
+          <h4 id="tour-step-title" class="font-bold text-white text-sm mt-0.5">ยินดีต้อนรับสู่ Exam Drill & Grill Hub</h4>
+        </div>
+      </div>
+      <button onclick="endWebsiteTour()" class="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition-colors" title="ปิดทัวร์ (Esc)">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Tour Coach Body -->
+    <div id="tour-step-content" class="text-xs text-slate-300 leading-relaxed mb-4 space-y-2">
+      <!-- Injected dynamically -->
+    </div>
+
+    <!-- Tour Progress Dots & Footer Controls -->
+    <div class="flex items-center justify-between pt-2 border-t border-surfaceBorder">
+      <div id="tour-step-dots" class="flex items-center gap-1">
+        <!-- Dots -->
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="prevTourStep()" id="tour-prev-btn" class="px-3 py-1.5 rounded-lg bg-surfaceDark hover:bg-slate-800 text-slate-300 text-xs font-medium border border-surfaceBorder transition-all">
+          ย้อนกลับ
+        </button>
+        <button onclick="nextTourStep()" id="tour-next-btn" class="px-3.5 py-1.5 rounded-lg bg-brandIndigo hover:bg-indigo-600 text-white text-xs font-medium flex items-center gap-1.5 shadow-lg shadow-brandIndigo/30 transition-all">
+          <span>ถัดไป</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
