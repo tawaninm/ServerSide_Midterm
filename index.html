@@ -166,35 +166,35 @@
     #tutorial-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(3, 5, 10, 0.78);
-      backdrop-filter: blur(3px);
+      background: transparent;
       z-index: 9998;
-      transition: opacity 0.25s ease;
+      cursor: pointer;
     }
     #tutorial-spotlight {
       position: fixed;
       border-radius: 14px;
-      box-shadow: 0 0 0 9999px rgba(3, 5, 10, 0.78), 0 0 30px 4px rgba(99, 102, 241, 0.75);
+      background: transparent;
+      box-shadow: 0 0 0 9999px rgba(4, 6, 12, 0.84), 0 0 25px 4px rgba(99, 102, 241, 0.8), inset 0 0 15px rgba(99, 102, 241, 0.15);
       border: 2.5px solid #818cf8;
       pointer-events: none;
       z-index: 9999;
-      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: top 0.25s cubic-bezier(0.4, 0, 0.2, 1), left 0.25s cubic-bezier(0.4, 0, 0.2, 1), width 0.25s cubic-bezier(0.4, 0, 0.2, 1), height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       animation: tourPulse 2.2s infinite ease-in-out;
     }
     @keyframes tourPulse {
       0%, 100% {
-        box-shadow: 0 0 0 9999px rgba(3, 5, 10, 0.78), 0 0 24px 3px rgba(99, 102, 241, 0.65);
+        box-shadow: 0 0 0 9999px rgba(4, 6, 12, 0.84), 0 0 20px 2px rgba(99, 102, 241, 0.7), inset 0 0 10px rgba(99, 102, 241, 0.1);
         border-color: #818cf8;
       }
       50% {
-        box-shadow: 0 0 0 9999px rgba(3, 5, 10, 0.78), 0 0 42px 8px rgba(129, 140, 248, 0.95);
+        box-shadow: 0 0 0 9999px rgba(4, 6, 12, 0.84), 0 0 35px 6px rgba(129, 140, 248, 0.95), inset 0 0 20px rgba(129, 140, 248, 0.25);
         border-color: #c7d2fe;
       }
     }
     #tutorial-popover {
       position: fixed;
       z-index: 10000;
-      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: top 0.25s cubic-bezier(0.4, 0, 0.2, 1), left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       max-width: 440px;
       width: calc(100vw - 32px);
     }
@@ -6288,7 +6288,7 @@ git push -u origin main
       {
         id: "tab1-study",
         tab: "study",
-        targetSelector: "#view-study",
+        targetSelector: "#view-study > div:first-child",
         title: "1. Study Hub: สรุปทฤษฎี 8 เสาหลัก (Day 01 - Day 07)",
         badge: "4 / 12 • STUDY HUB",
         icon: "book-open",
@@ -6351,7 +6351,7 @@ git push -u origin main
       {
         id: "tab4-labs-tour",
         tab: "labs",
-        targetSelector: "#view-labs",
+        targetSelector: "#view-labs > div:first-child",
         title: "4. Hands-on Coding Labs: 10 ข้อปฏิบัติพร้อม Auto-Grader",
         badge: "11 / 12 • CODING LABS",
         icon: "terminal",
@@ -6360,7 +6360,7 @@ git push -u origin main
       {
         id: "tab6-cheatsheet-tour",
         tab: "cheatsheet",
-        targetSelector: "#view-cheatsheet",
+        targetSelector: "#view-cheatsheet > div:first-child",
         title: "6. Quick Cheat Sheet: แผ่นกู้ชีพหน้าห้องสอบ",
         badge: "12 / 12 • READY TO ACE",
         icon: "zap",
@@ -6395,10 +6395,17 @@ git push -u origin main
         setVSCodeActiveActivity('steps');
       }
 
-      // 2. Wait for DOM render, then highlight element
+      // 2. Wait for DOM render & update positions smoothly
       setTimeout(() => {
         const targetEl = document.querySelector(step.targetSelector);
-        highlightTourElement(targetEl);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        updateTourTargetPosition();
+        setTimeout(updateTourTargetPosition, 80);
+        setTimeout(updateTourTargetPosition, 250);
+        setTimeout(updateTourTargetPosition, 500);
 
         // Update Popover contents
         document.getElementById('tour-step-badge').innerText = step.badge;
@@ -6435,60 +6442,59 @@ git push -u origin main
           dotsContainer.appendChild(dot);
         });
 
-        positionTutorialPopover(targetEl);
         lucide.createIcons();
-      }, 150);
+      }, 100);
     }
 
-    function highlightTourElement(el) {
+    function updateTourTargetPosition() {
+      if (!isTourActive || !TUTORIAL_STEPS[currentTourStep]) return;
+      const step = TUTORIAL_STEPS[currentTourStep];
+      const targetEl = document.querySelector(step.targetSelector);
       const spotlight = document.getElementById('tutorial-spotlight');
-      if (!el || !spotlight) return;
-
-      const rect = el.getBoundingClientRect();
-      const padding = 8;
-
-      spotlight.style.top = `${Math.max(0, rect.top - padding)}px`;
-      spotlight.style.left = `${Math.max(0, rect.left - padding)}px`;
-      spotlight.style.width = `${rect.width + padding * 2}px`;
-      spotlight.style.height = `${rect.height + padding * 2}px`;
-
-      // Smooth scroll into view
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-
-    function positionTutorialPopover(targetEl) {
       const popover = document.getElementById('tutorial-popover');
-      if (!popover) return;
+      if (!spotlight || !popover) return;
 
       if (!targetEl) {
-        // Center in screen
+        spotlight.style.width = '0px';
+        spotlight.style.height = '0px';
+        spotlight.style.top = '-100px';
+        spotlight.style.left = '-100px';
         popover.style.top = '50%';
         popover.style.left = '50%';
         popover.style.transform = 'translate(-50%, -50%)';
         return;
       }
 
+      popover.style.transform = 'none';
       const rect = targetEl.getBoundingClientRect();
+      const padding = 8;
+
+      const top = Math.max(0, rect.top - padding);
+      const left = Math.max(0, rect.left - padding);
+      const width = Math.min(window.innerWidth - left, rect.width + padding * 2);
+      const height = rect.height + padding * 2;
+
+      spotlight.style.top = `${top}px`;
+      spotlight.style.left = `${left}px`;
+      spotlight.style.width = `${width}px`;
+      spotlight.style.height = `${height}px`;
+
+      // Smart Popover Positioning
       const popoverHeight = 280;
       const popoverWidth = Math.min(window.innerWidth - 32, 440);
+      let pTop = 0;
+      let pLeft = Math.max(16, Math.min(window.innerWidth - popoverWidth - 16, rect.left + (rect.width / 2) - (popoverWidth / 2)));
 
-      let top = 0;
-      let left = Math.max(16, Math.min(window.innerWidth - popoverWidth - 16, rect.left + (rect.width / 2) - (popoverWidth / 2)));
-
-      // If space below element
       if (rect.bottom + popoverHeight + 20 < window.innerHeight) {
-        top = rect.bottom + 16;
+        pTop = rect.bottom + 16;
       } else if (rect.top - popoverHeight - 20 > 0) {
-        // Space above
-        top = rect.top - popoverHeight - 16;
+        pTop = rect.top - popoverHeight - 16;
       } else {
-        // Center vertically on screen
-        top = Math.max(20, (window.innerHeight / 2) - (popoverHeight / 2));
+        pTop = Math.max(20, (window.innerHeight / 2) - (popoverHeight / 2));
       }
 
-      popover.style.top = `${top}px`;
-      popover.style.left = `${left}px`;
-      popover.style.transform = 'none';
+      popover.style.top = `${pTop}px`;
+      popover.style.left = `${pLeft}px`;
     }
 
     function nextTourStep() {
@@ -6512,7 +6518,7 @@ git push -u origin main
       document.getElementById('tutorial-popover').classList.add('hidden');
     }
 
-    // Keyboard navigation for tour
+    // Keyboard navigation & scroll/resize events for tour
     window.addEventListener('keydown', (e) => {
       if (!isTourActive) return;
       if (e.key === 'Escape') endWebsiteTour();
@@ -6520,13 +6526,8 @@ git push -u origin main
       if (e.key === 'ArrowLeft') prevTourStep();
     });
 
-    window.addEventListener('resize', () => {
-      if (isTourActive && TUTORIAL_STEPS[currentTourStep]) {
-        const targetEl = document.querySelector(TUTORIAL_STEPS[currentTourStep].targetSelector);
-        highlightTourElement(targetEl);
-        positionTutorialPopover(targetEl);
-      }
-    });
+    window.addEventListener('scroll', updateTourTargetPosition, { passive: true });
+    window.addEventListener('resize', updateTourTargetPosition);
 
     function resetAllProgress() {
       if (confirm('คุณต้องการรีเซ็ตประวัติการฝึกทำแล็บ คะแนนควิซ และความคืบหน้า Guided Step ทั้งหมดใช่หรือไม่?')) {
