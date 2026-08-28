@@ -49,7 +49,8 @@
 │   └── 📝 06_Server_Side_Web_Development_Day_06_Notes_summary.md
 │
 ├── 📂 14_08_2026/
-│   └── 📄 7. 06016418 Server-Side Web Development Day 07.pdf
+│   ├── 📄 7. 06016418 Server-Side Web Development Day 07.pdf
+│   └── 📝 06016418_Server_Side_Web_Development_Day_07_Summary.md
 │
 ├── 📂 Labweek6/                  # ตัวอย่างโค้ด Express + MySQL + MongoDB Backend
 │   ├── 🐳 docker-compose.yaml    # Container Setup (MySQL / MongoDB)
