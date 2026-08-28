@@ -350,6 +350,131 @@ NoSQL เกิดขึ้นเพื่อตอบสนองการป�
 
 ---
 
+---
+
+### 5.6 การสร้าง Database และ Collection (เทียบเท่า Table ใน SQL) ใน MongoDB
+
+ในโลกของ Relational Database (SQL) เราจะต้องออกแบบ Schema และรันคำสั่ง DDL `CREATE TABLE ...` อย่างเคร่งครัดก่อนจึงจะสามารถ Insert ข้อมูลได้ แต่ใน **MongoDB (Document Database)** จะใช้คำว่า **Collection** แทน Table โดยมีพฤติกรรมและความยืดหยุ่นที่แตกต่างกันดังนี้:
+
+#### 1. กลไก Dynamic / Lazy Creation (สร้างอัตโนมัติเมื่อบันทึกข้อมูล)
+MongoDB มีคุณสมบัติพิเศษคือ **Auto-create on first write** กล่าวคือ เราไม่จำเป็นต้องสร้าง Database หรือ Collection ไว้ล่วงหน้า เมื่อมีคำสั่งบันทึกข้อมูล (Write Operation) เอกสารชิ้นแรกถูกส่งเข้ามา MongoDB Engine จะทำการสร้าง Database และ Collection นั้นให้โดยอัตโนมัติทันที
+
+#### 2. 4 ช่องทางการสร้าง Database & Collection ในทางปฏิบัติ
+1. **ผ่าน Mongoose Model ใน Node.js (วิธีหลักในการทำแล็บและข้อสอบ):**
+   ```javascript
+   // เมื่อประกาศ Model
+   const User = mongoose.model('User', userSchema);
+   // เมื่อเรียกใช้คำสั่ง Create ครั้งแรก
+   await User.create({ email: 'tawan@kmitl.ac.th', fullname: 'Thanatphat', password: '123' });
+   // -> Mongoose จะแปลง 'User' เป็นชื่อ Collection 'users' (Lowercase + Pluralize) 
+   //    และสร้าง Collection ให้ใน Database อัตโนมัติ
+   ```
+2. **ผ่านคำสั่ง Mongo Shell (`mongosh` หรือ Terminal ใน Docker):**
+   ```javascript
+   // สลับไปยัง Database ที่ต้องการ (ถ้ายังไม่มีจะสร้างให้อัตโนมัติเมื่อมีการ write)
+   use exam_db;
+
+   // คำสั่งสร้าง Collection แบบเจาะจง (Explicit Creation)
+   db.createCollection("users");
+
+   // หรือสั่ง Insert เอกสารโดยตรง (Implicit Creation)
+   db.users.insertOne({
+     email: "student@kmitl.ac.th",
+     fullname: "Doro IT",
+     password: "hash_password",
+     deleted_at: null,
+     createdAt: new Date()
+   });
+
+   // ตรวจสอบรายชื่อ Database และ Collection
+   show dbs;
+   show collections;
+   ```
+3. **ผ่าน MongoDB Atlas Cloud Web Console:**
+   - เข้าสู่ Cluster ➔ กดแท็บ **Collections**
+   - คลิกปุ่ม **+ Create Database**
+   - กรอก **Database Name** (เช่น `exam_db`) และ **Collection Name** แรก (เช่น `users`) ➔ กด **Create**
+4. **ผ่าน Extension "Database Client" ใน Visual Studio Code (วิธีแนะนำสูงสุดในห้องสอบ)**
+
+---
+
+### 5.7 คู่มือการใช้งาน Extension "Database Client" ใน Visual Studio Code (VS Code Master Guide)
+
+การสลับหน้าจอไปมาระหว่าง VS Code กับโปรแกรมจัดการฐานข้อมูลภายนอก (เช่น MySQL Workbench หรือ MongoDB Compass) อาจทำให้เสียเวลาและกินทรัพยากรเครื่อง การใช้ Extension **Database Client** (โดย cweijan) จะช่วยให้เราสามารถเปิดดูตาราง, ตรวจสอบ Document, แก้ไขข้อมูล, และรันคำสั่ง Query ทั้ง **MySQL** และ **MongoDB** ได้ครบจบภายใน VS Code หน้าต่างเดียว!
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│               VS Code Activity Bar ➔ Database Client                   │
+├────────────────────────────────────────────────────────────────────────┤
+│ 🐬 MySQL (localhost:3307)                                              │
+│    └── 📂 exam_db                                                      │
+│         └── 📄 users (Columns: id, email, fullname, deleted_at...)     │
+│                                                                        │
+│ 🍃 MongoDB (localhost:27017 หรือ Atlas Cloud)                          │
+│    └── 📂 exam_db                                                      │
+│         └── 📑 users (Documents: [{ _id, email, fullname... }])         │
+│         └── 📑 students                                                │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+#### 1. ขั้นตอนการติดตั้ง Extension ใน VS Code
+1. เปิด VS Code แล้วกดคีย์ลัด `Ctrl + Shift + X` (Windows) หรือ `Cmd + Shift + X` (macOS) เพื่อเปิด Extensions Marketplace
+2. พิมพ์ค้นหาคำว่า **`Database Client`** (พัฒนาโดย *cweijan*)
+3. คลิกปุ่ม **Install**
+4. เมื่อติดตั้งเสร็จ จะปรากฏไอคอนรูป **ฐานข้อมูล (Cylinder Icon)** อยู่ที่แถบ Activity Bar ด้านซ้ายสุด
+
+#### 2. ขั้นตอนการเชื่อมต่อ MySQL Database (Docker Container / Local)
+1. คลิกที่ไอคอน **Database Client** บน Activity Bar
+2. คลิกปุ่ม **`+` (Create Connection)**
+3. เลือกประเภท Database เป็น **`MySQL`**
+4. กรอกข้อมูลการเชื่อมต่อ:
+   - **Host:** `127.0.0.1` หรือ `localhost`
+   - **Port:** `3307` (ตามที่แมป Port ไว้ใน `docker-compose.yaml` ของแล็บ) หรือ `3306`
+   - **Username:** `root`
+   - **Password:** `password` (ตามที่กำหนดใน `.env` หรือ `docker-compose.yaml`)
+   - **Database:** `exam_db` (หรือปล่อยว่างไว้เพื่อดูทุก Database)
+5. คลิกปุ่ม **Connect** เพื่อบันทึกการเชื่อมต่อ
+
+#### 3. ขั้นตอนการเชื่อมต่อ MongoDB Database (Local Docker หรือ MongoDB Atlas)
+1. ในหน้าต่าง Database Client คลิกปุ่ม **`+` (Create Connection)**
+2. เลือกประเภท Database เป็น **`MongoDB`**
+3. เลือกวิธีการเชื่อมต่อ:
+   - **แบบ Local Docker:**
+     - **Host:** `localhost` หรือ `127.0.0.1`
+     - **Port:** `27017`
+   - **แบบ MongoDB Atlas Cloud (แนะนำ):**
+     - เลือกแท็บ **Connection String / URI**
+     - นำ Connection String ที่ได้จาก Atlas มาวาง เช่น:
+       `mongodb+srv://tawan_admin:Password123@cluster0.abcde.mongodb.net/exam_db?retryWrites=true&w=majority`
+4. คลิกปุ่ม **Connect**
+
+#### 4. การสร้าง Database และ Table / Collection ผ่าน GUI
+- **การสร้าง Database ใหม่:** คลิกขวาที่ชื่อ Connection (เช่น `MongoDB-Atlas`) ➔ เลือก **`Create Database`** ➔ กรอกชื่อ Database แล้วกด Enter
+- **การสร้าง Collection ใน MongoDB:** คลิกขวาที่ชื่อ Database ➔ เลือก **`Create Collection`** ➔ กรอกชื่อ Collection (เช่น `users` หรือ `students`)
+- **การสร้าง Table ใน MySQL:** คลิกขวาที่ Database ➔ เลือก **`Design Table`** หรือ **`New Table`** ➔ กำหนด Column Name, Data Type (`INT`, `VARCHAR`), และ Primary Key
+
+#### 5. การเปิดดูข้อมูล (Table Data Grid Viewer)
+- **การเปิดดูข้อมูล:** ดับเบิลคลิกที่ชื่อ Table หรือ Collection ที่ต้องการ
+- หน้าต่าง Data Grid จะแสดงข้อมูลขึ้นมาทันที:
+  - **Inline Editing:** ดับเบิลคลิกที่ช่องข้อมูลเพื่อแก้ไขค่า แล้วกดบันทึก
+  - **Add Record:** กดปุ่ม **`+ Add`** เพื่อเพิ่ม Row หรือ Document ใหม่
+  - **Delete Record:** เลือกแถวที่ต้องการแล้วกดปุ่ม **Delete**
+  - **Filter / Search:** มีแถบค้นหาข้อมูลและเรียงลำดับ (Sort) สะดวกสบาย
+
+#### 6. การเปิด Query Console พิมพ์คำสั่ง SQL / MongoDB Script
+- คลิกขวาที่ชื่อ Database ➔ เลือก **`Open Query Console`**
+- **สำหรับ MySQL:** พิมพ์คำสั่ง SQL เช่น:
+  ```sql
+  SELECT * FROM users WHERE deleted_at IS NULL;
+  ```
+- **สำหรับ MongoDB:** พิมพ์คำสั่ง MongoDB Query เช่น:
+  ```javascript
+  db.users.find({ deleted_at: null });
+  ```
+- กดปุ่ม **Run** หรือคีย์ลัด `Ctrl + Enter` เพื่อสั่งประมวลผลคำสั่งและดูผลลัพธ์ทันที
+
+---
+
 ## 6. 📦 Module 6: สถาปัตยกรรม Mongoose ODM และการสร้าง Data Models
 
 ### 6.1 Mongoose คืออะไร?
