@@ -1,0 +1,24 @@
+{
+  "name": "labweek6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server_mysql.js",
+    "dev": "nodemon server_mysql.js",
+    "dev:mysql": "nodemon server_mysql.js",
+    "dev:mongo": "nodemon server_mongodb.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.9.1",
+    "mysql2": "^3.23.2",
+    "nodemon": "^3.1.14"
+  }
+}

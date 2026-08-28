@@ -1,8 +1,10 @@
 # 🚀 Server-Side Web Development Practical Exam Drill & Grill Hub (06016418)
 
 > **KMITL IT — Faculty of Information Technology, Multimedia & Game Development**  
-> **Midterm Practical Examination Master Blueprint & Drill Platform (20 Points)**
+> **Midterm Practical Examination Master Blueprint & Drill Platform (20 Points)**  
+> 🌐 **Live Web Simulator:** [https://serverside-midterm.vercel.app](https://serverside-midterm.vercel.app)
 
+[![Live Web](https://img.shields.io/badge/Live_App-serverside--midterm.vercel.app-blueviolet.svg?style=flat-square&logo=vercel)](https://serverside-midterm.vercel.app)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 [![License: MIT](https://img.shields.io/badge/License-MIT-indigo.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-20.x-green.svg)](https://nodejs.org/)
@@ -12,24 +14,68 @@
 
 ---
 
-## 📖 ภาพรวมของระบบ (Overview)
+## 📖 ภาพรวมของ Repository (Repository Overview)
 
-เว็บแอปพลิเคชันสำหรับการฝึกซ้อมแบบเข้มข้น (Drill & Grill) และเปิดเป็น **Reference Hub** ระหว่างการสอบปฏิบัติวิชา **06016418 Server-Side Web Development** โดยเน้นหัวข้อหลักที่ออกสอบปฏิบัติ:
-- 🐙 **Git & Workflow:** การสร้าง Repository, Branching, `.gitignore` และการ Push งาน
-- 🐳 **Docker & Docker Compose:** Dockerfile Layer Caching, Named Volumes, Port Mapping (`HOST:CONTAINER`)
-- 🟢 **Node.js & Express.js:** RESTful API Architecture, Middleware Lifecycle, Global Error Handler
-- 🍃 **MongoDB & Mongoose:** Connection Module, Schema Validation Rules, 5-Route Async CRUD, Duplicate Key Error Handling
+คลังความรู้ สรุปเนื้อหา เลกเชอร์ สไลด์ โค้ดแล็บปฏิบัติการ และเว็บแอปพลิเคชันสำหรับฝึกซ้อมสอบปฏิบัติวิชา **06016418 Server-Side Web Development** (สอบกลางภาค 20 คะแนน)
 
 ---
 
-## 🛠️ 6 ฟีเจอร์หลักในระบบ (Core Modules)
+## 📂 โครงสร้างไฟล์และเนื้อหาใน Repository (Directory Structure)
+
+```
+📦 ServerSide_Midterm
+├── 🌐 index.html                 # Web Exam Simulator & Reference Hub (8 Tabs Interactive UI)
+├── 📦 package.json               # Node Package Config
+├── ⚡ vercel.json                # Vercel Deployment Configuration
+├── 📝 README.md                  # เอกสารแนะนำและสารบัญเนื้อหา
+│
+├── 📂 03_07_2026_1_Introduction_to_Server_side_Web_Development_Summary/
+│   ├── 📄 1. Introduction to Server-side Web Development.pdf
+│   └── 📝 1._Introduction_to_Server-side_Web_Development_Summary_summary.md
+│
+├── 📂 29_06_2026_06016418_SERVER_SIDE_WEB_DEVELOPMENT_Git_Summary/
+│   ├── 📄 06016418 SERVER-SIDE WEB DEVELOPMENT (Git).pdf
+│   ├── 📄 06016418 SEVER-SIDE WEB DEVELOPMENT (Docker).pdf
+│   ├── 📝 06016418_SERVER-SIDE_WEB_DEVELOPMENT_(Git)_Summary_summary.md
+│   └── 📝 06016418_SEVER-SIDE_WEB_DEVELOPMENT_(Docker)_Summary_summary.md
+│
+├── 📂 24_07_2026_Node/
+│   ├── 📄 06016418 SERVER-SIDE WEB DEVELOPMENT DAY 04.pdf
+│   └── 📝 06016418 SERVER-SIDE WEB DEVELOPMENT DAY 04 Summary.md
+│
+├── 📂 07_08_2026_06_Server_Side_Web_Development_Day_06_Notes/
+│   ├── 📄 6. 06016418 Server-Side Web Development Day 06.pdf
+│   ├── 📄 MySQL.pdf
+│   └── 📝 06_Server_Side_Web_Development_Day_06_Notes_summary.md
+│
+├── 📂 14_08_2026/
+│   └── 📄 7. 06016418 Server-Side Web Development Day 07.pdf
+│
+├── 📂 Labweek6/                  # ตัวอย่างโค้ด Express + MySQL + MongoDB Backend
+│   ├── 🐳 docker-compose.yaml    # Container Setup (MySQL / MongoDB)
+│   ├── 📄 server_mysql.js        # Express + mysql2 (Prepared Statements, CRUD)
+│   ├── 📄 server_mongodb.js      # Express + Mongoose (Schema, CRUD, Validation)
+│   ├── 📄 schema.sql             # MySQL Table Schema
+│   ├── 📄 models/User.js         # Mongoose User Model
+│   ├── 📝 DAY06_STUDY_NOTE.md    # สรุปขั้นตอนทำแล็บ Week 6 ละเอียด
+│   └── 📄 .env.example           # Environment Variables Template
+│
+├── 🔗 LinkSlide.txt              # ลิงก์รวมสไลด์และเอกสารประกอบการสอน
+└── 📝 Ref Study Server-Side.md    # บันทึก Reference และลิงก์ศึกษาเพิ่มเติม
+```
+
+---
+
+## 🛠️ 8 ฟีเจอร์หลักในระบบ Web Exam Hub (`index.html`)
 
 1. **📚 1. Study Hub (สรุปทฤษฎี & สถาปัตยกรรม):** สรุปเปรียบเทียบ VM vs Container, Mongoose Lifecycle Hooks, Parameterized Queries และ 12-Factor App Configurations
 2. **⚡ 2. Step-by-Step Blueprint (ขั้นตอนคำสั่งสด 0-9):** พิมพ์ตามได้ทันทีตั้งแต่ `mkdir` จนถึง `git push` พร้อมคำอธิบายและปุ่ม Copy โค้ด
-3. **🧪 3. Hands-on Coding Labs (10 ข้อปฏิบัติ):** ระบบ Interactive Code Editor ตรวจสอบ Regex Auto-Validation สดทันที
-4. **🔥 4. Grill Exam Simulator (ข้อสอบจับเวลา):** ข้อสอบจำลอง 15 ข้อ พร้อมเฉลยละเอียดและวิเคราะห์จุดหลอก
-5. **⚡ 5. Quick Cheat Sheet (กู้ชีพหน้าห้องสอบ):** สรุปโค้ดจำเป็นสำหรับคัดลอกด่วน (Connection, Model, Router, Compose, cURL)
-6. **✅ 6. Exam Readiness Checklist:** เช็กลิสต์ความพร้อมก่อนกดส่งข้อสอบ 100%
+3. **💻 3. VS Code Live Simulator:** จำลอง IDE พร้อม Live Terminal และ Syntax Auto-Validation
+4. **🧪 4. Hands-on Coding Labs (10 ข้อปฏิบัติ):** ระบบ Interactive Code Editor ตรวจสอบ Regex Auto-Validation สดทันที
+5. **🔥 5. Grill Exam Simulator (ข้อสอบจับเวลา 65 ข้อ):** คลังข้อสอบจำลองพร้อมเฉลยละเอียดและวิเคราะห์จุดหลอก
+6. **⚡ 6. Quick Cheat Sheet (กู้ชีพหน้าห้องสอบ):** สรุปโค้ดจำเป็นสำหรับคัดลอกด่วน (Connection, Model, Router, Compose, cURL)
+7. **✅ 7. Exam Readiness Checklist:** เช็กลิสต์ความพร้อมก่อนกดส่งข้อสอบ 100%
+8. **📦 8. Resource Archive:** รวมลิงก์สไลด์ เอกสาร และ Repo อ้างอิง
 
 ---
 
@@ -71,7 +117,7 @@ npm run dev
 npx serve .
 ```
 
-### 2. Deploy ขึ้น Vercel (1 คำสั่งจบ)
+### 2. Deploy ขึ้น Vercel
 ```bash
 npx vercel --prod
 ```
