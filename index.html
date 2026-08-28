@@ -836,7 +836,13 @@
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-brandEmerald" data-cat="git">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      
+                <span class="w-8 h-8 rounded-lg bg-emerald-500/20 border-emerald-500/40 text-emerald-300 border font-mono font-bold flex items-center justify-center text-sm shadow-sm">0</span>
+                <div>
+                  <h3 class="text-base font-bold text-white">STEP 0: สร้างโฟลเดอร์ & กำหนด Git Repo</h3>
+                  <p class="text-xs text-slate-400">git init, branch main, และ .gitignore</p>
+                </div>
+              </div>
+
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('.gitignore');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด .gitignore ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
@@ -885,7 +891,13 @@ git branch -M main</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-sky-500" data-cat="git">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      
+                <span class="w-8 h-8 rounded-lg bg-sky-500/20 border-sky-500/40 text-sky-300 border font-mono font-bold flex items-center justify-center text-sm shadow-sm">1</span>
+                <div>
+                  <h3 class="text-base font-bold text-white">STEP 1: ติดตั้ง Dependencies & ตั้งค่า package.json</h3>
+                  <p class="text-xs text-slate-400">npm init, express, mongoose, dotenv, cors, nodemon</p>
+                </div>
+              </div>
+
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('package.json');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด package.json ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
@@ -928,7 +940,13 @@ npm install -D nodemon</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-indigo-500" data-cat="git">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      
+                <span class="w-8 h-8 rounded-lg bg-indigo-500/20 border-indigo-500/40 text-indigo-300 border font-mono font-bold flex items-center justify-center text-sm shadow-sm">2</span>
+                <div>
+                  <h3 class="text-base font-bold text-white">STEP 2: ตั้งค่า Environment Variables (.env & .env.example)</h3>
+                  <p class="text-xs text-slate-400">กำหนด PORT, NODE_ENV, MONGO_URI (Local vs Atlas Cloud)</p>
+                </div>
+              </div>
+
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('.env');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด .env ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~1 นาที</span>
@@ -979,7 +997,13 @@ MONGO_URI=mongodb://localhost:27017/examdb</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-cyan-500" data-cat="docker">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      
+                <span class="w-8 h-8 rounded-lg bg-cyan-500/20 border-cyan-500/40 text-cyan-300 border font-mono font-bold flex items-center justify-center text-sm shadow-sm">3</span>
+                <div>
+                  <h3 class="text-base font-bold text-white">STEP 3: เขียน Dockerfile & docker-compose.yml</h3>
+                  <p class="text-xs text-slate-400">Layer Caching, mongo:6.0, port 27017, named volume</p>
+                </div>
+              </div>
+
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('Dockerfile');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด Dockerfile / docker-compose ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~4 นาที</span>
@@ -1047,7 +1071,13 @@ docker compose ps</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-emerald-500" data-cat="mongo">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      
+                <span class="w-8 h-8 rounded-lg bg-emerald-500/20 border-emerald-500/40 text-emerald-300 border font-mono font-bold flex items-center justify-center text-sm shadow-sm">4</span>
+                <div>
+                  <h3 class="text-base font-bold text-white">STEP 4: เชื่อมต่อ MongoDB (config/db.js)</h3>
+                  <p class="text-xs text-slate-400">mongoose.connect, error handling, process.exit(1)</p>
+                </div>
+              </div>
+
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('config/db.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด config/db.js ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
@@ -1086,7 +1116,13 @@ module.exports = connectDB;</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-purple-500" data-cat="mongo">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      
+                <span class="w-8 h-8 rounded-lg bg-purple-500/20 border-purple-500/40 text-purple-300 border font-mono font-bold flex items-center justify-center text-sm shadow-sm">5</span>
+                <div>
+                  <h3 class="text-base font-bold text-white">STEP 5: สร้าง Mongoose Schema & Model (models/Student.js)</h3>
+                  <p class="text-xs text-slate-400">Validations, required, unique, trim, timestamps: true</p>
+                </div>
+              </div>
+
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('models/Student.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด models/Student.js ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~3 นาที</span>
@@ -1147,7 +1183,13 @@ module.exports = mongoose.model('Student', studentSchema);</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-amber-500" data-cat="express">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      
+                <span class="w-8 h-8 rounded-lg bg-amber-500/20 border-amber-500/40 text-amber-300 border font-mono font-bold flex items-center justify-center text-sm shadow-sm">6</span>
+                <div>
+                  <h3 class="text-base font-bold text-white">STEP 6: สร้าง Main Express Server (server.js)</h3>
+                  <p class="text-xs text-slate-400">express.json(), cors, route mounting, 404, global error handler</p>
+                </div>
+              </div>
+
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('server.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด server.js ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~3 นาที</span>
@@ -1213,7 +1255,13 @@ app.listen(PORT, () => {
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-rose-500" data-cat="express">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      
+                <span class="w-8 h-8 rounded-lg bg-rose-500/20 border-rose-500/40 text-rose-300 border font-mono font-bold flex items-center justify-center text-sm shadow-sm">7</span>
+                <div>
+                  <h3 class="text-base font-bold text-white">STEP 7: สร้าง 5-Route CRUD Router (routes/studentRoutes.js)</h3>
+                  <p class="text-xs text-slate-400">POST(201), GET(200), GET/:id, PUT({new:true, runValidators:true}), DELETE</p>
+                </div>
+              </div>
+
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); openVSCodeFile('routes/studentRoutes.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด routes/studentRoutes.js ใน VS Code</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~5 นาที</span>
@@ -1314,7 +1362,13 @@ module.exports = router;</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-brandCyan" data-cat="test">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      
+                <span class="w-8 h-8 rounded-lg bg-cyan-500/20 border-cyan-500/40 text-cyan-300 border font-mono font-bold flex items-center justify-center text-sm shadow-sm">8</span>
+                <div>
+                  <h3 class="text-base font-bold text-white">STEP 8: ทดสอบด้วย Postman & cURL CLI</h3>
+                  <p class="text-xs text-slate-400">ทดสอบทั้ง 5 Endpoints และดักจับ Duplicate Key 11000</p>
+                </div>
+              </div>
+
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); runVSCodeTerminalCmd('curl http://localhost:5000/api/students');" class="px-2.5 py-1 rounded bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="play" class="w-3 h-3"></i><span>ทดสอบ cURL ใน Terminal</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
@@ -1325,8 +1379,88 @@ module.exports = router;</code></pre>
               </div>
             </div>
 
-            <!-- cURL snippets -->
-            <div class="space-y-3">
+<!-- Sub-tabs: Postman vs cURL -->
+            <div class="flex items-center gap-2 border-b border-surfaceBorder pb-3">
+              <button id="step8-btn-postman" onclick="switchStep8Mode('postman')" class="px-3 py-1.5 rounded-lg bg-brandIndigo text-white text-xs font-bold flex items-center gap-1.5 transition-all">
+                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                <span>📮 Postman Master Guide (แนะนำ)</span>
+              </button>
+              <button id="step8-btn-curl" onclick="switchStep8Mode('curl')" class="px-3 py-1.5 rounded-lg bg-surfaceDark text-slate-400 hover:text-slate-200 text-xs font-medium flex items-center gap-1.5 border border-surfaceBorder transition-all">
+                <i data-lucide="terminal" class="w-3.5 h-3.5"></i>
+                <span>⚡ cURL Terminal Snippets</span>
+              </button>
+            </div>
+
+            <!-- Postman Guide View -->
+            <div id="step8-view-postman" class="space-y-4">
+              <div class="p-4 rounded-xl bg-brandIndigo/10 border border-brandIndigo/30 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div>
+                  <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                    <span>🚀 1-Click Postman Collection (v2.1)</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono">Ready to Import</span>
+                  </h4>
+                  <p class="text-xs text-slate-300 mt-1">คัดลอก JSON ด้านล่างแล้วเปิด Postman ➔ กด Import ➔ Paste Raw Text ได้ทันที 7 Request พร้อมทดสอบ</p>
+                </div>
+                <button onclick="copyPostmanCollection()" class="px-3.5 py-1.5 rounded-lg bg-brandIndigo hover:bg-indigo-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-md whitespace-nowrap">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                  <span>คัดลอก Postman Collection JSON</span>
+                </button>
+              </div>
+
+              <!-- 7 Steps Table -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div class="p-3.5 rounded-xl bg-surfaceDark/80 border border-surfaceBorder space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono font-bold">1. POST (Create)</span>
+                    <span class="text-slate-400 font-mono">Status: 201 Created</span>
+                  </div>
+                  <p class="text-slate-300">URL: <code class="text-brandCyan font-mono">http://localhost:5000/api/students</code></p>
+                  <p class="text-slate-400">Body: <code class="text-amber-300 font-mono">raw ➔ JSON</code> (ส่ง studentId, name, major, gpa)</p>
+                  <p class="text-[11px] text-brandEmerald">💡 เมื่อสร้างสำเร็จ ให้ก๊อปปี้ค่า _id ใน Response ไว้ใช้ในขั้นต่อไป</p>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-surfaceDark/80 border border-surfaceBorder space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-mono font-bold">2. POST (Duplicate Trap)</span>
+                    <span class="text-slate-400 font-mono">Status: 400 Bad Request</span>
+                  </div>
+                  <p class="text-slate-300">URL: <code class="text-brandCyan font-mono">http://localhost:5000/api/students</code></p>
+                  <p class="text-slate-400">Body: ใช้ studentId เดิมที่ซ้ำกัน</p>
+                  <p class="text-[11px] text-rose-300">⚠️ ต้องได้ 400 (Duplicate studentId error) ไม่ใช่ 500 Crash</p>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-surfaceDark/80 border border-surfaceBorder space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-mono font-bold">3. GET All</span>
+                    <span class="text-slate-400 font-mono">Status: 200 OK</span>
+                  </div>
+                  <p class="text-slate-300">URL: <code class="text-brandCyan font-mono">http://localhost:5000/api/students</code></p>
+                  <p class="text-slate-400">คืนค่าเป็น Array ของนักศึกษาทั้งหมด</p>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-surfaceDark/80 border border-surfaceBorder space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono font-bold">4. PUT (Update)</span>
+                    <span class="text-slate-400 font-mono">Status: 200 OK</span>
+                  </div>
+                  <p class="text-slate-300">URL: <code class="text-brandCyan font-mono">http://localhost:5000/api/students/:id</code></p>
+                  <p class="text-slate-400">Body: <code class="text-amber-300 font-mono">{"gpa": 4.00, "major": "SE"}</code></p>
+                  <p class="text-[11px] text-amber-300">⚡ ต้องใส่ { new: true, runValidators: true } ใน Mongoose</p>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-surfaceDark/80 border border-surfaceBorder space-y-2 md:col-span-2">
+                  <div class="flex items-center justify-between">
+                    <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 font-mono font-bold">5. DELETE</span>
+                    <span class="text-slate-400 font-mono">Status: 200 OK ➔ GET ซ้ำได้ 404</span>
+                  </div>
+                  <p class="text-slate-300">URL: <code class="text-brandCyan font-mono">http://localhost:5000/api/students/:id</code></p>
+                  <p class="text-slate-400">ลบข้อมูลออกจาก DB สำเร็จ เมื่อยิง GET :id ซ้ำจะต้องได้ 404 Not Found</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- cURL snippets View -->
+            <div id="step8-view-curl" class="hidden space-y-3">
               <div class="space-y-1">
                 <div class="flex items-center justify-between text-xs text-slate-400">
                   <span class="font-mono text-emerald-400 font-semibold">1. Test POST Create:</span>
@@ -1365,7 +1499,13 @@ module.exports = router;</code></pre>
           <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-brandEmerald" data-cat="test">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
               <div class="flex items-center gap-3">
-      
+                <span class="w-8 h-8 rounded-lg bg-emerald-500/20 border-emerald-500/40 text-emerald-300 border font-mono font-bold flex items-center justify-center text-sm shadow-sm">9</span>
+                <div>
+                  <h3 class="text-base font-bold text-white">STEP 9: บันทึกและ Push ขึ้น Git Repo ส่งงาน</h3>
+                  <p class="text-xs text-slate-400">git status, git add ., git commit, git push -u origin main</p>
+                </div>
+              </div>
+
               <div class="flex items-center gap-2">
                 <button onclick="switchTab('vscode'); runVSCodeTerminalCmd('git status');" class="px-2.5 py-1 rounded bg-orange-600/20 hover:bg-orange-600 text-orange-300 hover:text-white border border-orange-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="git-branch" class="w-3 h-3"></i><span>รันคำสั่ง Git ใน Terminal</span></button>
                 <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
@@ -1411,736 +1551,6 @@ git push -u origin main</code></pre>
 
 
     <!-- ==================== VIEW-STEPS ==================== -->
-    <div id="view-steps" class="tab-view hidden space-y-8">
-      
-      <!-- Hero Banner -->
-      <div class="p-6 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-teal-950/20 to-slate-900/40 border border-brandEmerald/30 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="text-xs uppercase tracking-wider text-brandEmerald font-semibold">Live Practical Exam Blueprint</span>
-            <span class="text-xs px-2 py-0.5 rounded-full bg-brandEmerald/20 text-emerald-300 font-mono border border-brandEmerald/30">Total 20 Points</span>
-          </div>
-          <h2 class="text-2xl font-bold text-white mt-1">คู่มือพิมพ์คำสั่งและโค้ดทีละ Step สำหรับสอบปฏิบัติ (Step 0 - 9)</h2>
-          <p class="text-slate-400 text-sm mt-1">พิมพ์ตามลำดับจริง: Git Repo ➔ Scaffolding ➔ Docker Compose ➔ Mongoose ➔ Express CRUD ➔ cURL Test ➔ Git Push</p>
-        </div>
-        <div class="flex flex-wrap gap-2">
-          <button onclick="scrollToTerminalTrainer()" class="px-4 py-2 rounded-lg bg-brandEmerald hover:bg-emerald-600 text-white font-medium text-sm flex items-center gap-2 shadow-lg shadow-brandEmerald/25 transition-all">
-            <i data-lucide="terminal" class="w-4 h-4"></i>
-            <span>ซ้อมพิมพ์ใน Terminal Trainer</span>
-          </button>
-          <button onclick="copyAllStarterBundle()" class="px-4 py-2 rounded-lg bg-surfaceDark hover:bg-surfaceBorder text-slate-300 border border-surfaceBorder text-sm flex items-center gap-2 transition-all">
-            <i data-lucide="copy" class="w-4 h-4 text-brandCyan"></i>
-            <span>คัดลอก Starter Kit รวม</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- INTERACTIVE TERMINAL PRACTICE TRAINER -->
-      <div id="terminal-trainer-card" class="glass-card rounded-2xl p-6 border-brandEmerald/40 relative overflow-hidden shadow-2xl">
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-b border-surfaceBorder pb-4 mb-4">
-          <div class="flex items-center gap-3">
-      
-
-          <!-- Mode Picker & Streak -->
-          <div class="flex items-center gap-3 w-full md:w-auto justify-between">
-            <select id="trainer-scenario" onchange="changeTrainerScenario(this.value)" class="bg-bgDark text-white text-xs rounded-lg border border-surfaceBorder px-3 py-1.5 focus:outline-none focus:border-brandEmerald">
-              <option value="full">🎯 Full Exam Flow (ทุกคำสั่งตั้งแต่ 0-9)</option>
-              <option value="git">🌿 1. Git Workflow Only</option>
-              <option value="docker">🐳 2. Docker & Compose Only</option>
-              <option value="node">📦 3. Node & Express NPM Only</option>
-              <option value="curl">📡 4. cURL CRUD API Tests</option>
-            </select>
-            <div class="flex items-center gap-1.5 bg-surfaceDark px-3 py-1.5 rounded-lg border border-surfaceBorder text-xs font-mono text-amber-400">
-              <span>🔥 Streak:</span>
-              <span id="trainer-streak" class="font-bold">0</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Progress Indicator -->
-        <div class="mb-4">
-          <div class="flex justify-between text-xs font-mono text-slate-400 mb-1">
-            <span id="trainer-step-label">คำสั่งที่ 1 / 12</span>
-            <span id="trainer-progress-pct" class="text-brandEmerald font-bold">0%</span>
-          </div>
-          <div class="w-full h-1.5 bg-bgDark rounded-full overflow-hidden border border-surfaceBorder">
-            <div id="trainer-progress-bar" class="h-full bg-gradient-to-r from-brandEmerald to-brandCyan transition-all duration-300" style="width: 0%;"></div>
-          </div>
-        </div>
-
-        <!-- Target Command Prompt Box -->
-        <div class="bg-surfaceDark/80 p-4 rounded-xl border border-surfaceBorder mb-4 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-slate-400 flex items-center gap-1.5">
-              <i data-lucide="target" class="w-3.5 h-3.5 text-brandAmber"></i>
-              <span id="trainer-task-title">โจทย์: สร้าง Repository และกำหนด Main Branch</span>
-            </span>
-            <span id="trainer-task-cat" class="text-[10px] font-mono px-2 py-0.5 rounded bg-brandEmerald/10 text-emerald-300 border border-brandEmerald/20">GIT</span>
-          </div>
-          <div class="bg-bgDark p-3 rounded-lg border border-surfaceBorder flex items-center justify-between">
-            <div class="font-mono text-xs md:text-sm text-emerald-300 overflow-x-auto">
-              <span class="text-slate-500 mr-2">$</span>
-              <span id="trainer-target-cmd" class="font-bold text-white tracking-wide">git init && git branch -M main</span>
-            </div>
-            <button onclick="copyCurrentTargetCmd()" class="text-slate-400 hover:text-white p-1 rounded hover:bg-surfaceDark" title="Copy Command">
-              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Terminal Window Screen -->
-        <div class="bg-[#050608] rounded-xl border border-surfaceBorder overflow-hidden font-mono shadow-inner">
-          <div class="bg-surfaceDark/90 px-4 py-2 border-b border-surfaceBorder flex items-center justify-between text-xs text-slate-400">
-            <div class="flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-rose-500/80 inline-block"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block"></span>
-              <span class="text-[11px] text-slate-400 ml-2">bash - doro@kmitl-exam: ~/exam-project</span>
-            </div>
-            <span class="text-[10px] text-slate-500">Interactive Prompt</span>
-          </div>
-
-          <!-- Console Output Logs -->
-          <div id="trainer-console-log" class="p-4 text-xs space-y-1.5 max-h-48 overflow-y-auto text-slate-300">
-            <div class="text-slate-500"># Welcome to Server-Side Practical Exam Live Terminal Trainer.</div>
-            <div class="text-slate-500"># พิมพ์คำสั่งในช่องด้านล่าง แล้วกด Enter เพื่อจำลองการรันจริง</div>
-          </div>
-
-          <!-- Terminal Input Row -->
-          <div class="p-3 bg-bgDark/60 border-t border-surfaceBorder flex items-center gap-2">
-            <span class="text-emerald-400 font-bold text-xs select-none">doro@exam:~$</span>
-            <input type="text" id="trainer-input" onkeydown="handleTrainerKeydown(event)" placeholder="พิมพ์คำสั่งที่นี่..." class="flex-1 bg-transparent text-xs md:text-sm text-emerald-300 focus:outline-none font-mono" autocomplete="off" spellcheck="false">
-            <button onclick="submitTrainerCommand()" class="px-3 py-1.5 bg-brandEmerald hover:bg-emerald-600 text-white rounded-lg text-xs font-sans font-medium flex items-center gap-1">
-              <span>Enter</span>
-              <i data-lucide="corner-down-left" class="w-3 h-3"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Terminal Actions Toolbar -->
-        <div class="flex flex-wrap items-center justify-between gap-2 mt-4 pt-3 border-t border-surfaceBorder">
-          <div class="flex items-center gap-2">
-            <button onclick="autoTypeCommand()" class="px-3 py-1.5 rounded-lg bg-surfaceDark hover:bg-surfaceBorder text-slate-300 text-xs flex items-center gap-1.5 border border-surfaceBorder">
-              <i data-lucide="wand-2" class="w-3.5 h-3.5 text-brandCyan"></i>
-              <span>พิมพ์ให้ดู / Auto-Type</span>
-            </button>
-            <button onclick="skipTrainerCommand()" class="px-3 py-1.5 rounded-lg bg-surfaceDark hover:bg-surfaceBorder text-slate-400 hover:text-slate-200 text-xs flex items-center gap-1.5 border border-surfaceBorder">
-              <i data-lucide="skip-forward" class="w-3.5 h-3.5"></i>
-              <span>ข้ามข้อนี้ (Skip)</span>
-            </button>
-          </div>
-          <button onclick="resetTrainer()" class="px-3 py-1.5 rounded-lg bg-surfaceDark hover:bg-surfaceBorder text-slate-400 hover:text-rose-400 text-xs flex items-center gap-1.5 border border-surfaceBorder">
-            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-            <span>เริ่มรอบใหม่ (Reset)</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- FILTERABLE STEP-BY-STEP EXAM GUIDE -->
-      <div class="space-y-6">
-        
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 glass-card p-4 rounded-xl">
-          <div>
-            <h3 class="font-bold text-white text-base flex items-center gap-2">
-              <i data-lucide="layers" class="w-5 h-5 text-brandEmerald"></i>
-              <span>Master Exam Pipeline (ลำดับการทำฉบับเต็มทีละไฟล์)</span>
-            </h3>
-            <p class="text-xs text-slate-400">คลิกเลือกหมวดหมู่เพื่อกรอง หรือดูครบทุก Step พร้อมโค้ดสำหรับเปิดดูในห้องสอบ</p>
-          </div>
-
-          <!-- Filter Pills -->
-          <div class="flex flex-wrap gap-1.5" id="step-filter-buttons">
-            <button onclick="filterStepCards('all')" class="step-filter-btn active-filter px-3 py-1 rounded-lg text-xs font-medium bg-brandEmerald text-white border border-brandEmerald transition-all" data-cat="all">ทั้งหมด (All 0-9)</button>
-            <button onclick="filterStepCards('git')" class="step-filter-btn px-3 py-1 rounded-lg text-xs font-medium bg-surfaceDark text-slate-300 border border-surfaceBorder hover:border-slate-500 transition-all" data-cat="git">🌿 Git (0-2)</button>
-            <button onclick="filterStepCards('docker')" class="step-filter-btn px-3 py-1 rounded-lg text-xs font-medium bg-surfaceDark text-slate-300 border border-surfaceBorder hover:border-slate-500 transition-all" data-cat="docker">🐳 Docker (3)</button>
-            <button onclick="filterStepCards('mongo')" class="step-filter-btn px-3 py-1 rounded-lg text-xs font-medium bg-surfaceDark text-slate-300 border border-surfaceBorder hover:border-slate-500 transition-all" data-cat="mongo">🍃 MongoDB (4-5)</button>
-            <button onclick="filterStepCards('express')" class="step-filter-btn px-3 py-1 rounded-lg text-xs font-medium bg-surfaceDark text-slate-300 border border-surfaceBorder hover:border-slate-500 transition-all" data-cat="express">⚡ Express & CRUD (6-7)</button>
-            <button onclick="filterStepCards('test')" class="step-filter-btn px-3 py-1 rounded-lg text-xs font-medium bg-surfaceDark text-slate-300 border border-surfaceBorder hover:border-slate-500 transition-all" data-cat="test">📡 cURL & Push (8-9)</button>
-          </div>
-        </div>
-
-        <!-- STEP CARDS CONTAINER -->
-        <div class="space-y-6" id="step-cards-container">
-          
-          <!-- STEP 0 -->
-          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-brandEmerald" data-cat="git">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
-              <div class="flex items-center gap-3">
-      
-              <div class="flex items-center gap-2">
-                <button onclick="switchTab('vscode'); openVSCodeFile('.gitignore');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด .gitignore ใน VS Code</span></button>
-                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
-                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
-                  <input type="checkbox" onchange="toggleStepDone('step0', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
-                  <span>ทำเสร็จแล้ว</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Terminal Commands -->
-            <div class="space-y-2">
-              <div class="flex items-center justify-between text-xs text-slate-400">
-                <span class="font-semibold">💻 คำสั่ง Terminal ที่ต้องพิมพ์:</span>
-                <button onclick="copySnippet('cmd-step0')" class="text-brandCyan hover:underline flex items-center gap-1">
-                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกคำสั่ง
-                </button>
-              </div>
-              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-emerald-300 overflow-x-auto"><code id="cmd-step0">mkdir server-exam-2026 && cd server-exam-2026
-git init
-git branch -M main</code></pre>
-            </div>
-
-            <!-- File Content -->
-            <div class="space-y-2">
-              <div class="flex items-center justify-between text-xs text-slate-400">
-                <span class="font-semibold flex items-center gap-1.5"><i data-lucide="file-code" class="w-3.5 h-3.5 text-amber-400"></i> สร้างไฟล์: <code>.gitignore</code></span>
-                <button onclick="copySnippet('file-step0')" class="text-brandCyan hover:underline flex items-center gap-1">
-                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกเนื้อหาไฟล์
-                </button>
-              </div>
-              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="file-step0">node_modules/
-.env
-.DS_Store
-*.log</code></pre>
-            </div>
-
-            <!-- Warning Callout -->
-            <div class="p-3 rounded-lg bg-rose-950/30 border border-rose-800/40 text-xs text-rose-200 flex items-start gap-2">
-              <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-400 shrink-0 mt-0.5"></i>
-              <span><strong>⚠️ จุดที่อาจารย์หักคะแนนบ่อย:</strong> ห้ามลืมสร้างไฟล์ <code>.gitignore</code> เด็ดขาด! หากเผลอ `git add .` โดยไม่มี .gitignore โฟลเดอร์ `node_modules` จะหลุดขึ้นไปบน GitHub ทันที</span>
-            </div>
-          </div>
-
-          <!-- STEP 1 -->
-          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-sky-500" data-cat="git">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
-              <div class="flex items-center gap-3">
-      
-              <div class="flex items-center gap-2">
-                <button onclick="switchTab('vscode'); openVSCodeFile('package.json');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด package.json ใน VS Code</span></button>
-                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
-                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
-                  <input type="checkbox" onchange="toggleStepDone('step1', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
-                  <span>ทำเสร็จแล้ว</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Terminal Commands -->
-            <div class="space-y-2">
-              <div class="flex items-center justify-between text-xs text-slate-400">
-                <span class="font-semibold">💻 คำสั่ง Terminal ที่ต้องพิมพ์:</span>
-                <button onclick="copySnippet('cmd-step1')" class="text-brandCyan hover:underline flex items-center gap-1">
-                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกคำสั่ง
-                </button>
-              </div>
-              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-sky-300 overflow-x-auto"><code id="cmd-step1">npm init -y
-npm install express mongoose dotenv cors
-npm install -D nodemon</code></pre>
-            </div>
-
-            <!-- package.json scripts snippet -->
-            <div class="space-y-2">
-              <div class="flex items-center justify-between text-xs text-slate-400">
-                <span class="font-semibold flex items-center gap-1.5"><i data-lucide="file-code" class="w-3.5 h-3.5 text-amber-400"></i> ปรับแต่งส่วน scripts ใน: <code>package.json</code></span>
-                <button onclick="copySnippet('file-step1')" class="text-brandCyan hover:underline flex items-center gap-1">
-                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอก scripts
-                </button>
-              </div>
-              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="file-step1">"scripts": {
-  "start": "node server.js",
-  "dev": "nodemon server.js"
-}</code></pre>
-            </div>
-          </div>
-
-          <!-- STEP 2 -->
-          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-indigo-500" data-cat="git">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
-              <div class="flex items-center gap-3">
-      
-              <div class="flex items-center gap-2">
-                <button onclick="switchTab('vscode'); openVSCodeFile('.env');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด .env ใน VS Code</span></button>
-                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~1 นาที</span>
-                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
-                  <input type="checkbox" onchange="toggleStepDone('step2', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
-                  <span>ทำเสร็จแล้ว</span>
-                </label>
-              </div>
-            </div>
-
-                        <!-- File Content with Local vs Cloud Option -->
-            <div class="space-y-4">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="space-y-2">
-                  <div class="flex items-center justify-between text-xs text-slate-400">
-                    <span class="font-semibold flex items-center gap-1"><i data-lucide="lock" class="w-3.5 h-3.5 text-indigo-400"></i> ไฟล์: <code>.env</code> (Option A: Local Docker)</span>
-                    <button onclick="copySnippet('file-step2-env')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
-                  </div>
-                  <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-indigo-300 overflow-x-auto"><code id="file-step2-env">PORT=5000
-NODE_ENV=development
-MONGO_URI=mongodb://localhost:27017/examdb</code></pre>
-                </div>
-
-                <div class="space-y-2">
-                  <div class="flex items-center justify-between text-xs text-slate-400">
-                    <span class="font-semibold flex items-center gap-1"><i data-lucide="cloud" class="w-3.5 h-3.5 text-emerald-400"></i> ไฟล์: <code>.env</code> (Option B: MongoDB Atlas Cloud)</span>
-                    <button onclick="copySnippet('file-step2-atlas')" class="text-emerald-400 hover:underline text-xs">คัดลอก</button>
-                  </div>
-                  <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-emerald-300 overflow-x-auto"><code id="file-step2-atlas">PORT=5000
-NODE_ENV=development
-MONGO_URI=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/examdb?retryWrites=true&w=majority</code></pre>
-                </div>
-              </div>
-
-              <div class="space-y-2">
-                <div class="flex items-center justify-between text-xs text-slate-400">
-                  <span class="font-semibold flex items-center gap-1"><i data-lucide="file" class="w-3.5 h-3.5 text-slate-400"></i> ไฟล์: <code>.env.example</code> (Push ขึ้น Git ให้อาจารย์ตรวจ)</span>
-                  <button onclick="copySnippet('file-step2-ex')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
-                </div>
-                <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-slate-400 overflow-x-auto"><code id="file-step2-ex">PORT=5000
-NODE_ENV=development
-MONGO_URI=mongodb://localhost:27017/examdb</code></pre>
-              </div>
-            </div>
-          </div>
-
-          <!-- STEP 3 -->
-          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-cyan-500" data-cat="docker">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
-              <div class="flex items-center gap-3">
-      
-              <div class="flex items-center gap-2">
-                <button onclick="switchTab('vscode'); openVSCodeFile('Dockerfile');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด Dockerfile / docker-compose ใน VS Code</span></button>
-                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~4 นาที</span>
-                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
-                  <input type="checkbox" onchange="toggleStepDone('step3', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
-                  <span>ทำเสร็จแล้ว</span>
-                </label>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              <!-- Dockerfile -->
-              <div class="space-y-2">
-                <div class="flex items-center justify-between text-xs text-slate-400">
-                  <span class="font-semibold flex items-center gap-1"><i data-lucide="box" class="w-3.5 h-3.5 text-cyan-400"></i> ไฟล์: <code>Dockerfile</code></span>
-                  <button onclick="copySnippet('file-step3-dockerfile')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
-                </div>
-                <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-cyan-300 overflow-x-auto"><code id="file-step3-dockerfile">FROM node:20-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-EXPOSE 5000
-CMD ["npm", "start"]</code></pre>
-              </div>
-
-              <!-- docker-compose.yml -->
-              <div class="space-y-2">
-                <div class="flex items-center justify-between text-xs text-slate-400">
-                  <span class="font-semibold flex items-center gap-1"><i data-lucide="layers" class="w-3.5 h-3.5 text-cyan-400"></i> ไฟล์: <code>docker-compose.yml</code></span>
-                  <button onclick="copySnippet('file-step3-compose')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
-                </div>
-                <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-cyan-300 overflow-x-auto"><code id="file-step3-compose">version: '3.8'
-services:
-  mongodb:
-    image: mongo:6.0
-    container_name: exam_mongodb
-    restart: always
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_DATABASE: examdb
-    volumes:
-      - mongo_data:/data/db
-
-volumes:
-  mongo_data:</code></pre>
-              </div>
-            </div>
-
-            <!-- Terminal Run Commands -->
-            <div class="space-y-2">
-              <div class="flex items-center justify-between text-xs text-slate-400">
-                <span class="font-semibold">💻 คำสั่งสั่งรัน Container ในพื้นหลัง:</span>
-                <button onclick="copySnippet('cmd-step3-run')" class="text-brandCyan hover:underline flex items-center gap-1">
-                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกคำสั่ง
-                </button>
-              </div>
-              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-emerald-300 overflow-x-auto"><code id="cmd-step3-run">docker compose up -d
-docker compose ps</code></pre>
-            </div>
-          </div>
-
-          <!-- STEP 4 -->
-          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-emerald-500" data-cat="mongo">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
-              <div class="flex items-center gap-3">
-      
-              <div class="flex items-center gap-2">
-                <button onclick="switchTab('vscode'); openVSCodeFile('config/db.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด config/db.js ใน VS Code</span></button>
-                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
-                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
-                  <input type="checkbox" onchange="toggleStepDone('step4', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
-                  <span>ทำเสร็จแล้ว</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- File Content -->
-            <div class="space-y-2">
-              <div class="flex items-center justify-between text-xs text-slate-400">
-                <span class="font-semibold flex items-center gap-1.5"><i data-lucide="database" class="w-3.5 h-3.5 text-emerald-400"></i> ไฟล์: <code>config/db.js</code></span>
-                <button onclick="copySnippet('file-step4')" class="text-brandCyan hover:underline flex items-center gap-1">
-                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกโค้ด
-                </button>
-              </div>
-              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-emerald-300 overflow-x-auto"><code id="file-step4">const mongoose = require('mongoose');
-
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/examdb');
-    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
-  } catch (error) {
-    console.error(`❌ MongoDB Connection Error: ${error.message}`);
-    process.exit(1);
-  }
-};
-
-module.exports = connectDB;</code></pre>
-            </div>
-          </div>
-
-          <!-- STEP 5 -->
-          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-purple-500" data-cat="mongo">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
-              <div class="flex items-center gap-3">
-      
-              <div class="flex items-center gap-2">
-                <button onclick="switchTab('vscode'); openVSCodeFile('models/Student.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด models/Student.js ใน VS Code</span></button>
-                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~3 นาที</span>
-                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
-                  <input type="checkbox" onchange="toggleStepDone('step5', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
-                  <span>ทำเสร็จแล้ว</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- File Content -->
-            <div class="space-y-2">
-              <div class="flex items-center justify-between text-xs text-slate-400">
-                <span class="font-semibold flex items-center gap-1.5"><i data-lucide="file-code" class="w-3.5 h-3.5 text-purple-400"></i> ไฟล์: <code>models/Student.js</code></span>
-                <button onclick="copySnippet('file-step5')" class="text-brandCyan hover:underline flex items-center gap-1">
-                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกโค้ด
-                </button>
-              </div>
-              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-purple-300 overflow-x-auto"><code id="file-step5">const mongoose = require('mongoose');
-
-const studentSchema = new mongoose.Schema({
-  studentId: {
-    type: String,
-    required: [true, 'Student ID is required'],
-    unique: true,
-    trim: true
-  },
-  name: {
-    type: String,
-    required: [true, 'Student name is required'],
-    trim: true
-  },
-  major: {
-    type: String,
-    required: true,
-    enum: ['IT', 'CS', 'DS', 'SE'],
-    default: 'IT'
-  },
-  gpa: {
-    type: Number,
-    min: [0.0, 'GPA cannot be less than 0.0'],
-    max: [4.0, 'GPA cannot be more than 4.0'],
-    default: 0.0
-  },
-  isActive: {
-    type: Boolean,
-    default: true
-  }
-}, {
-  timestamps: true // สร้าง createdAt และ updatedAt อัตโนมัติ
-});
-
-module.exports = mongoose.model('Student', studentSchema);</code></pre>
-            </div>
-          </div>
-
-          <!-- STEP 6 -->
-          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-amber-500" data-cat="express">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
-              <div class="flex items-center gap-3">
-      
-              <div class="flex items-center gap-2">
-                <button onclick="switchTab('vscode'); openVSCodeFile('server.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด server.js ใน VS Code</span></button>
-                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~3 นาที</span>
-                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
-                  <input type="checkbox" onchange="toggleStepDone('step6', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
-                  <span>ทำเสร็จแล้ว</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- File Content -->
-            <div class="space-y-2">
-              <div class="flex items-center justify-between text-xs text-slate-400">
-                <span class="font-semibold flex items-center gap-1.5"><i data-lucide="file-code" class="w-3.5 h-3.5 text-amber-400"></i> ไฟล์: <code>server.js</code></span>
-                <button onclick="copySnippet('file-step6')" class="text-brandCyan hover:underline flex items-center gap-1">
-                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกโค้ด
-                </button>
-              </div>
-              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-amber-300 overflow-x-auto"><code id="file-step6">require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const connectDB = require('./config/db');
-const studentRoutes = require('./routes/studentRoutes');
-
-const app = express();
-const PORT = process.env.PORT || 5000;
-
-// 1. เชื่อมต่อฐานข้อมูล MongoDB
-connectDB();
-
-// 2. Built-in Middleware (สำคัญมาก! ต้องวางก่อน Route Handler)
-app.use(cors());
-app.use(express.json());
-
-// 3. Root Healthcheck Route
-app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Server-Side Practical Exam API is running!' });
-});
-
-// 4. Mount API Routes
-app.use('/api/students', studentRoutes);
-
-// 5. 404 Route Not Found Middleware
-app.use((req, res, next) => {
-  res.status(404).json({ error: `Route ${req.originalUrl} not found` });
-});
-
-// 6. Global 500 Error Handling Middleware (ต้องมีครบ 4 parameters เสมอ)
-app.use((err, req, res, next) => {
-  console.error('Unhandled Error:', err.stack);
-  res.status(err.status || 500).json({
-    error: err.message || 'Internal Server Error'
-  });
-});
-
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});</code></pre>
-            </div>
-          </div>
-
-          <!-- STEP 7 -->
-          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-rose-500" data-cat="express">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
-              <div class="flex items-center gap-3">
-      
-              <div class="flex items-center gap-2">
-                <button onclick="switchTab('vscode'); openVSCodeFile('routes/studentRoutes.js');" class="px-2.5 py-1 rounded bg-blue-600/20 hover:bg-blue-600 text-blue-300 hover:text-white border border-blue-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="code-2" class="w-3 h-3"></i><span>เปิด routes/studentRoutes.js ใน VS Code</span></button>
-                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~5 นาที</span>
-                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
-                  <input type="checkbox" onchange="toggleStepDone('step7', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
-                  <span>ทำเสร็จแล้ว</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- File Content -->
-            <div class="space-y-2">
-              <div class="flex items-center justify-between text-xs text-slate-400">
-                <span class="font-semibold flex items-center gap-1.5"><i data-lucide="file-code" class="w-3.5 h-3.5 text-rose-400"></i> ไฟล์: <code>routes/studentRoutes.js</code></span>
-                <button onclick="copySnippet('file-step7')" class="text-brandCyan hover:underline flex items-center gap-1">
-                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกโค้ด
-                </button>
-              </div>
-              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-rose-300 overflow-x-auto leading-relaxed"><code id="file-step7">const express = require('express');
-const router = express.Router();
-const Student = require('../models/Student');
-
-// 1. CREATE: POST /api/students
-router.post('/', async (req, res) => {
-  try {
-    const student = await Student.create(req.body);
-    res.status(201).json(student);
-  } catch (err) {
-    if (err.code === 11000) {
-      return res.status(400).json({ error: 'Duplicate studentId error' });
-    }
-    res.status(400).json({ error: err.message });
-  }
-});
-
-// 2. READ ALL: GET /api/students (รองรับ Query Filter)
-router.get('/', async (req, res) => {
-  try {
-    const filter = {};
-    if (req.query.major) filter.major = req.query.major;
-    if (req.query.isActive !== undefined) filter.isActive = req.query.isActive === 'true';
-
-    const students = await Student.find(filter).sort({ createdAt: -1 });
-    res.status(200).json(students);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// 3. READ ONE BY ID: GET /api/students/:id
-router.get('/:id', async (req, res) => {
-  try {
-    const student = await Student.findById(req.params.id);
-    if (!student) {
-      return res.status(404).json({ message: 'Student not found' });
-    }
-    res.status(200).json(student);
-  } catch (err) {
-    res.status(400).json({ error: 'Invalid ID format or Error: ' + err.message });
-  }
-});
-
-// 4. UPDATE: PUT /api/students/:id (สำคัญมาก: ต้องมี { new: true, runValidators: true })
-router.put('/:id', async (req, res) => {
-  try {
-    const updatedStudent = await Student.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
-    if (!updatedStudent) {
-      return res.status(404).json({ message: 'Student not found' });
-    }
-    res.status(200).json(updatedStudent);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
-
-// 5. DELETE: DELETE /api/students/:id
-router.delete('/:id', async (req, res) => {
-  try {
-    const deletedStudent = await Student.findByIdAndDelete(req.params.id);
-    if (!deletedStudent) {
-      return res.status(404).json({ message: 'Student not found' });
-    }
-    res.status(200).json({ message: 'Student deleted successfully', id: req.params.id });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-module.exports = router;</code></pre>
-            </div>
-          </div>
-
-          <!-- STEP 8 -->
-          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-brandCyan" data-cat="test">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
-              <div class="flex items-center gap-3">
-      
-              <div class="flex items-center gap-2">
-                <button onclick="switchTab('vscode'); runVSCodeTerminalCmd('curl http://localhost:5000/api/students');" class="px-2.5 py-1 rounded bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white border border-emerald-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="play" class="w-3 h-3"></i><span>ทดสอบ cURL ใน Terminal</span></button>
-                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
-                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
-                  <input type="checkbox" onchange="toggleStepDone('step8', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
-                  <span>ทำเสร็จแล้ว</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- cURL snippets -->
-            <div class="space-y-3">
-              <div class="space-y-1">
-                <div class="flex items-center justify-between text-xs text-slate-400">
-                  <span class="font-mono text-emerald-400 font-semibold">1. Test POST Create:</span>
-                  <button onclick="copySnippet('curl-1')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
-                </div>
-                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-1">curl -X POST http://localhost:5000/api/students -H "Content-Type: application/json" -d "{\"studentId\":\"66070001\",\"name\":\"Tawan Promthong\",\"major\":\"IT\",\"gpa\":3.85}"</code></pre>
-              </div>
-
-              <div class="space-y-1">
-                <div class="flex items-center justify-between text-xs text-slate-400">
-                  <span class="font-mono text-sky-400 font-semibold">2. Test GET All:</span>
-                  <button onclick="copySnippet('curl-2')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
-                </div>
-                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-2">curl http://localhost:5000/api/students</code></pre>
-              </div>
-
-              <div class="space-y-1">
-                <div class="flex items-center justify-between text-xs text-slate-400">
-                  <span class="font-mono text-amber-400 font-semibold">3. Test PUT Update (แก้ GPA เป็น 4.00):</span>
-                  <button onclick="copySnippet('curl-3')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
-                </div>
-                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-3">curl -X PUT http://localhost:5000/api/students/PASTE_ID_HERE -H "Content-Type: application/json" -d "{\"gpa\":4.00}"</code></pre>
-              </div>
-
-              <div class="space-y-1">
-                <div class="flex items-center justify-between text-xs text-slate-400">
-                  <span class="font-mono text-rose-400 font-semibold">4. Test DELETE:</span>
-                  <button onclick="copySnippet('curl-4')" class="text-brandCyan hover:underline text-xs">คัดลอก</button>
-                </div>
-                <pre class="bg-bgDark p-2.5 rounded-lg text-xs font-mono text-slate-300 overflow-x-auto"><code id="curl-4">curl -X DELETE http://localhost:5000/api/students/PASTE_ID_HERE</code></pre>
-              </div>
-            </div>
-          </div>
-
-          <!-- STEP 9 -->
-          <div class="step-card glass-card rounded-xl p-6 space-y-4 border-l-4 border-l-brandEmerald" data-cat="test">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-surfaceBorder pb-3">
-              <div class="flex items-center gap-3">
-      
-              <div class="flex items-center gap-2">
-                <button onclick="switchTab('vscode'); runVSCodeTerminalCmd('git status');" class="px-2.5 py-1 rounded bg-orange-600/20 hover:bg-orange-600 text-orange-300 hover:text-white border border-orange-500/30 text-xs flex items-center gap-1 transition-all"><i data-lucide="git-branch" class="w-3 h-3"></i><span>รันคำสั่ง Git ใน Terminal</span></button>
-                <span class="text-xs font-mono text-slate-400 bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder">⏱️ ~2 นาที</span>
-                <label class="flex items-center gap-1.5 text-xs text-slate-300 cursor-pointer bg-surfaceDark px-2.5 py-1 rounded border border-surfaceBorder hover:text-white select-none">
-                  <input type="checkbox" onchange="toggleStepDone('step9', this.checked)" class="step-chk rounded border-surfaceBorder text-brandEmerald focus:ring-brandEmerald">
-                  <span>ทำเสร็จแล้ว</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- Terminal Commands -->
-            <div class="space-y-2">
-              <div class="flex items-center justify-between text-xs text-slate-400">
-                <span class="font-semibold">💻 คำสั่ง Terminal บันทึกและส่งงาน:</span>
-                <button onclick="copySnippet('cmd-step9')" class="text-brandCyan hover:underline flex items-center gap-1">
-                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอกคำสั่ง
-                </button>
-              </div>
-              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-emerald-300 overflow-x-auto"><code id="cmd-step9">git status
-git add .
-git commit -m "feat: complete server-side exam express mongoose crud with docker"
-git remote add origin https://github.com/YOUR_USERNAME/server-side-exam.git
-git push -u origin main</code></pre>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-
-    <!-- ==================== VIEW-VSCODE ==================== -->
     <div id="view-vscode" class="tab-view hidden space-y-6">
       
       <!-- VS Code Simulator Intro & Control Bar -->
@@ -2589,154 +1999,33 @@ git push -u origin main</code></pre>
         </div>
 
         <!-- VS Code Bottom Status Bar -->
-        <div class="vscode-statusbar px-3 flex items-center justify-between select-none">
+        <div class="vscode-statusbar px-3 py-1 flex items-center justify-between select-none bg-[#007acc] text-white text-[11px] font-mono">
           <div class="flex items-center gap-3">
-      
-
-      </div>
-
-    </div>
+            <span class="flex items-center gap-1"><i data-lucide="git-branch" class="w-3 h-3"></i> <span>main*</span></span>
+            <span class="flex items-center gap-1"><i data-lucide="radio" class="w-3 h-3 text-emerald-300"></i> <span>Port: 5000</span></span>
+            <span class="flex items-center gap-1.5"><i data-lucide="alert-circle" class="w-3 h-3 text-rose-300"></i> <span id="stb-errors">0</span> <i data-lucide="alert-triangle" class="w-3 h-3 text-amber-300"></i> <span id="stb-warnings">0</span></span>
+          </div>
+          <div class="flex items-center gap-4">
+            <span id="stb-cursor">Ln 1, Col 1</span>
+            <span>Spaces: 2</span>
+            <span>UTF-8</span>
+            <span id="stb-lang" class="font-bold">JavaScript</span>
+          </div>
+        </div>
 
     <div id="view-labs" class="tab-view hidden space-y-6">
       
       <!-- Lab Selector Header -->
       <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 glass-card p-4 rounded-xl">
         <div class="flex items-center gap-3">
-      
-
-        <div class="flex items-center gap-2 w-full lg:w-auto">
-          <label for="lab-select" class="text-xs text-slate-400 whitespace-nowrap">เลือกข้อแล็บ:</label>
-          <select id="lab-select" onchange="loadLab(this.value)" class="bg-bgDark text-white text-xs rounded-lg border border-surfaceBorder px-3 py-2 focus:outline-none focus:border-brandIndigo w-full lg:w-72">
-            <!-- Populated via JS -->
-          </select>
-        </div>
-      </div>
-
-      <!-- Lab Problem & Workspace Area -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-        <!-- Left Column: Lab Brief & Requirements (5 Cols) -->
-        <div class="lg:col-span-5 space-y-4">
-          <div class="glass-card rounded-xl p-5 space-y-4">
-            <div class="flex items-center justify-between border-b border-surfaceBorder pb-3">
-              <span id="lab-badge" class="text-xs font-mono px-2.5 py-0.5 rounded-full bg-brandIndigo/20 text-indigo-300 border border-brandIndigo/30">Lab 01</span>
-              <span id="lab-difficulty" class="text-xs font-medium text-amber-400 flex items-center gap-1">
-                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i> Medium
-              </span>
-            </div>
-
-            <div>
-              <h3 id="lab-title" class="font-bold text-lg text-white">Dockerfile for Node.js Application</h3>
-              <p id="lab-desc" class="text-sm text-slate-300 mt-2 leading-relaxed">จงเขียน Dockerfile เพื่อ Build Image แอปพลิเคชัน Node.js ที่มี Layer Caching เหมาะสม</p>
-            </div>
-
-            <div class="space-y-2">
-              <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400">🎯 ข้อกำหนดที่ต้องทำ (Requirements):</h4>
-              <ul id="lab-requirements" class="text-xs space-y-1.5 text-slate-300 list-disc list-inside">
-                <!-- Populated via JS -->
-              </ul>
-            </div>
-
-            <!-- Hint Box -->
-            <div class="pt-2">
-              <button onclick="toggleHint()" class="text-xs text-brandCyan hover:underline flex items-center gap-1">
-                <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
-                <span id="hint-btn-text">ดูคำใบ้ (Show Hint)</span>
-              </button>
-              <div id="lab-hint" class="hidden mt-2 p-3 rounded-lg bg-sky-950/40 border border-sky-800/40 text-xs text-sky-200 font-mono">
-                <!-- Populated via JS -->
-              </div>
-            </div>
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brandIndigo to-purple-600 flex items-center justify-center text-white shadow-md">
+            <i data-lucide="flask-conical" class="w-5 h-5"></i>
           </div>
-
-          <!-- Solution Snippet (Initially Hidden) -->
-          <div class="glass-card rounded-xl p-4">
-            <button onclick="toggleSolution()" class="w-full text-xs font-semibold text-slate-400 hover:text-slate-200 flex items-center justify-between">
-              <span class="flex items-center gap-1.5">
-                <i data-lucide="key" class="w-4 h-4 text-brandAmber"></i>
-                เฉลยและคำอธิบายโค้ดมาตรฐาน (Official Solution)
-              </span>
-              <i id="sol-chevron" data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i>
-            </button>
-            <div id="lab-solution-box" class="hidden mt-3 pt-3 border-t border-surfaceBorder">
-              <pre class="bg-bgDark p-3 rounded-lg text-xs font-mono text-emerald-300 overflow-x-auto whitespace-pre-wrap"><code id="lab-solution-code"></code></pre>
-              <p id="lab-solution-explain" class="text-xs text-slate-400 mt-2 leading-relaxed"></p>
-            </div>
+          <div>
+            <h2 class="text-lg font-bold text-white">10 Coding Labs & Auto-Grader</h2>
+            <p class="text-xs text-slate-400">แบบฝึกหัด 10 ข้อตรงตามแนวสอบปฏิบัติ พร้อมระบบตรวจโค้ดอัตโนมัติ</p>
           </div>
         </div>
-
-        <!-- Right Column: Interactive Code Editor & Validation (7 Cols) -->
-        <div class="lg:col-span-7 flex flex-col space-y-4">
-          <div class="glass-card rounded-xl overflow-hidden flex-1 flex flex-col border border-surfaceBorder">
-            
-            <!-- Editor Header -->
-            <div class="bg-surfaceDark px-4 py-2.5 border-b border-surfaceBorder flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
-                <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
-                <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
-                <span id="editor-filename" class="text-xs font-mono text-slate-400 ml-2">Dockerfile</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <button onclick="resetEditorCode()" class="text-xs text-slate-400 hover:text-white px-2 py-1 rounded bg-bgDark border border-surfaceBorder flex items-center gap-1" title="คืนค่าตั้งต้น">
-                  <i data-lucide="refresh-cw" class="w-3 h-3"></i> รีเซ็ต
-                </button>
-                <button onclick="copyEditorCode()" class="text-xs text-slate-400 hover:text-white px-2 py-1 rounded bg-bgDark border border-surfaceBorder flex items-center gap-1" title="คัดลอกโค้ด">
-                  <i data-lucide="copy" class="w-3 h-3"></i> คัดลอก
-                </button>
-              </div>
-            </div>
-
-            <!-- Textarea Code Editor -->
-            <div class="relative flex-1 min-h-[340px] bg-bgDark">
-              <textarea id="code-input" class="w-full h-full p-4 bg-transparent text-emerald-400 text-xs md:text-sm font-mono focus:outline-none resize-none leading-relaxed" spellcheck="false"></textarea>
-            </div>
-
-            <!-- Editor Action Footer -->
-            <div class="bg-surfaceDark px-4 py-3 border-t border-surfaceBorder flex items-center justify-between gap-3">
-              <div class="flex items-center gap-2 text-xs text-slate-400">
-                <i data-lucide="shield-check" class="w-4 h-4 text-brandCyan"></i>
-                <span>ระบบตรวจจับ Syntax & Rules อัตโนมัติ</span>
-              </div>
-              <button onclick="evaluateCurrentLab()" class="px-5 py-2 rounded-lg bg-gradient-to-r from-brandIndigo to-brandCyan hover:opacity-95 text-white font-medium text-xs md:text-sm flex items-center gap-2 shadow-lg shadow-brandIndigo/25 transition-all">
-                <i data-lucide="play" class="w-4 h-4 fill-white"></i>
-                <span>ตรวจสอบโค้ด (Check Code)</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Evaluation Results Box -->
-          <div id="eval-result-card" class="hidden glass-card rounded-xl p-4 transition-all">
-            <div class="flex items-start gap-3">
-              <div id="eval-icon-wrap" class="p-2 rounded-lg shrink-0 mt-0.5">
-                <!-- Icon injected -->
-              </div>
-              <div class="flex-1">
-                <h4 id="eval-title" class="font-bold text-sm"></h4>
-                <p id="eval-msg" class="text-xs mt-1 text-slate-300 leading-relaxed"></p>
-                <div id="eval-details" class="mt-2 text-xs font-mono space-y-1"></div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-</div>
-</div>
-</div>
-</div>
-
-
-    <!-- ==================== VIEW-LABS ==================== -->
-    <div id="view-labs" class="tab-view hidden space-y-6">
-      
-      <!-- Lab Selector Header -->
-      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 glass-card p-4 rounded-xl">
-        <div class="flex items-center gap-3">
-      
 
         <div class="flex items-center gap-2 w-full lg:w-auto">
           <label for="lab-select" class="text-xs text-slate-400 whitespace-nowrap">เลือกข้อแล็บ:</label>
@@ -5808,47 +5097,6 @@ volumes:
 
       renderQuiz();
       if (window.lucide) lucide.createIcons();
-    }
-`);
-        fbEl.classList.remove('hidden');
-        if (isCorrect) {
-          fbEl.className = 'mt-3 p-3 rounded-lg text-xs leading-relaxed bg-emerald-950/40 border border-emerald-800/40 text-emerald-200';
-          fbEl.innerHTML = `<strong>✓ ถูกต้อง!</strong> ${q.explanation}`;
-        } else {
-          fbEl.className = 'mt-3 p-3 rounded-lg text-xs leading-relaxed bg-rose-950/40 border border-rose-800/40 text-rose-200';
-          fbEl.innerHTML = `<strong>✗ ไม่ถูกต้อง:</strong> คำตอบที่ถูกคือ <em>"${q.options[q.answer]}"</em><br><span class="text-slate-300 mt-1 block">${q.explanation}</span>`;
-        }
-      });
-
-      // Save score
-      localStorage.setItem('serverside_quiz_score', score);
-      document.getElementById('stat-quiz').innerText = `${score} / ${QUIZ_QUESTIONS.length}`;
-
-      // Show Report Banner
-      const reportBox = document.getElementById('quiz-report');
-      reportBox.classList.remove('hidden');
-      const percent = Math.round((score / QUIZ_QUESTIONS.length) * 100);
-
-      let gradeMsg = '';
-      if (percent >= 80) gradeMsg = '🏆 ยอดเยี่ยมมาก! คุณมีความเข้าใจลึกซึ้ง พร้อมทำข้อสอบปฏิบัติได้คะแนนเต็ม!';
-      else if (percent >= 60) gradeMsg = '👍 ผ่านเกณฑ์ได้ดี แต่ยังมีจุดที่ต้องทบทวนในส่วนที่ตอบผิดด้านล่าง';
-      else gradeMsg = '📚 ควรกลับไปทบทวนในแท็บ Study Hub และฝึกทำ Hands-on Lab ซ้ำอีกรอบ!';
-
-      reportBox.innerHTML = `
-        <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-surfaceBorder pb-4">
-          <div>
-            <h3 class="text-xl font-bold text-white">ผลคะแนนสอบจำลอง Server-Side Grill</h3>
-            <p class="text-sm text-slate-300 mt-1">${gradeMsg}</p>
-          </div>
-          <div class="text-center px-6 py-3 rounded-xl bg-surfaceDark border border-surfaceBorder">
-            <span class="text-3xl font-bold font-mono text-brandCyan">${score} / ${QUIZ_QUESTIONS.length}</span>
-            <p class="text-xs text-slate-400 mt-0.5">${percent}% Score</p>
-          </div>
-        </div>
-        <p class="text-xs text-slate-400">คุณสามารถเลื่อนดูคำอธิบายเฉลยและเหตุผลของแต่ละข้อด้านบนเพื่อจดจำจุดหลอกก่อนเข้าสอบจริงได้เลย!</p>
-      `;
-
-      reportBox.scrollIntoView({ behavior: 'smooth' });
     }
 
     // --- 6. CHECKLIST LOGIC ---
@@ -8933,6 +8181,34 @@ git push -u origin main
     }
 
     // --- INITIALIZATION ---
+    
+    // --- MONGODB ATLAS GENERATOR FUNCTIONS ---
+    function updateAtlasURIGenerator() {
+      const user = (document.getElementById('atlas-gen-user')?.value || 'tawan_admin').trim();
+      const pass = (document.getElementById('atlas-gen-pass')?.value || 'ExamPass2026').trim();
+      const host = (document.getElementById('atlas-gen-host')?.value || 'cluster0.abcde.mongodb.net').trim();
+      const db = (document.getElementById('atlas-gen-db')?.value || 'examdb').trim();
+      
+      const encodedUser = encodeURIComponent(user);
+      const encodedPass = encodeURIComponent(pass);
+      const generated = `MONGO_URI=mongodb+srv://${encodedUser}:${encodedPass}@${host}/${db}?retryWrites=true&w=majority`;
+      
+      const outEl = document.getElementById('atlas-gen-output');
+      if (outEl) outEl.innerText = generated;
+    }
+
+    function copyGeneratedAtlasURI() {
+      const outEl = document.getElementById('atlas-gen-output');
+      if (outEl) {
+        navigator.clipboard.writeText(outEl.innerText).then(() => {
+          showToast('✅ คัดลอก Atlas MONGO_URI เรียบร้อย!');
+        }).catch(() => {
+          showToast('❌ ไม่สามารถคัดลอกได้');
+        });
+      }
+    }
+
+
     window.addEventListener('DOMContentLoaded', () => {
       loadSavedState();
       initLabSelector();
@@ -9125,6 +8401,36 @@ git push -u origin main
         }
       ]
     };
+
+    
+    // --- STEP 8 POSTMAN VS CURL SWITCHER ---
+    function switchStep8Mode(mode) {
+      const btnPostman = document.getElementById('step8-btn-postman');
+      const btnCurl = document.getElementById('step8-btn-curl');
+      const viewPostman = document.getElementById('step8-view-postman');
+      const viewCurl = document.getElementById('step8-view-curl');
+
+      if (mode === 'postman') {
+        if (btnPostman) {
+          btnPostman.className = 'px-3 py-1.5 rounded-lg bg-brandIndigo text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm';
+        }
+        if (btnCurl) {
+          btnCurl.className = 'px-3 py-1.5 rounded-lg bg-surfaceDark text-slate-400 hover:text-slate-200 text-xs font-medium flex items-center gap-1.5 border border-surfaceBorder transition-all';
+        }
+        if (viewPostman) viewPostman.classList.remove('hidden');
+        if (viewCurl) viewCurl.classList.add('hidden');
+      } else {
+        if (btnCurl) {
+          btnCurl.className = 'px-3 py-1.5 rounded-lg bg-brandCyan text-bgDark text-xs font-bold flex items-center gap-1.5 transition-all shadow-sm';
+        }
+        if (btnPostman) {
+          btnPostman.className = 'px-3 py-1.5 rounded-lg bg-surfaceDark text-slate-400 hover:text-slate-200 text-xs font-medium flex items-center gap-1.5 border border-surfaceBorder transition-all';
+        }
+        if (viewCurl) viewCurl.classList.remove('hidden');
+        if (viewPostman) viewPostman.classList.add('hidden');
+      }
+      if (window.lucide) lucide.createIcons();
+    }
 
     function copyPostmanCollection() {
       const jsonStr = JSON.stringify(EXAM_POSTMAN_COLLECTION, null, 2);
