@@ -642,6 +642,53 @@
           </div>
         </div>
 
+<!-- Card 10: MongoDB Table/Collection Creation & VS Code Database Client Master Guide -->
+        <div class="glass-card rounded-xl p-6 hover:border-brandIndigo/50 transition-all space-y-4 md:col-span-2">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <i data-lucide="database" class="w-5 h-5"></i>
+              </div>
+              <h3 class="font-bold text-lg text-white">10. MongoDB Table & Collection Creation (vs SQL) & VS Code Database Client Master Guide</h3>
+            </div>
+            <span class="text-xs font-mono bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/20">Day 06 • MongoDB & Tooling</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-300">
+            <div class="space-y-3">
+              <div>
+                <strong class="text-white flex items-center gap-1.5 mb-1"><i data-lucide="chevron-right" class="w-4 h-4 text-emerald-400"></i>การสร้าง Table ใน MongoDB (SQL Table vs MongoDB Collection):</strong>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                  ใน MongoDB ไม่มี Table แบบ Fixed Schema แต่ใช้ <strong>Collection</strong> ซึ่งเป็นกลุ่มของ <strong>Document (BSON JSON)</strong> และมีคุณสมบัติ <strong>Dynamic / Lazy Creation (Auto-create on write)</strong> ไม่จำเป็นต้องรันคำสั่ง <code>CREATE TABLE</code> ล่วงหน้า เมื่อมีการ Insert เอกสารชิ้นแรก ระบบจะสร้าง Database และ Collection ให้อัตโนมัติทันที
+                </p>
+              </div>
+              <div>
+                <strong class="text-white flex items-center gap-1.5 mb-1"><i data-lucide="chevron-right" class="w-4 h-4 text-emerald-400"></i>4 วิธีสร้าง Database & Collection ในทางปฏิบัติ:</strong>
+                <div class="text-xs font-mono bg-bgDark p-3 rounded-lg border border-surfaceBorder space-y-1.5 text-slate-300">
+                  <p>• <strong>1. Mongoose Model (Auto-create):</strong> <code>const User = mongoose.model('User', schema)</code> ➔ เมื่อ <code>User.create()</code> จะสร้าง collection <code>users</code> ให้ทันที</p>
+                  <p>• <strong>2. Mongo Shell (mongosh):</strong> <code>use exam_db; db.createCollection("users");</code> หรือ <code>db.users.insertOne({...})</code></p>
+                  <p>• <strong>3. MongoDB Atlas Web Console:</strong> ไปที่ Database ➔ Collections ➔ <code>+ Create Database</code></p>
+                  <p>• <strong>4. VS Code Database Client:</strong> คลิกขวาที่ Connection ➔ <code>Create Database</code> / <code>Create Collection</code></p>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div>
+                <strong class="text-white flex items-center gap-1.5 mb-1"><i data-lucide="chevron-right" class="w-4 h-4 text-cyan-400"></i>คู่มือการใช้ Extension "Database Client" ใน VS Code (by cweijan):</strong>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                  ช่วยให้จัดการได้ทั้ง <strong>MySQL, MongoDB, Redis, PostgreSQL</strong> ได้จากภายใน VS Code หน้าต่างเดียว โดยไม่ต้องเปิดโปรแกรมเสริมภายนอก (ไม่ต้องเปิด Compass หรือ Workbench)
+                </p>
+              </div>
+              <div class="text-xs font-mono bg-bgDark p-3 rounded-lg border border-surfaceBorder space-y-1.5 text-slate-300">
+                <p><span class="text-cyan-400 font-bold">1. ติดตั้ง:</span> <code>Ctrl+Shift+X</code> ➔ พิมพ์ <code>Database Client</code> ➔ กด Install</p>
+                <p><span class="text-teal-400 font-bold">2. ต่อ MySQL:</span> กด <code>+</code> ➔ เลือก MySQL ➔ Host: <code>localhost</code>, Port: <code>3307</code>, User: <code>root</code>, Pass: <code>password</code></p>
+                <p><span class="text-emerald-400 font-bold">3. ต่อ MongoDB:</span> กด <code>+</code> ➔ เลือก MongoDB ➔ ใส่ URI: <code>mongodb+srv://...</code> หรือ Local: <code>localhost:27017</code></p>
+                <p><span class="text-amber-400 font-bold">4. จัดการตาราง:</span> ดับเบิลคลิกที่ชื่อ Table/Collection เพื่อเปิดดูตาราง (Data Grid), เพิ่ม/ลบ/แก้ไขแถวได้ทันที</p>
+                <p><span class="text-purple-400 font-bold">5. รัน Query Console:</span> คลิกขวาที่ DB ➔ <code>Open Query Console</code> พิมพ์ <code>SELECT * FROM users</code> หรือ <code>db.users.find()</code> แล้วกด <code>Ctrl+Enter</code></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1623,6 +1670,10 @@ git push -u origin main</code></pre>
               <button onclick="setVSCodeActiveActivity('rubric')" id="act-rubric" class="p-2 text-slate-500 hover:text-white border-l-2 border-transparent" title="Exam Rubric (20 Points)">
                 <i data-lucide="award" class="w-5 h-5"></i>
               </button>
+              <button onclick="setVSCodeActiveActivity('database')" id="act-database" class="p-2 text-slate-500 hover:text-white border-l-2 border-transparent relative" title="Database Client (MySQL & MongoDB Inspector)">
+                <i data-lucide="database" class="w-5 h-5"></i>
+              </button>
+
             </div>
             <div class="flex flex-col items-center gap-3 text-slate-500">
               <button onclick="openVSCodeSettingsModal()" class="p-2 hover:text-white" title="Settings">
@@ -1737,6 +1788,74 @@ git push -u origin main</code></pre>
                 <div class="font-bold text-slate-300">Staged Changes:</div>
                 <div id="vscode-git-file-list" class="space-y-1">
                   <!-- List files -->
+                </div>
+              </div>
+            </div>
+<!-- VIEW 5: DATABASE CLIENT VIEW -->
+            <div id="vsside-database" class="hidden flex-1 flex flex-col p-3 space-y-3 overflow-hidden bg-[#13141a]">
+              <div class="flex items-center justify-between text-[11px] font-bold text-slate-300 uppercase tracking-wider border-b border-[#232530] pb-2">
+                <div class="flex items-center gap-1.5">
+                  <i data-lucide="database" class="w-3.5 h-3.5 text-cyan-400"></i>
+                  <span>DATABASE CLIENT</span>
+                </div>
+                <button onclick="simulateOpenQueryConsole()" class="text-xs text-cyan-400 hover:underline flex items-center gap-1" title="Open SQL / MongoDB Console">
+                  <i data-lucide="terminal" class="w-3 h-3"></i>
+                  <span>Console</span>
+                </button>
+              </div>
+
+              <!-- Connections Tree -->
+              <div class="flex-1 overflow-y-auto space-y-3 text-xs font-mono">
+                <!-- Connection 1: MySQL Docker -->
+                <div class="p-2 rounded-lg bg-[#181922] border border-[#262838] space-y-1.5">
+                  <div class="flex items-center justify-between text-teal-400 font-bold">
+                    <div class="flex items-center gap-1.5">
+                      <span>🐬 MySQL 8.0</span>
+                      <span class="text-[10px] px-1 py-0.2 rounded bg-teal-500/20 text-teal-300 font-normal">Port 3307</span>
+                    </div>
+                    <span class="w-2 h-2 rounded-full bg-emerald-500" title="Connected"></span>
+                  </div>
+                  <div class="pl-3 border-l border-teal-500/30 space-y-1 text-slate-300">
+                    <div class="text-[11px] text-slate-400">📂 database: <strong class="text-white">exam_db</strong></div>
+                    <div class="flex items-center justify-between py-0.5 hover:bg-slate-800/60 px-1 rounded cursor-pointer" onclick="simulateViewTable('mysql_users')">
+                      <span class="flex items-center gap-1">📄 users <span class="text-[10px] text-slate-500">(Table)</span></span>
+                      <span class="text-[10px] text-emerald-400">View Data</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Connection 2: MongoDB Atlas / Local -->
+                <div class="p-2 rounded-lg bg-[#181922] border border-[#262838] space-y-1.5">
+                  <div class="flex items-center justify-between text-emerald-400 font-bold">
+                    <div class="flex items-center gap-1.5">
+                      <span>🍃 MongoDB (Atlas / M0)</span>
+                    </div>
+                    <span class="w-2 h-2 rounded-full bg-emerald-500" title="Connected"></span>
+                  </div>
+                  <div class="pl-3 border-l border-emerald-500/30 space-y-1 text-slate-300">
+                    <div class="text-[11px] text-slate-400">📂 database: <strong class="text-white">exam_db</strong></div>
+                    <div class="flex items-center justify-between py-0.5 hover:bg-slate-800/60 px-1 rounded cursor-pointer" onclick="simulateViewTable('mongo_users')">
+                      <span class="flex items-center gap-1">📑 users <span class="text-[10px] text-slate-500">(Collection)</span></span>
+                      <span class="text-[10px] text-emerald-400">View Docs</span>
+                    </div>
+                    <div class="flex items-center justify-between py-0.5 hover:bg-slate-800/60 px-1 rounded cursor-pointer" onclick="simulateViewTable('mongo_students')">
+                      <span class="flex items-center gap-1">📑 students <span class="text-[10px] text-slate-500">(Collection)</span></span>
+                      <span class="text-[10px] text-emerald-400">View Docs</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Quick Action Buttons -->
+                <div class="p-2.5 rounded-lg bg-surfaceDark/70 border border-surfaceBorder space-y-2">
+                  <div class="text-[11px] font-bold text-slate-300">💡 Quick Client Actions:</div>
+                  <button onclick="simulateCreateCollectionPrompt()" class="w-full py-1.5 px-2 rounded bg-indigo-600/30 hover:bg-indigo-600 border border-indigo-500/40 text-indigo-200 hover:text-white text-[11px] flex items-center justify-center gap-1 transition-all">
+                    <i data-lucide="plus" class="w-3 h-3"></i>
+                    <span>สร้าง Collection / Table ใหม่</span>
+                  </button>
+                  <button onclick="switchTab('study');" class="w-full py-1.5 px-2 rounded bg-emerald-600/20 hover:bg-emerald-600/40 border border-emerald-500/30 text-emerald-300 text-[11px] flex items-center justify-center gap-1 transition-all">
+                    <i data-lucide="book-open" class="w-3 h-3"></i>
+                    <span>อ่านคู่มือใช้งาน Extension เต็ม</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -2508,6 +2627,39 @@ git push -u origin main</code></pre>
             <div class="bg-bgDark p-2.5 rounded-lg border border-surfaceBorder">
               <span class="text-slate-400">5xx Server Errors:</span>
               <p class="text-rose-300 mt-0.5">500 Internal Server Error • 502 Bad Gateway • 503 Service Unavailable</p>
+            </div>
+          </div>
+        </div>
+
+<!-- Sheet 9: MongoDB Shell & VS Code Database Client Quick Reference -->
+        <div class="glass-card rounded-xl p-5 space-y-3 md:col-span-2">
+          <div class="flex items-center justify-between border-b border-surfaceBorder pb-2">
+            <h3 class="font-bold text-white text-base flex items-center gap-2">
+              <i data-lucide="database" class="w-4 h-4 text-emerald-400"></i>
+              <span>9. MongoDB Shell (`mongosh`) & VS Code Database Client Master Cheatsheet</span>
+            </h3>
+            <span class="text-[10px] font-mono bg-emerald-500/10 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/20">DB Tooling</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+            <div class="space-y-2">
+              <div class="bg-bgDark p-2.5 rounded-lg border border-surfaceBorder">
+                <span class="text-slate-400">// Mongo Shell (mongosh) Core Commands</span>
+                <p class="text-emerald-300 mt-0.5">• <code>show dbs;</code> (ดูฐานข้อมูลทั้งหมด)<br>• <code>use exam_db;</code> (สลับหรือสร้าง Database)<br>• <code>show collections;</code> (ดูชื่อ Tables/Collections)<br>• <code>db.createCollection('users');</code> (สร้าง Collection เปล่า)<br>• <code>db.users.drop();</code> (ลบ Collection ทิ้ง)</p>
+              </div>
+              <div class="bg-bgDark p-2.5 rounded-lg border border-surfaceBorder">
+                <span class="text-slate-400">// MongoDB CRUD Queries</span>
+                <p class="text-emerald-300 mt-0.5">• <code>db.users.insertOne({ fullname: 'Tawan', email: 't@kmitl.ac.th' });</code><br>• <code>db.users.find({ deleted_at: null }).pretty();</code><br>• <code>db.users.updateOne({ email: 't@kmitl.ac.th' }, { $set: { fullname: 'New Name' } });</code><br>• <code>db.users.deleteOne({ email: 't@kmitl.ac.th' });</code></p>
+              </div>
+            </div>
+            <div class="space-y-2">
+              <div class="bg-bgDark p-2.5 rounded-lg border border-surfaceBorder">
+                <span class="text-slate-400">// VS Code Database Client Quick Steps</span>
+                <p class="text-cyan-300 mt-0.5">1. กดไอคอน <strong>Database Client</strong> ที่ Activity Bar ด้านซ้าย<br>2. กด <strong>+</strong> ➔ เลือก <strong>MySQL</strong> หรือ <strong>MongoDB</strong><br>3. MySQL: Host <code>localhost</code>, Port <code>3307</code>, User <code>root</code>, Pass <code>password</code><br>4. MongoDB: วาง Connection String SRV จาก Atlas</p>
+              </div>
+              <div class="bg-bgDark p-2.5 rounded-lg border border-surfaceBorder">
+                <span class="text-slate-400">// Useful Features in Database Client</span>
+                <p class="text-amber-300 mt-0.5">• <strong>View Data:</strong> ดับเบิลคลิกที่ชื่อ Table/Collection เพื่อเปิด Data Grid<br>• <strong>Inline Edit:</strong> ดับเบิลคลิกที่ช่องเพื่อแก้ค่าแล้วกด Save<br>• <strong>Query Console:</strong> คลิกขวาที่ DB ➔ <code>Open Query Console</code> ➔ กด <code>Ctrl+Enter</code> รันคำสั่ง</p>
+              </div>
             </div>
           </div>
         </div>
@@ -7968,7 +8120,7 @@ git push -u origin main
       vsActiveActivity = activity;
       
       // Update Activity Bar Icons
-      const activities = ['explorer', 'steps', 'search', 'git', 'rubric'];
+      const activities = ['explorer', 'steps', 'search', 'git', 'rubric', 'database'];
       activities.forEach(act => {
         const btn = document.getElementById(`act-${act}`);
         if (!btn) return;
@@ -7984,6 +8136,7 @@ git push -u origin main
       document.getElementById('vsside-steps').classList.toggle('hidden', activity !== 'steps');
       document.getElementById('vsside-search').classList.toggle('hidden', activity !== 'search');
       document.getElementById('vsside-git').classList.toggle('hidden', activity !== 'git');
+      const vsDb = document.getElementById('vsside-database'); if (vsDb) vsDb.classList.toggle('hidden', activity !== 'database');
 
       // Ensure sidebar is visible
       const sidebar = document.getElementById('vscode-sidebar');
@@ -8028,6 +8181,37 @@ git push -u origin main
       if (badge) badge.innerText = `${completedCount}/${total}`;
       const progBadge = document.getElementById('wizard-progress-badge');
       if (progBadge) progBadge.innerText = `${completedCount}/${total} Done`;
+    }
+
+    function simulateOpenQueryConsole() {
+      setVSCodePanelTab('terminal');
+      const panel = document.getElementById('vscode-bottom-panel');
+      if (panel && panel.classList.contains('hidden')) panel.classList.remove('hidden');
+      runVSCodeTerminalCmd("mongosh 'mongodb+srv://exam_db' --eval 'db.users.find().pretty()'");
+    }
+
+    function simulateViewTable(tableName) {
+      setVSCodePanelTab('terminal');
+      const panel = document.getElementById('vscode-bottom-panel');
+      if (panel && panel.classList.contains('hidden')) panel.classList.remove('hidden');
+      if (tableName === 'mysql_users') {
+        runVSCodeTerminalCmd("mysql -u root -p -e 'USE exam_db; SELECT id, fullname, email, deleted_at, createdAt FROM users LIMIT 5;'");
+      } else if (tableName === 'mongo_users') {
+        runVSCodeTerminalCmd("mongosh 'mongodb+srv://exam_db' --eval 'db.users.find({ deleted_at: null }).pretty()'");
+      } else {
+        runVSCodeTerminalCmd("mongosh 'mongodb+srv://exam_db' --eval 'db.students.find().pretty()'");
+      }
+    }
+
+    function simulateCreateCollectionPrompt() {
+      const colName = prompt('ระบุชื่อ Collection ใหม่ที่ต้องการสร้างใน MongoDB (เช่น products หรือ orders):', 'products');
+      if (colName) {
+        setVSCodePanelTab('terminal');
+        const panel = document.getElementById('vscode-bottom-panel');
+        if (panel && panel.classList.contains('hidden')) panel.classList.remove('hidden');
+        runVSCodeTerminalCmd(`mongosh 'mongodb+srv://exam_db' --eval 'db.createCollection("${colName}")'`);
+        showToastNotification(`สร้าง Collection "${colName}" เรียบร้อยแล้ว!`, 'success');
+      }
     }
 
     function renderVSCodeStepGuide() {
